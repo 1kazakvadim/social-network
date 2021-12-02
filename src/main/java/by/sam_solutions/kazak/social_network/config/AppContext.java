@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -17,13 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"by.sam_solutions.kazak.social_network.config"})
 @PropertySource("classpath:database.properties")
-public class HibernateConfig {
+public class AppContext {
 
   private final Environment environment;
 
-  public HibernateConfig(Environment environment) {
+  public AppContext(Environment environment) {
     this.environment = environment;
   }
 
@@ -31,7 +29,8 @@ public class HibernateConfig {
   public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
     sessionFactory.setDataSource(dataSource());
-    sessionFactory.setPackagesToScan("by.sam_solutions.kazak.social_network.entities");
+    sessionFactory.setPackagesToScan(
+        "by.sam_solutions.kazak.social_network.entities");
     sessionFactory.setHibernateProperties(hibernateProperties());
     return sessionFactory;
   }
