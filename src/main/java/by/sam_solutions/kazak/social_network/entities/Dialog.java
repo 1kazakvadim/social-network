@@ -1,12 +1,15 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,9 @@ public class Dialog {
 
   @Column(name = "time_creation")
   private LocalDateTime timeCreation;
+
+  @ManyToMany(mappedBy = "dialogs")
+  private Set<User> users = new HashSet<>();
 
   public Dialog() {
   }
@@ -55,6 +61,14 @@ public class Dialog {
 
   public void setTimeCreation(LocalDateTime timeCreation) {
     this.timeCreation = timeCreation;
+  }
+
+  public Set<User> getUsers() {
+    return users;
+  }
+
+  public void setUsers(Set<User> users) {
+    this.users = users;
   }
 
   @Override

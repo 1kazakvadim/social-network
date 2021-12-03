@@ -1,13 +1,18 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -35,6 +40,14 @@ public class User {
 
   @Column(name = "time_registration", nullable = false)
   private LocalDateTime timeRegistration;
+
+  @ManyToMany(cascade = { CascadeType.ALL })
+  @JoinTable(
+      name = "users_to_dialogs",
+      joinColumns = { @JoinColumn(name = "user_id") },
+      inverseJoinColumns = { @JoinColumn(name = "dialog_id") }
+  )
+  private Set<Dialog> dialogs = new HashSet<>();
 
   public User() {
   }
@@ -95,6 +108,14 @@ public class User {
 
   public void setTimeRegistration(LocalDateTime timeRegistration) {
     this.timeRegistration = timeRegistration;
+  }
+
+  public Set<Dialog> getProjects() {
+    return dialogs;
+  }
+
+  public void setProjects(Set<Dialog> projects) {
+    this.dialogs = projects;
   }
 
   @Override
