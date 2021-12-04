@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 public class RoleDaoImpl extends AbstractBaseDao<Role> implements RoleDao {
 
   @Override
-  public void save(Role obj) {
-    saveOrUpdate(obj);
+  public void saveOrUpdate(Role obj) {
+    super.saveOrUpdate(obj);
   }
 
   @Override
-  public Role getById(int id) {
+  public Role getById(Long id) {
     return getById(Role.class, id);
   }
 
@@ -25,13 +25,8 @@ public class RoleDaoImpl extends AbstractBaseDao<Role> implements RoleDao {
   }
 
   @Override
-  public void deleteById(int id) {
+  public void deleteById(Long id) {
     delete(getById(Role.class, id));
-  }
-
-  @Override
-  public void update(Role obj) {
-    saveOrUpdate(obj);
   }
 
 }

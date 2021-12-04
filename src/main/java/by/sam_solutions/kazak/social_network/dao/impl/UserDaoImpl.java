@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 
   @Override
-  public void save(User obj) {
-    saveOrUpdate(obj);
+  public void saveOrUpdate(User obj) {
+    super.saveOrUpdate(obj);
   }
 
   @Override
-  public User getById(int id) {
+  public User getById(Long id) {
     return getById(User.class, id);
   }
 
@@ -25,12 +25,7 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
   }
 
   @Override
-  public void update(User obj) {
-    saveOrUpdate(obj);
-  }
-
-  @Override
-  public void deleteById(int id) {
+  public void deleteById(Long id) {
     delete(getById(User.class, id));
   }
 
