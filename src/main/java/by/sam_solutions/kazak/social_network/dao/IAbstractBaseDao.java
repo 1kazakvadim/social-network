@@ -4,14 +4,12 @@ import java.util.List;
 
 public interface IAbstractBaseDao<T> {
 
-  void save(T obj);
+  void saveOrUpdate(T obj);
 
-  T getById(int id);
+  T getById(Long id);
 
   List<T> getAll();
 
-  void update(T obj);
-
-  void deleteById(int id);
+  void deleteById(Long id);
 
 }
