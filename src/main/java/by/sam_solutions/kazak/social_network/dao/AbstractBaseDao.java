@@ -1,12 +1,11 @@
 package by.sam_solutions.kazak.social_network.dao;
 
 import java.util.List;
+import java.util.UUID;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractBaseDao<T> {
-
-  private T entity;
 
   @Autowired
   private SessionFactory sessionFactory;
@@ -15,7 +14,7 @@ public abstract class AbstractBaseDao<T> {
     sessionFactory.getCurrentSession().saveOrUpdate(obj);
   }
 
-  protected T getById(Class<T> aClass, Integer id) {
+  protected T getById(Class<T> aClass, Long id) {
     return sessionFactory.getCurrentSession().get(aClass, id);
   }
 
