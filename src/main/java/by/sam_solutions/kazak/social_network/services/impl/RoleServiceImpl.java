@@ -4,6 +4,8 @@ import by.sam_solutions.kazak.social_network.dao.RoleDao;
 import by.sam_solutions.kazak.social_network.entities.Role;
 import by.sam_solutions.kazak.social_network.services.RoleService;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
+  private final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
   private final RoleDao roleDao;
 
   public RoleServiceImpl(RoleDao roleDao) {
@@ -19,21 +22,25 @@ public class RoleServiceImpl implements RoleService {
 
   @Override
   public void saveOrUpdate(Role role) {
+    logger.debug("saveOrUpdate({})", role);
     roleDao.saveOrUpdate(role);
   }
 
   @Override
   public Role getById(Long id) {
+    logger.debug("get role by id = {}", id);
     return roleDao.getById(id);
   }
 
   @Override
   public List<Role> getAll() {
+    logger.debug("get all roles");
     return roleDao.getAll();
   }
 
   @Override
   public void deleteById(Long id) {
+    logger.debug("delete role with id = {}", id);
     roleDao.deleteById(id);
   }
 
