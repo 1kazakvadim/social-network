@@ -1,6 +1,6 @@
 package by.sam_solutions.kazak.social_network.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
-  private Integer id;
+  private Long id;
 
   @Column(name = "email", nullable = false, unique = true)
   private String email;
@@ -39,21 +39,24 @@ public class User {
   private boolean isLocked;
 
   @Column(name = "time_registration", nullable = false)
-  private LocalDateTime timeRegistration;
+  private Timestamp timeRegistration;
 
-  @ManyToMany(cascade = { CascadeType.ALL })
+  @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(
       name = "users_to_dialogs",
-      joinColumns = { @JoinColumn(name = "user_id") },
-      inverseJoinColumns = { @JoinColumn(name = "dialog_id") }
-  )
+      joinColumns = {@JoinColumn(name = "user_id")},
+      inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
   private Set<Dialog> dialogs = new HashSet<>();
 
-  public User() {
-  }
+  public User() {}
 
-  public User(Integer id, String email, String password,
-      Role role, boolean isLocked, LocalDateTime timeRegistration) {
+  public User(
+      Long id,
+      String email,
+      String password,
+      Role role,
+      boolean isLocked,
+      Timestamp timeRegistration) {
     this.id = id;
     this.email = email;
     this.password = password;
@@ -62,11 +65,11 @@ public class User {
     this.timeRegistration = timeRegistration;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -102,11 +105,11 @@ public class User {
     isLocked = locked;
   }
 
-  public LocalDateTime getTimeRegistration() {
+  public Timestamp getTimeRegistration() {
     return timeRegistration;
   }
 
-  public void setTimeRegistration(LocalDateTime timeRegistration) {
+  public void setTimeRegistration(Timestamp timeRegistration) {
     this.timeRegistration = timeRegistration;
   }
 
@@ -127,12 +130,12 @@ public class User {
       return false;
     }
     User user = (User) o;
-    return isLocked == user.isLocked &&
-        Objects.equals(id, user.id) &&
-        Objects.equals(email, user.email) &&
-        Objects.equals(password, user.password) &&
-        Objects.equals(role, user.role) &&
-        Objects.equals(timeRegistration, user.timeRegistration);
+    return isLocked == user.isLocked
+        && Objects.equals(id, user.id)
+        && Objects.equals(email, user.email)
+        && Objects.equals(password, user.password)
+        && Objects.equals(role, user.role)
+        && Objects.equals(timeRegistration, user.timeRegistration);
   }
 
   @Override
