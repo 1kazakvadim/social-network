@@ -15,24 +15,23 @@ public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
-  private Integer id;
+  private Long id;
 
   @Column(name = "name", nullable = false)
   private String name;
 
-  public Role() {
-  }
+  public Role() {}
 
-  public Role(Integer id, String name) {
+  public Role(Long id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -53,8 +52,7 @@ public class Role {
       return false;
     }
     Role role = (Role) o;
-    return Objects.equals(id, role.id) &&
-        Objects.equals(name, role.name);
+    return Objects.equals(id, role.id) && Objects.equals(name, role.name);
   }
 
   @Override
