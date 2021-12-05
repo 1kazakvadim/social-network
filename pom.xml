@@ -24,6 +24,8 @@
     <hibernate.version>5.6.1.Final</hibernate.version>
     <mysql-connector-java.version>8.0.25</mysql-connector-java.version>
     <flyway-core.version>8.1.0</flyway-core.version>
+    <jcl.slf4j.version>1.7.30</jcl.slf4j.version>
+    <logback.version>1.2.6</logback.version>
     <junit.version>4.11</junit.version>
   </properties>
 
@@ -51,6 +53,12 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
       <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.webflow</groupId>
+      <artifactId>org.springframework.binding</artifactId>
+      <version>2.0.5.RELEASE</version>
     </dependency>
 
     <dependency>
@@ -89,6 +97,12 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -101,6 +115,18 @@
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
       <version>${flyway-core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${jcl.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
     </dependency>
 
     <dependency>
