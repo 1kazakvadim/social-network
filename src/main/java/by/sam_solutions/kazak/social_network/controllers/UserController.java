@@ -19,7 +19,7 @@ public class UserController {
   @GetMapping("/users")
   public String users(Model model) {
     List<UserDTO> users = userFacade.getAll();
-    model.addAttribute("user", users);
+    model.addAttribute("users", users);
     return "user-list";
   }
 
