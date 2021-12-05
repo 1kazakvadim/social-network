@@ -24,7 +24,7 @@ public class UserFacade {
     List<User> users = userService.getAll();
     for (User user : users) {
       try {
-        userDTOS.add((UserDTO) userConverter.convertSourceToTargetClass(user, User.class));
+        userDTOS.add((UserDTO) userConverter.convertSourceToTargetClass(user, UserDTO.class));
       } catch (Exception e) {
         e.printStackTrace();
       }
