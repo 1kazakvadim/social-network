@@ -19,11 +19,15 @@ public class UserFacade {
     this.userConverter = userConverter;
   }
 
-  public List<UserDTO> getAll() throws Exception {
+  public List<UserDTO> getAll() {
     List<UserDTO> userDTOS = new ArrayList<>();
     List<User> users = userService.getAll();
     for (User user : users) {
-      userDTOS.add((UserDTO) userConverter.convertSourceToTargetClass(user, User.class));
+      try {
+        userDTOS.add((UserDTO) userConverter.convertSourceToTargetClass(user, User.class));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
     return userDTOS;
   }
