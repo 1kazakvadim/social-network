@@ -1,31 +1,154 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page isELIgnored="false" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8"/>
+    <script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
+    <link href="<c:url value="/resources/static/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/font-awesome/css/font-awesome.min.css"/>"
+          rel="stylesheet">
+    <link href="<c:url value="/resources/static/css/style.css"/>" rel="stylesheet"/>
+    <script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
     <title>Social Network</title>
 </head>
-<body>
-<c:forEach var="user" items="${users}">
-    <table>
-        <tr>
-            <th>id</th>
-            <th>email</th>
-            <th>role.id</th>
-            <th>role.name</th>
-            <th>isLocked</th>
-            <th>time registration</th>
-        </tr>
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.email}</td>
-            <td>${user.role.id}</td>
-            <td>${user.role.name}</td>
-            <td>${user.locked}</td>
-            <td>${user.timeRegistration}</td>
-        </tr>
-    </table>
-</c:forEach>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav class="navbar navbar-expand mb-4">
+    <div class="container-lg">
+        <a class="navbar-brand" href="#">Social Network</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item mr-4">
+                    <a class="nav-link nav-notification" href="#">
+                        <i class="icon-bell-alt icon-2x">
+                            <span class="badge bg-primary rounded-pill">23</span>
+                        </i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-profile" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="icon-user icon-2x"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">
+                            <fmt:message key="nav.profile"/>
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <fmt:message key="nav.settings"/>
+                        </a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">
+                            <fmt:message key="nav.signOut"/>
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
+                       href="#">
+                        <i class="icon-user icon-large nav-profile-side-icon"></i>
+                        <span><fmt:message key="nav.profile"/></span>
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
+                       href="#">
+                        <i class="icon-comment-alt icon-large"></i>
+                        <span><fmt:message key="nav.messages"/></span>
+                        <span class="badge bg-primary rounded-pill">14</span>
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
+                       href="#">
+                        <i class="icon-group icon-large"></i>
+                        <span><fmt:message key="nav.friends"/></span>
+                        <span class="badge bg-primary rounded-pill">7</span>
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
+                       href="#">
+                        <i class="icon-picture icon-large"></i>
+                        <span><fmt:message key="nav.photos"/></span>
+                    </a>
+                    <hr class="solid">
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div>
+                    <c:forEach var="user" items="${users}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><fmt:message key="user.email"/></th>
+                                <th scope="col"><fmt:message key="user.role"/></th>
+                                <th scope="col"><fmt:message key="user.isLocked"/></th>
+                                <th scope="col"><fmt:message key="user.timeRegistration"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">${user.id}</th>
+                                <td>${user.email}</td>
+                                <td>${user.role.name}</td>
+                                <td><c:choose>
+                                    <c:when test="${user.locked == true}">
+                                        <fmt:message key="user.isLocked.yes"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:message key="user.isLocked.no"/>
+                                    </c:otherwise>
+                                </c:choose></td>
+                                <td>${user.timeRegistration}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="text-center text-lg-start mt-auto">
+    <div class="text-center p-2 footer">
+        <div class="dropup">
+            <button type="button" class="btn btn-secondary dropdown-toggle language-selector"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <span><fmt:message key="footer.language"/></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="?lang=en">
+                        <span><fmt:message key="footer.language.english"/></span>
+                        <span class="flag-icon flag-icon-us"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="?lang=ru">
+                        <span><fmt:message key="footer.language.russian"/></span>
+                        <span class="flag-icon flag-icon-ru"></span>
+                    </a>
+                </li>
+            </ul>
+            <span>© 2021 Vadim Kazak</span>
+        </div>
+    </div>
+</footer>
+
+<script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
+
 </body>
 </html>

@@ -1,0 +1,93 @@
+body {
+    font-family: "Helvetica Neue", sans-serif !important;
+}
+
+hr.solid {
+    border-top: 1px solid #bbb;
+    margin: 15px;
+}
+
+.navbar {
+    background-color: rgba(52, 172, 220, 0.98);
+}
+
+.navbar-brand {
+    color: #FFFFFF;
+    opacity: 0.95;
+}
+
+.navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+.nav-notification i {
+    color: #FFFFFF;
+}
+
+.nav-notification span {
+    font-size: 12px;
+    background-color: #ecc36f !important;
+}
+
+.nav-notification:hover {
+    opacity: 0.8;
+}
+
+.nav-profile i {
+    color: #FFFFFF;
+}
+
+.nav-profile i:hover {
+    opacity: 0.8;
+}
+
+.nav-profile-side i {
+    margin-right: 10px;
+}
+
+.nav-profile-side-icon {
+    padding-right: 4px;
+}
+
+.footer {
+    color: #FFFFFF;
+    background-color: rgba(52, 172, 220, 0.98);
+    opacity: 0.9;
+}
+
+footer p {
+    padding: 5px 0 5px;
+    margin-bottom: 0;
+}
+
+.language-selector {
+    font-size: 12px !important;
+    background-color: rgba(52, 172, 220, 0.98) !important;
+    opacity: 0.7 !important;
+    border-color: rgba(52, 172, 220, 0.98) !important;
+}
+
+.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.33333333em;
+    line-height: 1em;
+}
+
+.flag-icon:before {
+    content: "\00a0";
+}
+
+.flag-icon-ru {
+    background-image: url("../images/flag-ru.svg");
+}
+
+.flag-icon-us {
+    background-image: url("../images/flag-us.svg");
+}
+
+
+
