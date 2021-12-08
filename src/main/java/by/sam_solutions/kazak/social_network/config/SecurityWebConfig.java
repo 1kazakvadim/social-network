@@ -9,42 +9,28 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
-//
-//  @Bean
-//  public PasswordEncoder passwordEncoder() {
-//    return new BCryptPasswordEncoder();
-//  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication().withUser("mkyong").password("{noop}123456").roles("USER");
-    auth.inMemoryAuthentication().withUser("admin").password("{noop}123456").roles("ADMIN");
-    auth.inMemoryAuthentication().withUser("dba").password("{noop}123456").roles("DBA");
+    auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
     http.authorizeRequests()
-        .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-        .antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
+        .antMatchers("/users/**").permitAll()
         .and().formLogin();
-
   }
 
-
-
-
-//
-//  @Override
-//  public void configure(WebSecurity web) {
-//    web.ignoring()
-//        .antMatchers("/resources/**", "/static/**");
-//  }
 
 }
