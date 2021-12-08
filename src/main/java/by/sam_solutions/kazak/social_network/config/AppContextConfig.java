@@ -4,25 +4,54 @@ import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:database.properties")
-public class AppContext {
+@ComponentScan(basePackages = "by.sam_solutions.kazak.social_network.*")
+@Import({ SecurityWebConfig.class })
+public class AppContextConfig {
 
-  private final Environment environment;
+  @Autowired
+  private Environment environment;
 
-  public AppContext(Environment environment) {
-    this.environment = environment;
+  @Bean("messageSource")
+  public MessageSource messageSource() {
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasenames("l10n/messages");
+    messageSource.setDefaultEncoding("UTF-8");
+    return messageSource;
+  }
+
+  @Bean
+  public InternalResourceViewResolver resolver() {
+    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+    resolver.setViewClass(JstlView.class);
+    resolver.setPrefix("WEB-INF/pages/");
+    resolver.setSuffix(".jsp");
+    return resolver;
+  }
+
+  @Bean
+  public LocaleResolver localeResolver() {
+    return new CookieLocaleResolver();
   }
 
   @Bean
