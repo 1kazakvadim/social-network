@@ -7,4 +7,6 @@ public interface UserFacade {
 
   List<UserDTO> getAll();
 
+  UserDTO findByEmail(String email);
+
 }

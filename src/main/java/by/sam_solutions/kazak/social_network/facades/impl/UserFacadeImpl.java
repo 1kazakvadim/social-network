@@ -34,4 +34,16 @@ public class UserFacadeImpl implements UserFacade {
     return usersDTO;
   }
 
+  @Override
+  public UserDTO findByEmail(String email) {
+    User user = userService.findByEmail(email);
+    UserDTO userDTO = new UserDTO();
+    try {
+      userDTO = (UserDTO) userConverter.convertSourceToTargetClass(user, UserDTO.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return userDTO;
+  }
+
 }
