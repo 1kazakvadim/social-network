@@ -4,53 +4,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
     <link href="<c:url value="/resources/static/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/static/css/font-awesome/css/font-awesome.min.css"/>"
           rel="stylesheet">
     <link href="<c:url value="/resources/static/css/style.css"/>" rel="stylesheet"/>
-    <script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
     <title>Social Network</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand mb-4">
-    <div class="container-lg">
-        <a class="navbar-brand" href="#">Social Network</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item mr-4">
-                    <a class="nav-link nav-notification" href="#">
-                        <i class="icon-bell-alt icon-2x">
-                            <span class="badge bg-primary rounded-pill">23</span>
-                        </i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link nav-profile" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="icon-user icon-2x"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.profile"/>
-                        </a></li>
-                        <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.settings"/>
-                        </a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.signOut"/>
-                        </a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<jsp:include page="header.jsp"/>
 
 <section>
     <div class="container">
@@ -119,34 +82,9 @@
     </div>
 </section>
 
-<footer class="text-center text-lg-start mt-auto">
-    <div class="text-center p-2 footer">
-        <div class="dropup">
-            <button type="button" class="btn btn-secondary dropdown-toggle language-selector"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <span><spring:message key="footer.language"/></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="?lang=en">
-                        <span><spring:message key="footer.language.english"/></span>
-                        <span class="flag-icon flag-icon-us"></span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="?lang=ru">
-                        <span><spring:message key="footer.language.russian"/></span>
-                        <span class="flag-icon flag-icon-ru"></span>
-                    </a>
-                </li>
-            </ul>
-            <span>© 2021 Vadim Kazak</span>
-        </div>
-    </div>
-</footer>
+<jsp:include page="footer.jsp" />
 
-<script src="<c:url value="/resources/static/js/bootstrap.bundle.js"/>"></script>
+<script src="<c:url value="/resources/static/js/bootstrap.bundle.min.js"/>"></script>
 
 </body>
 </html>
