@@ -1,4 +1,4 @@
-<%@taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand mb-4">
     <div class="container-lg">
@@ -19,16 +19,16 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.profile"/>
+                            <spring:message code="nav.profile"/>
                         </a></li>
                         <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.settings"/>
+                            <spring:message code="nav.settings"/>
                         </a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="#">
-                            <spring:message key="nav.signOut"/>
+                            <spring:message code="nav.signOut"/>
                         </a></li>
                     </ul>
                 </li>
