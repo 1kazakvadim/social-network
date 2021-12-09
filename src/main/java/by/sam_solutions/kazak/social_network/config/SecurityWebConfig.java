@@ -19,7 +19,6 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
-  @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
   }
@@ -28,7 +27,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
     http.authorizeRequests()
-        .antMatchers("/users/**").permitAll()
+        .antMatchers("/users/**").hasRole("ADMIN")
         .and().formLogin();
   }
 
