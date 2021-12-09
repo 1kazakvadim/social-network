@@ -1,13 +1,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="style" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="<c:url value="/resources/static/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="<c:url value="/resources/static/css/font-awesome/css/font-awesome.min.css"/>"
-          rel="stylesheet">
-    <link href="<c:url value="/resources/static/css/style.css"/>" rel="stylesheet"/>
+    <style:styles/>
     <title>Social Network</title>
 </head>
 
@@ -23,24 +21,24 @@
                     <a class="list-group-item list-group-item-action list-group-item-light border-0"
                        href="#">
                         <i class="icon-user icon-large nav-profile-side-icon"></i>
-                        <span><spring:message key="nav.profile"/></span>
+                        <span><spring:message code="nav.profile"/></span>
                     </a>
                     <a class="list-group-item list-group-item-action list-group-item-light border-0"
                        href="#">
                         <i class="icon-comment-alt icon-large"></i>
-                        <span><spring:message key="nav.messages"/></span>
+                        <span><spring:message code="nav.messages"/></span>
                         <span class="badge bg-primary rounded-pill">14</span>
                     </a>
                     <a class="list-group-item list-group-item-action list-group-item-light border-0"
                        href="#">
                         <i class="icon-group icon-large"></i>
-                        <span><spring:message key="nav.friends"/></span>
+                        <span><spring:message code="nav.friends"/></span>
                         <span class="badge bg-primary rounded-pill">7</span>
                     </a>
                     <a class="list-group-item list-group-item-action list-group-item-light border-0"
                        href="#">
                         <i class="icon-picture icon-large"></i>
-                        <span><spring:message key="nav.photos"/></span>
+                        <span><spring:message code="nav.photos"/></span>
                     </a>
                     <hr class="solid">
                 </div>
@@ -51,10 +49,10 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"><spring:message key="user.email"/></th>
-                            <th scope="col"><spring:message key="user.role"/></th>
-                            <th scope="col"><spring:message key="user.isLocked"/></th>
-                            <th scope="col"><spring:message key="user.timeRegistration"/></th>
+                            <th scope="col"><spring:message code="user.email"/></th>
+                            <th scope="col"><spring:message code="user.role"/></th>
+                            <th scope="col"><spring:message code="user.isLocked"/></th>
+                            <th scope="col"><spring:message code="user.timeRegistration"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,10 +63,10 @@
                                 <td>${user.role.name}</td>
                                 <td><c:choose>
                                     <c:when test="${user.locked == true}">
-                                        <spring:message key="user.isLocked.yes"/>
+                                        <spring:message code="user.isLocked.yes"/>
                                     </c:when>
                                     <c:otherwise>
-                                        <spring:message key="user.isLocked.no"/>
+                                        <spring:message code="user.isLocked.no"/>
                                     </c:otherwise>
                                 </c:choose></td>
                                 <td>${user.timeRegistration}</td>
@@ -84,7 +82,7 @@
 
 <jsp:include page="footer.jsp" />
 
-<script src="<c:url value="/resources/static/js/bootstrap.bundle.min.js"/>"></script>
+<style:scripts/>
 
 </body>
 </html>
