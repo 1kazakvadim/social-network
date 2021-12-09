@@ -1,6 +1,5 @@
-INSERT INTO `social_network`.`role` (`id`, `name`) VALUES ('1', 'ROLE_USER');
-INSERT INTO `social_network`.`role` (`id`, `name`) VALUES ('2', 'ROLE_ADMIN');
+INSERT INTO `social_network`.`role` (`id`, `name`) VALUES ('1', 'USER');
+INSERT INTO `social_network`.`role` (`id`, `name`) VALUES ('2', 'ADMIN');
 
-INSERT INTO `social_network`.`user` (`id`, `email`, `password`, `role_id`, `locked`, `time_registration`) VALUES ('1', 'test1@email.com', 'test_password1', '1', '0', '2021-01-01 23:23:00');
-INSERT INTO `social_network`.`user` (`id`, `email`, `password`, `role_id`, `locked`, `time_registration`) VALUES ('2', 'test2@email.com', 'test_password2', '2', '0', '2021-01-01 23:23:00');
-INSERT INTO `social_network`.`user` (`id`, `email`, `password`, `role_id`, `locked`, `time_registration`) VALUES ('3', 'test3@email.com', 'test_password3', '1', '1', '2021-01-01 23:23:00');
+INSERT INTO `social_network`.`user` (`id`, `email`, `password`, `role_id`, `locked`, `time_registration`) VALUES ('1', 'admin', '$2a$10$qkvOI97twvl9Q/tDZwA16O30Xj7pl7Yeu.bmgzO8KNfNOknj5g3lC', '2', '0', '2021-01-01 23:23:00');
+INSERT INTO `social_network`.`user` (`id`, `email`, `password`, `role_id`, `locked`, `time_registration`) VALUES ('2', 'user', '$2a$10$BR7uH1mtHLK9fOOlM.wvdeE56cGinB4WcOXjgb5IIBHmACSdZF.Fi', '1', '0', '2021-01-01 23:23:00');
