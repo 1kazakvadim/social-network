@@ -6,6 +6,7 @@ import by.sam_solutions.kazak.social_network.services.UserService;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
   private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-  private final UserDao userDao;
 
-  public UserServiceImpl(UserDao userDao) {
-    this.userDao = userDao;
-  }
+  @Autowired
+  private UserDao userDao;
 
   @Override
   public void saveOrUpdate(User user) {

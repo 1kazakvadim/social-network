@@ -6,6 +6,7 @@ import by.sam_solutions.kazak.social_network.services.RoleService;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoleServiceImpl implements RoleService {
 
   private final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
-  private final RoleDao roleDao;
 
-  public RoleServiceImpl(RoleDao roleDao) {
-    this.roleDao = roleDao;
-  }
+  @Autowired
+  private RoleDao roleDao;
 
   @Override
   public void saveOrUpdate(Role role) {
