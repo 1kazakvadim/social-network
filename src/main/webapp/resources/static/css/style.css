@@ -1,92 +1,161 @@
 body {
-    font-family: "Helvetica Neue", sans-serif !important;
+  font-family: "Helvetica Neue", sans-serif !important;
 }
 
 hr.solid {
-    border-top: 1px solid #bbb;
-    margin: 15px;
+  border-top: 1px solid #bbb;
+  margin: 15px;
 }
 
 .navbar {
-    background-color: rgba(52, 172, 220, 0.98);
+  background-color: rgba(52, 172, 220, 0.98);
 }
 
 .navbar-brand {
-    color: #FFFFFF;
-    opacity: 0.95;
+  color: #FFFFFF;
+  opacity: 0.95;
 }
 
 .navbar-brand:hover {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 .nav-notification i {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 .nav-notification span {
-    font-size: 12px;
-    background-color: #ecc36f !important;
+  font-size: 12px;
+  background-color: #ecc36f !important;
 }
 
 .nav-notification:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .nav-profile i {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 .nav-profile i:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .nav-profile-side i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .nav-profile-side-icon {
-    padding-right: 4px;
+  padding-right: 4px;
+}
+
+.nav-administration {
+  margin-top: 10px;
+}
+
+.nav-administration li {
+  list-style-type: none;
+}
+
+.nav-administration a {
+  color: #636464;
+}
+
+.nav-administration a:hover {
+  color: #636464;
+}
+
+.profile-info-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.profile-edit {
+  padding-left: 45px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.profile-edit a {
+  color: #8a8a8f;
+  text-decoration: none;
+}
+
+.friend-title {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 10px 0 5px 10px;
+}
+
+.friend-title a {
+  color: #8a8a8f;
+  text-decoration: none;
+}
+
+.friend-img-list {
+  text-align: center;
+  padding: 5px 0 5px;
+}
+
+.friend-img-list img {
+  max-width: 55px;
+  border-radius: 2.5rem;
+}
+
+.social-contact a {
+  text-decoration: none;
+}
+
+.photo-title {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 10px 0 10px 12px;
+}
+
+.photo-title a {
+  color: #8a8a8f;
+  text-decoration: none;
 }
 
 .footer {
-    color: #FFFFFF;
-    background-color: rgba(52, 172, 220, 0.98);
-    opacity: 0.9;
+  color: #FFFFFF;
+  background-color: rgba(52, 172, 220, 0.98);
+  opacity: 0.9;
 }
 
 footer p {
-    padding: 5px 0 5px;
-    margin-bottom: 0;
+  padding: 5px 0 5px;
+  margin-bottom: 0;
 }
 
 .language-selector {
-    font-size: 12px !important;
-    background-color: rgba(52, 172, 220, 0.98) !important;
-    opacity: 0.7 !important;
-    border-color: rgba(52, 172, 220, 0.98) !important;
+  font-size: 12px !important;
+  background-color: rgba(52, 172, 220, 0.98) !important;
+  opacity: 0.7 !important;
+  border-color: rgba(52, 172, 220, 0.98) !important;
 }
 
 .flag-icon {
-    background-size: contain;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    position: relative;
-    display: inline-block;
-    width: 1.33333333em;
-    line-height: 1em;
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.33333333em;
+  line-height: 1em;
 }
 
 .flag-icon:before {
-    content: "\00a0";
+  content: "\00a0";
 }
 
 .flag-icon-ru {
-    background-image: url("../images/flag-ru.svg");
+  background-image: url("../images/flag-ru.svg");
 }
 
 .flag-icon-us {
-    background-image: url("../images/flag-us.svg");
+  background-image: url("../images/flag-us.svg");
 }
 
 
