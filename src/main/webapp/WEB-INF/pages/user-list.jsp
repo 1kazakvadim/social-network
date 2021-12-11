@@ -16,34 +16,8 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
-                       href="#">
-                        <i class="icon-user icon-large nav-profile-side-icon"></i>
-                        <span><spring:message code="nav.profile"/></span>
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
-                       href="#">
-                        <i class="icon-comment-alt icon-large"></i>
-                        <span><spring:message code="nav.messages"/></span>
-                        <span class="badge bg-primary rounded-pill">14</span>
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
-                       href="#">
-                        <i class="icon-group icon-large"></i>
-                        <span><spring:message code="nav.friends"/></span>
-                        <span class="badge bg-primary rounded-pill">7</span>
-                    </a>
-                    <a class="list-group-item list-group-item-action list-group-item-light border-0"
-                       href="#">
-                        <i class="icon-picture icon-large"></i>
-                        <span><spring:message code="nav.photos"/></span>
-                    </a>
-                    <hr class="solid">
-                </div>
-            </div>
-            <div class="col-sm-8">
+            <jsp:include page="side-nav.jsp"/>
+            <div class="col-8">
                 <div>
                     <table class="table">
                         <thead>
@@ -80,7 +54,7 @@
     </div>
 </section>
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="footer.jsp"/>
 
 <style:scripts/>
 
