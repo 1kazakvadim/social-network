@@ -40,7 +40,7 @@
             <div class="collapse" id="collapseExample">
                 <div>
                     <ul class="nav-administration">
-                        <li><a class="dropdown-item" href=""><spring:message
+                        <li><a class="dropdown-item" href="<c:url value='/users'/>"><spring:message
                                 code="nav.users"/></a></li>
                     </ul>
                 </div>
