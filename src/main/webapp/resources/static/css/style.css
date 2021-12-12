@@ -55,13 +55,10 @@ hr.solid {
 
 .nav-administration li {
   list-style-type: none;
+
 }
 
 .nav-administration a {
-  color: #636464;
-}
-
-.nav-administration a:hover {
   color: #636464;
 }
 
