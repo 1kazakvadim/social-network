@@ -38,7 +38,7 @@ public class UserConverter implements TwoWayConverter {
     sourceUser.setRole(targetUser.getRole());
     sourceUser.setLocked(targetUser.isLocked());
     sourceUser.setTimeRegistration(Timestamp.valueOf(targetUser.getTimeRegistration()));
-    return targetUser;
+    return sourceUser;
   }
 
   @Override
