@@ -20,16 +20,22 @@
                     <input type="hidden"
                            name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
-                    <div class="form-outline mb-4">
-                        <input type="text" id="form3Example3" class="form-control form-control-lg"
-                               placeholder="<spring:message code="loginPage.placeholder.email"/>"
-                               name="username"/>
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            <input type="text" id="email" class="form-control form-control-lg"
+                                   name="username" placeholder="E-mail"/>
+                            <label class="text-secondary" for="email"><spring:message
+                                    code="loginPage.placeholder.email"/></label>
+                        </div>
                     </div>
-                    <div class="form-outline mb-3">
-                        <input type="password" id="form3Example4"
-                               class="form-control form-control-lg"
-                               placeholder="<spring:message code="loginPage.placeholder.password"/>"
-                               name="password"/>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="password" id="password"
+                                   class="form-control form-control-lg" name="password"
+                                   placeholder="Password"/>
+                            <label class="text-secondary" for="password"><spring:message
+                                    code="loginPage.placeholder.password"/></label>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check mb-0">
@@ -39,16 +45,15 @@
                                 <spring:message code="loginPage.rememberMe"/>
                             </label>
                         </div>
-                        <a href="#!" class="text-body"><spring:message
+                        <a href="#" class="text-body"><spring:message
                                 code="loginPage.forgotPassword"/>?</a>
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            <spring:message code="loginPage.signIn"/>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <span class="p-4"><spring:message code="loginPage.signIn"/></span>
                         </button>
                         <p class="small fw-bold mt-2 pt-1 mb-0"><spring:message
-                                code="loginPage.noAccount"/>? <a href="#!"
+                                code="loginPage.noAccount"/>? <a href="#"
                                                                  class="link-danger"><spring:message
                                 code="loginPage.register"/></a>
                         </p>
