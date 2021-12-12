@@ -44,14 +44,18 @@ CREATE TABLE `profile`
     `id`                   int NOT NULL AUTO_INCREMENT,
     `user_id`              int                                                     DEFAULT NULL,
     `basic_information_id` int                                                     DEFAULT NULL,
-    `mobile_phone`         varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
-    `home_phone`           varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
-    `skype_name`           varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
-    `instagram_name`       varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
-    `country`              varchar(255) COLLATE utf8_unicode_ci                    DEFAULT NULL,
-    `city`                 varchar(255) COLLATE utf8_unicode_ci                    DEFAULT NULL,
-    `profile_photo_name`   varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+    `job_title`            varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
+    `country`              varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+    `city`                 varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+    `mobile_phone`         varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci  DEFAULT NULL,
+    `home_phone`           varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci  DEFAULT NULL,
+    `github_name`          varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
+    `twitter_name`         varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
+    `instagram_name`       varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci  DEFAULT NULL,
+    `facebook_name`        varchar(45) COLLATE utf8_unicode_ci                     DEFAULT NULL,
+    `skype_name`           varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci  DEFAULT NULL,
     `friend_count`         int                                                     DEFAULT NULL,
+    `profile_photo_name`   varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `user_information_id_idx` (`user_id`),
     KEY `basic_information_id_idx` (`basic_information_id`),
@@ -157,4 +161,18 @@ CREATE TABLE `comment`
     CONSTRAINT `user_table_comment_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb3
-  COLLATE = utf8_unicode_ci
+  COLLATE = utf8_unicode_ci;
+
+CREATE TABLE `verification_token`
+(
+    `id`          int NOT NULL AUTO_INCREMENT,
+    `token`       varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+    `user_id`     int                                  DEFAULT NULL,
+    `expiry_date` datetime                             DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_table_verification_token_idx` (`user_id`),
+    CONSTRAINT `user_table_verification_token` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  DEFAULT CHARSET = utf8mb3
+  COLLATE = utf8_unicode_ci;
