@@ -16,6 +16,11 @@
     <div class="container-lg">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
+                <c:if test="${param.error!=null}">
+                    <div class="alert alert-danger" role="alert">
+                        <spring:message code="loginPage.invalidEmailPassword"/>
+                    </div>
+                </c:if>
                 <form action="${pageContext.request.contextPath}/login" method="POST">
                     <input type="hidden"
                            name="${_csrf.parameterName}"
@@ -25,7 +30,7 @@
                             <input type="text" id="email" class="form-control form-control-lg"
                                    name="username" placeholder="E-mail"/>
                             <label class="text-secondary" for="email"><spring:message
-                                    code="loginPage.placeholder.email"/></label>
+                                    code="loginPage.email"/></label>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -34,14 +39,14 @@
                                    class="form-control form-control-lg" name="password"
                                    placeholder="Password"/>
                             <label class="text-secondary" for="password"><spring:message
-                                    code="loginPage.placeholder.password"/></label>
+                                    code="loginPage.password"/></label>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value=""
-                                   id="form2Example3"/>
-                            <label class="form-check-label" for="form2Example3">
+                            <input class="form-check-input me-2" type="checkbox" name="remember-me"
+                                   id="remember-me"/>
+                            <label class="form-check-label" for="remember-me">
                                 <spring:message code="loginPage.rememberMe"/>
                             </label>
                         </div>
@@ -53,7 +58,7 @@
                             <span class="p-4"><spring:message code="loginPage.signIn"/></span>
                         </button>
                         <p class="small fw-bold mt-2 pt-1 mb-0"><spring:message
-                                code="loginPage.noAccount"/>? <a href="#"
+                                code="loginPage.noAccount"/>? <a href="<c:url value='/register'/>"
                                                                  class="link-danger"><spring:message
                                 code="loginPage.register"/></a>
                         </p>
