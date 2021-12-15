@@ -42,18 +42,22 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
         .antMatchers("/profile/**").hasAnyRole("ADMIN", "USER")
-        .antMatchers("/register", "/login?lang=ru", "login?lang=en").permitAll()
-        .and().formLogin().loginPage("/login").defaultSuccessUrl("/profile")
+        .antMatchers("/**").permitAll()
+        .and().formLogin().loginProcessingUrl("/login").loginPage("/login")
+        .defaultSuccessUrl("/profile")
         .and()
-        .logout().permitAll().logoutSuccessUrl("/login");
+        .logout().logoutSuccessUrl("/login")
+        .and()
+        .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
+        .userDetailsService(userDetailsService);
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
-    .antMatchers("/resources/static/css/**",
-        "/resources/static/js/**", "/resources/static/images/**",
-        "/resources/static/fonts/**");
+        .antMatchers("/resources/static/css/**",
+            "/resources/static/js/**", "/resources/static/images/**",
+            "/resources/static/fonts/**");
   }
 
 }
