@@ -1,7 +1,7 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="style" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="style" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +26,6 @@
                             <th scope="col"><spring:message code="user.email"/></th>
                             <th scope="col"><spring:message code="user.role"/></th>
                             <th scope="col"><spring:message code="user.isLocked"/></th>
-                            <th scope="col"><spring:message code="user.timeRegistration"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,7 +42,6 @@
                                         <spring:message code="user.isLocked.no"/>
                                     </c:otherwise>
                                 </c:choose></td>
-                                <td>${user.timeRegistration}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

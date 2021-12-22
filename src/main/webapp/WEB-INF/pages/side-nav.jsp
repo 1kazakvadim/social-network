@@ -32,12 +32,11 @@
         </a>
         <sec:authorize access="hasRole('ADMIN')">
             <a class="list-group-item list-group-item-action list-group-item-light border-0 dropdown-toggle"
-               data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-               aria-controls="collapseExample">
+               data-bs-toggle="collapse" href="#" role="button" aria-expanded="false">
                 <i class="icon-cogs icon-large "></i>
                 <span><spring:message code="nav.administration"/></span>
             </a>
-            <div class="collapse" id="collapseExample">
+            <div class="collapse">
                 <div>
                     <ul class="nav-administration">
                         <li><a class="dropdown-item" href="<c:url value='/users'/>"><spring:message
