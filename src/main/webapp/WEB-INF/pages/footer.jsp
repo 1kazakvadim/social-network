@@ -1,5 +1,5 @@
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <footer class="text-center text-lg-start mt-auto">
     <div class="text-center p-2 footer">
         <div class="dropup">
