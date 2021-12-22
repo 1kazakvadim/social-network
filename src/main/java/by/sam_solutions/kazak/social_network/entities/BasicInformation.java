@@ -1,6 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "basic_information")
@@ -15,8 +17,8 @@ public class BasicInformation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
 
   @Column(name = "firstname")
   private String firstname;
@@ -25,6 +27,7 @@ public class BasicInformation {
   private String lastname;
 
   @Column(name = "birthday")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
 
   @Column(name = "gender")
@@ -36,7 +39,7 @@ public class BasicInformation {
   public BasicInformation() {
   }
 
-  public BasicInformation(Integer id, String firstname, String lastname, LocalDate birthday,
+  public BasicInformation(Long id, String firstname, String lastname, LocalDate birthday,
       String gender, String relationship) {
     this.id = id;
     this.firstname = firstname;
@@ -46,11 +49,11 @@ public class BasicInformation {
     this.relationship = relationship;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

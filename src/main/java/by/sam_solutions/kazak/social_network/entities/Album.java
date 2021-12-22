@@ -1,6 +1,6 @@
 package by.sam_solutions.kazak.social_network.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +17,8 @@ public class Album {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
 
   @Column(name = "name")
   private String name;
@@ -28,23 +28,23 @@ public class Album {
   private User user;
 
   @Column(name = "time_creation")
-  private LocalDateTime timeCreation;
+  private Timestamp timeCreation;
 
   public Album() {
   }
 
-  public Album(Integer id, String name, User user, LocalDateTime timeCreation) {
+  public Album(Long id, String name, User user, Timestamp timeCreation) {
     this.id = id;
     this.name = name;
     this.user = user;
     this.timeCreation = timeCreation;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -64,11 +64,11 @@ public class Album {
     this.user = user;
   }
 
-  public LocalDateTime getTimeCreation() {
+  public Timestamp getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(LocalDateTime timeCreation) {
+  public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
   }
 

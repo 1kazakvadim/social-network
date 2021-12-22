@@ -1,6 +1,8 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,28 +18,19 @@ public class Profile {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
   private User user;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "basic_information_id")
   private BasicInformation basicInformation;
 
-  @Column(name = "mobile_phone")
-  private String mobilePhone;
-
-  @Column(name = "home_phone")
-  private String homePhone;
-
-  @Column(name = "skype_name")
-  private String skypeName;
-
-  @Column(name = "instagram_name")
-  private String instagramName;
+  @Column(name = "job_title")
+  private String jobTitle;
 
   @Column(name = "country")
   private String country;
@@ -45,37 +38,71 @@ public class Profile {
   @Column(name = "city")
   private String city;
 
-  @Column(name = "profile_photo_name")
-  private String profilePhotoName;
+  @Column(name = "mobile_phone")
+  private String mobilePhone;
+
+  @Column(name = "home_phone")
+  private String homePhone;
+
+  @Column(name = "github_name")
+  private String githubName;
+
+  @Column(name = "twitter_name")
+  private String twitterName;
+
+  @Column(name = "instagram_name")
+  private String instagramName;
+
+  @Column(name = "facebook_name")
+  private String facebookName;
+
+  @Column(name = "skype_name")
+  private String skypeName;
 
   @Column(name = "friend_count")
   private Integer friendCount;
 
+  @Column(name = "profile_photo_name")
+  private String profilePhotoName;
+
+  @Column(name = "time_registration", nullable = false)
+  private LocalDateTime timeRegistration;
+
+  @Column(name = "update_time")
+  private LocalDateTime updateTime;
+
   public Profile() {
   }
 
-  public Profile(Integer id, User user,
-      BasicInformation basicInformation, String mobilePhone, String homePhone,
-      String skypeName, String instagramName, String country, String city,
-      String profilePhotoName, Integer friendCount) {
+  public Profile(Long id, User user,
+      BasicInformation basicInformation, String jobTitle, String country, String city,
+      String mobilePhone, String homePhone, String githubName, String twitterName,
+      String instagramName, String facebookName, String skypeName, Integer friendCount,
+      String profilePhotoName, LocalDateTime timeRegistration, LocalDateTime updateTime) {
     this.id = id;
     this.user = user;
     this.basicInformation = basicInformation;
-    this.mobilePhone = mobilePhone;
-    this.homePhone = homePhone;
-    this.skypeName = skypeName;
-    this.instagramName = instagramName;
+    this.jobTitle = jobTitle;
     this.country = country;
     this.city = city;
-    this.profilePhotoName = profilePhotoName;
+    this.mobilePhone = mobilePhone;
+    this.homePhone = homePhone;
+    this.githubName = githubName;
+    this.twitterName = twitterName;
+    this.instagramName = instagramName;
+    this.facebookName = facebookName;
+    this.skypeName = skypeName;
     this.friendCount = friendCount;
+    this.profilePhotoName = profilePhotoName;
+    this.timeRegistration = timeRegistration;
+    this.updateTime = updateTime;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -96,36 +123,12 @@ public class Profile {
     this.basicInformation = basicInformation;
   }
 
-  public String getMobilePhone() {
-    return mobilePhone;
+  public String getJobTitle() {
+    return jobTitle;
   }
 
-  public void setMobilePhone(String mobilePhone) {
-    this.mobilePhone = mobilePhone;
-  }
-
-  public String getHomePhone() {
-    return homePhone;
-  }
-
-  public void setHomePhone(String homePhone) {
-    this.homePhone = homePhone;
-  }
-
-  public String getSkypeName() {
-    return skypeName;
-  }
-
-  public void setSkypeName(String skypeName) {
-    this.skypeName = skypeName;
-  }
-
-  public String getInstagramName() {
-    return instagramName;
-  }
-
-  public void setInstagramName(String instagramName) {
-    this.instagramName = instagramName;
+  public void setJobTitle(String jobTitle) {
+    this.jobTitle = jobTitle;
   }
 
   public String getCountry() {
@@ -144,12 +147,60 @@ public class Profile {
     this.city = city;
   }
 
-  public String getProfilePhotoName() {
-    return profilePhotoName;
+  public String getMobilePhone() {
+    return mobilePhone;
   }
 
-  public void setProfilePhotoName(String profilePhotoName) {
-    this.profilePhotoName = profilePhotoName;
+  public void setMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+  }
+
+  public String getHomePhone() {
+    return homePhone;
+  }
+
+  public void setHomePhone(String homePhone) {
+    this.homePhone = homePhone;
+  }
+
+  public String getGithubName() {
+    return githubName;
+  }
+
+  public void setGithubName(String githubName) {
+    this.githubName = githubName;
+  }
+
+  public String getTwitterName() {
+    return twitterName;
+  }
+
+  public void setTwitterName(String twitterName) {
+    this.twitterName = twitterName;
+  }
+
+  public String getInstagramName() {
+    return instagramName;
+  }
+
+  public void setInstagramName(String instagramName) {
+    this.instagramName = instagramName;
+  }
+
+  public String getFacebookName() {
+    return facebookName;
+  }
+
+  public void setFacebookName(String facebookName) {
+    this.facebookName = facebookName;
+  }
+
+  public String getSkypeName() {
+    return skypeName;
+  }
+
+  public void setSkypeName(String skypeName) {
+    this.skypeName = skypeName;
   }
 
   public Integer getFriendCount() {
@@ -158,6 +209,30 @@ public class Profile {
 
   public void setFriendCount(Integer friendCount) {
     this.friendCount = friendCount;
+  }
+
+  public String getProfilePhotoName() {
+    return profilePhotoName;
+  }
+
+  public void setProfilePhotoName(String profilePhotoName) {
+    this.profilePhotoName = profilePhotoName;
+  }
+
+  public LocalDateTime getTimeRegistration() {
+    return timeRegistration;
+  }
+
+  public void setTimeRegistration(LocalDateTime timeRegistration) {
+    this.timeRegistration = timeRegistration;
+  }
+
+  public LocalDateTime getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(LocalDateTime updateTime) {
+    this.updateTime = updateTime;
   }
 
   @Override
@@ -172,21 +247,29 @@ public class Profile {
     return Objects.equals(id, profile.id) &&
         Objects.equals(user, profile.user) &&
         Objects.equals(basicInformation, profile.basicInformation) &&
-        Objects.equals(mobilePhone, profile.mobilePhone) &&
-        Objects.equals(homePhone, profile.homePhone) &&
-        Objects.equals(skypeName, profile.skypeName) &&
-        Objects.equals(instagramName, profile.instagramName) &&
+        Objects.equals(jobTitle, profile.jobTitle) &&
         Objects.equals(country, profile.country) &&
         Objects.equals(city, profile.city) &&
+        Objects.equals(mobilePhone, profile.mobilePhone) &&
+        Objects.equals(homePhone, profile.homePhone) &&
+        Objects.equals(githubName, profile.githubName) &&
+        Objects.equals(twitterName, profile.twitterName) &&
+        Objects.equals(instagramName, profile.instagramName) &&
+        Objects.equals(facebookName, profile.facebookName) &&
+        Objects.equals(skypeName, profile.skypeName) &&
+        Objects.equals(friendCount, profile.friendCount) &&
         Objects.equals(profilePhotoName, profile.profilePhotoName) &&
-        Objects.equals(friendCount, profile.friendCount);
+        Objects.equals(timeRegistration, profile.timeRegistration) &&
+        Objects.equals(updateTime, profile.updateTime);
   }
 
   @Override
   public int hashCode() {
     return Objects
-        .hash(id, user, basicInformation, mobilePhone, homePhone, skypeName, instagramName, country,
-            city, profilePhotoName, friendCount);
+        .hash(id, user, basicInformation, jobTitle, country, city, mobilePhone, homePhone,
+            githubName,
+            twitterName, instagramName, facebookName, skypeName, friendCount, profilePhotoName,
+            timeRegistration, updateTime);
   }
 
 }

@@ -1,12 +1,12 @@
 package by.sam_solutions.kazak.social_network.entities;
 
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,10 +38,7 @@ public class User {
   @Column(name = "locked", nullable = false)
   private boolean isLocked;
 
-  @Column(name = "time_registration", nullable = false)
-  private Timestamp timeRegistration;
-
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "users_to_dialogs",
       joinColumns = {@JoinColumn(name = "user_id")},
@@ -55,14 +52,12 @@ public class User {
       String email,
       String password,
       Role role,
-      boolean isLocked,
-      Timestamp timeRegistration) {
+      boolean isLocked) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.role = role;
     this.isLocked = isLocked;
-    this.timeRegistration = timeRegistration;
   }
 
   public Long getId() {
@@ -105,14 +100,6 @@ public class User {
     isLocked = locked;
   }
 
-  public Timestamp getTimeRegistration() {
-    return timeRegistration;
-  }
-
-  public void setTimeRegistration(Timestamp timeRegistration) {
-    this.timeRegistration = timeRegistration;
-  }
-
   public Set<Dialog> getProjects() {
     return dialogs;
   }
@@ -130,17 +117,16 @@ public class User {
       return false;
     }
     User user = (User) o;
-    return isLocked == user.isLocked
-        && Objects.equals(id, user.id)
-        && Objects.equals(email, user.email)
-        && Objects.equals(password, user.password)
-        && Objects.equals(role, user.role)
-        && Objects.equals(timeRegistration, user.timeRegistration);
+    return isLocked == user.isLocked &&
+        Objects.equals(id, user.id) &&
+        Objects.equals(email, user.email) &&
+        Objects.equals(password, user.password) &&
+        Objects.equals(role, user.role) &&
+        Objects.equals(dialogs, user.dialogs);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, password, role, isLocked, timeRegistration);
+    return Objects.hash(id, email, password, role, isLocked, dialogs);
   }
-
 }

@@ -1,6 +1,6 @@
 package by.sam_solutions.kazak.social_network.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +17,8 @@ public class Photo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
 
   @Column(name = "image_name")
   private String imageName;
@@ -34,13 +34,13 @@ public class Photo {
   private Integer likeCount;
 
   @Column(name = "time_creation")
-  private LocalDateTime timeCreation;
+  private Timestamp timeCreation;
 
   public Photo() {
   }
 
-  public Photo(Integer id, String imageName, String description,
-      Album album, Integer likeCount, LocalDateTime timeCreation) {
+  public Photo(Long id, String imageName, String description,
+      Album album, Integer likeCount, Timestamp timeCreation) {
     this.id = id;
     this.imageName = imageName;
     this.description = description;
@@ -49,11 +49,11 @@ public class Photo {
     this.timeCreation = timeCreation;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -89,11 +89,11 @@ public class Photo {
     this.likeCount = likeCount;
   }
 
-  public LocalDateTime getTimeCreation() {
+  public Timestamp getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(LocalDateTime timeCreation) {
+  public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
   }
 

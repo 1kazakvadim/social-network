@@ -1,7 +1,6 @@
 package by.sam_solutions.kazak.social_network.dao;
 
 import java.util.List;
-import java.util.UUID;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 

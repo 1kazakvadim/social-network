@@ -1,6 +1,6 @@
 package by.sam_solutions.kazak.social_network.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,14 +18,14 @@ public class Dialog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Integer id;
+  @Column(name = "id", nullable = false, unique = true)
+  private Long id;
 
   @Column(name = "name")
   private String name;
 
   @Column(name = "time_creation")
-  private LocalDateTime timeCreation;
+  private Timestamp timeCreation;
 
   @ManyToMany(mappedBy = "dialogs")
   private Set<User> users = new HashSet<>();
@@ -33,17 +33,17 @@ public class Dialog {
   public Dialog() {
   }
 
-  public Dialog(Integer id, String name, LocalDateTime timeCreation) {
+  public Dialog(Long id, String name, Timestamp timeCreation) {
     this.id = id;
     this.name = name;
     this.timeCreation = timeCreation;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -55,11 +55,11 @@ public class Dialog {
     this.name = name;
   }
 
-  public LocalDateTime getTimeCreation() {
+  public Timestamp getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(LocalDateTime timeCreation) {
+  public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
   }
 
