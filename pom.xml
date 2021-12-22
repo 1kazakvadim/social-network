@@ -16,7 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <spring.version>5.3.13</spring.version>
+    <spring.version>5.3.11</spring.version>
     <spring-security.version>5.6.0</spring-security.version>
     <spring-binding.version>2.0.5.RELEASE</spring-binding.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
@@ -30,7 +30,6 @@
     <slf4j-api.version>1.7.5</slf4j-api.version>
     <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
     <jcl.slf4j.version>1.7.30</jcl.slf4j.version>
-    <logback.version>1.2.6</logback.version>
     <junit.version>4.11</junit.version>
   </properties>
 
@@ -218,6 +217,7 @@
           <path>/social-network</path>
         </configuration>
       </plugin>
+<!--      TODO for local usage-->
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
