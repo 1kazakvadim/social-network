@@ -2,16 +2,18 @@ package by.sam_solutions.kazak.social_network.dao.impl;
 
 import by.sam_solutions.kazak.social_network.dao.AbstractBaseDao;
 import by.sam_solutions.kazak.social_network.dao.VerificationTokenDao;
+import by.sam_solutions.kazak.social_network.entities.User;
 import by.sam_solutions.kazak.social_network.entities.VerificationToken;
 import java.util.List;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class VerificationTokenDaoImpl extends AbstractBaseDao<VerificationToken> implements
     VerificationTokenDao {
 
-  private final SessionFactory sessionFactory;
+  private SessionFactory sessionFactory;
 
   public VerificationTokenDaoImpl(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
@@ -23,11 +25,21 @@ public class VerificationTokenDaoImpl extends AbstractBaseDao<VerificationToken>
   }
 
   @Override
-  public VerificationToken findByToken(String token) {
+  public VerificationToken getByToken(String token) {
     return (VerificationToken)
         sessionFactory
             .getCurrentSession()
             .createQuery("FROM VerificationToken WHERE token = :token")
+            .setParameter("token", token)
+            .uniqueResult();
+  }
+
+  @Override
+  public User getUserByToken(String token) {
+    return (User)
+        sessionFactory
+            .getCurrentSession()
+            .createQuery("SELECT user FROM VerificationToken WHERE token = :token")
             .setParameter("token", token)
             .uniqueResult();
   }
