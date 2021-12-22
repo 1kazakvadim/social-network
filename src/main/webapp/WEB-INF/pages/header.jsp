@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand mb-4">
     <div class="container-lg">
-        <a class="navbar-brand" href="#">Social Network</a>
+        <a class="navbar-brand" href="<c:url value='/profile'/>">Social Network</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <sec:authorize access="isAuthenticated()">
