@@ -11,19 +11,17 @@ public class UserDTO {
   private String password;
   private Role role;
   private boolean isLocked;
-  private LocalDateTime timeRegistration;
 
   public UserDTO() {
   }
 
   public UserDTO(Long id, String email, String password,
-      Role role, boolean isLocked, LocalDateTime timeRegistration) {
+      Role role, boolean isLocked) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.role = role;
     this.isLocked = isLocked;
-    this.timeRegistration = timeRegistration;
   }
 
   public Long getId() {
@@ -66,14 +64,6 @@ public class UserDTO {
     isLocked = locked;
   }
 
-  public LocalDateTime getTimeRegistration() {
-    return timeRegistration;
-  }
-
-  public void setTimeRegistration(LocalDateTime timeRegistration) {
-    this.timeRegistration = timeRegistration;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -87,13 +77,12 @@ public class UserDTO {
         Objects.equals(id, userDTO.id) &&
         Objects.equals(email, userDTO.email) &&
         Objects.equals(password, userDTO.password) &&
-        Objects.equals(role, userDTO.role) &&
-        Objects.equals(timeRegistration, userDTO.timeRegistration);
+        Objects.equals(role, userDTO.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, password, role, isLocked, timeRegistration);
+    return Objects.hash(id, email, password, role, isLocked);
   }
 
 }

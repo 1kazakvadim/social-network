@@ -6,4 +6,6 @@ public interface UserDao extends IAbstractBaseDao<User> {
 
   User findByEmail(String email);
 
+  boolean isEmailExists(String email);
+
 }

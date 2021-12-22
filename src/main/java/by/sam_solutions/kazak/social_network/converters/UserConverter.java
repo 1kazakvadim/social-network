@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.converters;
 
 import by.sam_solutions.kazak.social_network.dto.UserDTO;
 import by.sam_solutions.kazak.social_network.entities.User;
-import java.sql.Timestamp;
 import org.springframework.binding.convert.converters.TwoWayConverter;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +36,6 @@ public class UserConverter implements TwoWayConverter {
     sourceUser.setPassword(targetUser.getPassword());
     sourceUser.setRole(targetUser.getRole());
     sourceUser.setLocked(targetUser.isLocked());
-    sourceUser.setTimeRegistration(Timestamp.valueOf(targetUser.getTimeRegistration()));
     return sourceUser;
   }
 
@@ -58,7 +56,6 @@ public class UserConverter implements TwoWayConverter {
     targetUser.setPassword(sourceUser.getPassword());
     targetUser.setRole(sourceUser.getRole());
     targetUser.setLocked(sourceUser.isLocked());
-    targetUser.setTimeRegistration(sourceUser.getTimeRegistration().toLocalDateTime());
     return targetUser;
   }
 

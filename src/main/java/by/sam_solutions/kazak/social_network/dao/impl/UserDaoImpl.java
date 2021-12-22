@@ -46,4 +46,13 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
             .uniqueResult();
   }
 
+  @Override
+  public boolean isEmailExists(String email) {
+    return sessionFactory
+        .getCurrentSession().createQuery(
+            "SELECT 1 FROM User WHERE EXISTS (SELECT 1 FROM User p WHERE email = :email)")
+        .setParameter("email", email)
+        .uniqueResult() != null;
+  }
+
 }
