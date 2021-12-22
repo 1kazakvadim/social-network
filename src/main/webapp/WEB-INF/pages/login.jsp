@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="style" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <style:styles/>
@@ -16,19 +17,29 @@
     <div class="container-lg">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
-                <c:if test="${param.error!=null}">
+                <c:if test="${param.error != null}">
                     <div class="alert alert-danger" role="alert">
                         <spring:message code="loginPage.invalidEmailPassword"/>
                     </div>
                 </c:if>
-                <form action="${pageContext.request.contextPath}/login" method="POST">
+                <c:if test="${messageError != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${messageError}
+                    </div>
+                </c:if>
+                <c:if test="${messageSuccess != null}">
+                    <div class="alert alert-success" role="alert">
+                            ${messageSuccess}
+                    </div>
+                </c:if>
+                <form:form action="login" method="POST" id="signin-form">
                     <input type="hidden"
                            name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
                     <div class="mb-4">
                         <div class="form-floating">
-                            <input type="text" id="email" class="form-control form-control-lg"
-                                   name="username" placeholder="E-mail"/>
+                            <input type="email" id="email" class="form-control form-control-lg"
+                                   name="username"/>
                             <label class="text-secondary" for="email"><spring:message
                                     code="loginPage.email"/></label>
                         </div>
@@ -36,8 +47,7 @@
                     <div class="mb-3">
                         <div class="form-floating">
                             <input type="password" id="password"
-                                   class="form-control form-control-lg" name="password"
-                                   placeholder="Password"/>
+                                   class="form-control form-control-lg" name="password"/>
                             <label class="text-secondary" for="password"><spring:message
                                     code="loginPage.password"/></label>
                         </div>
@@ -50,7 +60,8 @@
                                 <spring:message code="loginPage.rememberMe"/>
                             </label>
                         </div>
-                        <a href="#" class="text-body"><spring:message
+                        <a href="<c:url value='/recover-password'/>"
+                           class="text-body"><spring:message
                                 code="loginPage.forgotPassword"/>?</a>
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
@@ -63,7 +74,7 @@
                                 code="loginPage.register"/></a>
                         </p>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </div>
