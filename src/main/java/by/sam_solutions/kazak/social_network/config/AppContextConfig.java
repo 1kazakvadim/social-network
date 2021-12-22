@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableTransactionManagement
 @PropertySource("classpath:database.properties")
 @ComponentScan(basePackages = "by.sam_solutions.kazak.social_network.*")
-@Import({ SecurityWebConfig.class })
+@Import({SecurityWebConfig.class})
 public class AppContextConfig {
 
   @Autowired
@@ -44,7 +44,7 @@ public class AppContextConfig {
   public InternalResourceViewResolver resolver() {
     InternalResourceViewResolver resolver = new InternalResourceViewResolver();
     resolver.setViewClass(JstlView.class);
-    resolver.setPrefix("WEB-INF/pages/");
+    resolver.setPrefix("/WEB-INF/pages/");
     resolver.setSuffix(".jsp");
     return resolver;
   }
@@ -78,9 +78,8 @@ public class AppContextConfig {
     properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
     properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-    properties.put(
-        "hibernate.connection.CharSet",
-        environment.getRequiredProperty("hibernate.connection.CharSet"));
+    properties.put("hibernate.connection.charSet",
+        environment.getRequiredProperty("hibernate.connection.charSet"));
     return properties;
   }
 
