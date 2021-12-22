@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,23 +20,25 @@ public class VerificationToken {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "token")
+  @Column(name = "token", nullable = false)
   private String token;
 
   @OneToOne
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @Column(name = "expiry_date")
+  @Column(name = "expiry_date", nullable = false)
   private LocalDateTime expiryDate;
 
   public VerificationToken() {
   }
 
-  public VerificationToken(User user) {
+  public VerificationToken(Long id, String token,
+      User user, LocalDateTime expiryDate) {
+    this.id = id;
+    this.token = token;
     this.user = user;
-    this.token = UUID.randomUUID().toString();
-    this.expiryDate = LocalDateTime.now();
+    this.expiryDate = expiryDate;
   }
 
   public Long getId() {
