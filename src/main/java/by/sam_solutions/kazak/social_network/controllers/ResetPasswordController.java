@@ -1,10 +1,12 @@
 package by.sam_solutions.kazak.social_network.controllers;
 
-import by.sam_solutions.kazak.social_network.entities.User;
-import by.sam_solutions.kazak.social_network.facades.PasswordResetTokenFacade;
+import by.sam_solutions.kazak.social_network.entities.Token;
+import by.sam_solutions.kazak.social_network.facades.TokenFacade;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,10 @@ public class ResetPasswordController {
   private UserFacade userFacade;
 
   @Autowired
-  private PasswordResetTokenFacade passwordResetTokenFacade;
+  private TokenFacade passwordResetTokenFacade;
+
+  @Autowired
+  private MessageSource messageSource;
 
   @GetMapping("/recover-password")
   public String getRecoverPasswordPage() {
@@ -30,12 +35,16 @@ public class ResetPasswordController {
   public ModelAndView processRecoverPassword(HttpServletRequest request, ModelAndView modelAndView,
       @RequestParam("email") String email) {
     if (!userFacade.isEmailExists(email)) {
-      modelAndView.addObject("messageError", "No such E-mail");
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("recoverPasswordPage.error.noEmail", null, Locale
+              .getDefault()));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
     passwordResetTokenFacade.createAndSendPasswordResetToken(email, request.getContextPath());
-    modelAndView.addObject("messageSuccess", "E-mail was sent");
+    modelAndView.addObject("messageSuccess",
+        messageSource.getMessage("recoverPasswordPage.success.emailSend", null, Locale
+            .getDefault()));
     modelAndView.setViewName("recover-password");
     return modelAndView;
   }
@@ -43,19 +52,25 @@ public class ResetPasswordController {
   @GetMapping(value = "/confirm-reset")
   public ModelAndView confirmResetPasswordToken(ModelAndView modelAndView,
       @RequestParam String token) {
-    User user = passwordResetTokenFacade.getByToken(token).getUser();
-    if (token == null) {
-      modelAndView.addObject("messageError", "invalid token");
+    Token resetPasswordToken = passwordResetTokenFacade.getByToken(token);
+    if (resetPasswordToken == null) {
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("token.error.invalidOrBroken", null, Locale
+              .getDefault()));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
-    if (user == null) {
-      modelAndView.addObject("messageError", "invalid user");
+    if (resetPasswordToken.getUser() == null) {
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("token.error.invalidUser", null, Locale
+              .getDefault()));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
     if (passwordResetTokenFacade.isTokenExpired(token)) {
-      modelAndView.addObject("messageError", "The token has expired");
+      modelAndView
+          .addObject("messageError", messageSource.getMessage("token.error.isExpired", null, Locale
+              .getDefault()));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
@@ -76,7 +91,9 @@ public class ResetPasswordController {
       @PathVariable String token, @RequestParam("newPassword") String newPassword,
       @RequestParam("confirmPassword") String confirmPassword) {
     if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
-      modelAndView.addObject("messageError", "Passwords do not match");
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("resetPasswordPage.error.passwordMatch", null, Locale
+              .getDefault()));
       modelAndView.setViewName("reset-password");
       return modelAndView;
     }

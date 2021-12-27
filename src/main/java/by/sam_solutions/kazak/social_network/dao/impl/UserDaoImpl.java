@@ -5,16 +5,14 @@ import by.sam_solutions.kazak.social_network.dao.UserDao;
 import by.sam_solutions.kazak.social_network.entities.User;
 import java.util.List;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 
-  private final SessionFactory sessionFactory;
-
-  public UserDaoImpl(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+  @Autowired
+  private SessionFactory sessionFactory;
 
   @Override
   public void saveOrUpdate(User obj) {

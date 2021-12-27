@@ -1,7 +1,6 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "basic_information")
@@ -27,7 +25,6 @@ public class BasicInformation {
   private String lastname;
 
   @Column(name = "birthday")
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
 
   @Column(name = "gender")

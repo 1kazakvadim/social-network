@@ -1,13 +1,15 @@
 package by.sam_solutions.kazak.social_network.facades.impl;
 
+import by.sam_solutions.kazak.social_network.converters.ProfileConverter;
 import by.sam_solutions.kazak.social_network.converters.UserConverter;
+import by.sam_solutions.kazak.social_network.dto.ProfileDTO;
 import by.sam_solutions.kazak.social_network.dto.UserDTO;
-import by.sam_solutions.kazak.social_network.entities.BasicInformation;
+import by.sam_solutions.kazak.social_network.entities.Profile;
 import by.sam_solutions.kazak.social_network.entities.User;
-import by.sam_solutions.kazak.social_network.entities.VerificationToken;
+import by.sam_solutions.kazak.social_network.entities.Token;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
 import by.sam_solutions.kazak.social_network.services.UserService;
-import by.sam_solutions.kazak.social_network.services.VerificationTokenService;
+import by.sam_solutions.kazak.social_network.services.TokenService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,13 @@ public class UserFacadeImpl implements UserFacade {
   private UserService userService;
 
   @Autowired
-  private VerificationTokenService verificationTokenService;
+  private TokenService tokenService;
 
   @Autowired
   private UserConverter userConverter;
+
+  @Autowired
+  private ProfileConverter profileConverter;
 
   @Autowired
   private JavaMailSender mailSender;
@@ -57,6 +62,7 @@ public class UserFacadeImpl implements UserFacade {
     return userDTO;
   }
 
+  @Override
   public boolean isEmailExists(String email) {
     return userService.isEmailExists(email);
   }
@@ -68,12 +74,17 @@ public class UserFacadeImpl implements UserFacade {
 
   @Override
   @Transactional
-  public void registerUserAndSendVerificationToken(BasicInformation basicInformation, String email,
-      String password, String appUrl) {
-    User user = userService.registerUser(basicInformation, email, password);
-    VerificationToken verificationToken = verificationTokenService.createVerificationToken(user);
+  public void registerUserAndSendVerificationToken(ProfileDTO profileDTO, String appUrl) {
+    Profile profile = new Profile();
+    try {
+      profile = (Profile) profileConverter.convertTargetToSourceClass(profileDTO, Profile.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    User user = userService.registerUser(profile);
+    Token token = tokenService.createVerificationToken(user);
     mailSender.send(
-        verificationTokenService.constructVerificationTokenEmail(appUrl, verificationToken, user));
+        tokenService.constructVerificationTokenEmail(appUrl, token, user));
   }
 
   @Override

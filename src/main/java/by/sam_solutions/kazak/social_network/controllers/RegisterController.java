@@ -1,12 +1,16 @@
 package by.sam_solutions.kazak.social_network.controllers;
 
-import by.sam_solutions.kazak.social_network.entities.BasicInformation;
-import by.sam_solutions.kazak.social_network.entities.VerificationToken;
+import by.sam_solutions.kazak.social_network.dto.ProfileDTO;
+import by.sam_solutions.kazak.social_network.entities.Token;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
-import by.sam_solutions.kazak.social_network.facades.VerificationTokenFacade;
+import by.sam_solutions.kazak.social_network.facades.TokenFacade;
+import by.sam_solutions.kazak.social_network.validators.ProfileDtoValidator;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,41 +24,35 @@ public class RegisterController {
   private UserFacade userFacade;
 
   @Autowired
-  private VerificationTokenFacade verificationTokenFacade;
+  private TokenFacade tokenFacade;
+
+  @Autowired
+  private ProfileDtoValidator profileDtoValidator;
+
+  @Autowired
+  private MessageSource messageSource;
 
   @GetMapping("/register")
   public ModelAndView getRegisterPage(ModelAndView modelAndView) {
-    BasicInformation basicInformation = new BasicInformation();
-    modelAndView.addObject("basicInformation", basicInformation);
+    ProfileDTO profileDTO = new ProfileDTO();
+    modelAndView.addObject("profileDTO", profileDTO);
     modelAndView.setViewName("register");
     return modelAndView;
   }
 
   @PostMapping("/register")
   public ModelAndView registerUser(HttpServletRequest request, ModelAndView modelAndView,
-      @ModelAttribute("basicInformation") BasicInformation basicInformation,
-      @RequestParam("email") String email, @RequestParam("password") String password,
-      @RequestParam("confirmPassword") String confirmPassword,
-      @RequestParam(name = "termsAndConditions", defaultValue = "false") String termsAndConditions) {
-    if (userFacade.isEmailExists(email)) {
-      modelAndView.addObject("messageError", "E-mail already exists");
+      @ModelAttribute("profileDTO") ProfileDTO profileDTO, BindingResult result) {
+    profileDtoValidator.validate(profileDTO, result);
+    if (result.hasErrors()) {
       modelAndView.setViewName("register");
       return modelAndView;
     }
-    if (!userFacade.isPasswordMatchConfirmPassword(password, confirmPassword)) {
-      modelAndView.addObject("messageError", "Passwords do not match");
-      modelAndView.setViewName("register");
-      return modelAndView;
-    }
-    if (termsAndConditions.equals("false")) {
-      modelAndView.addObject("messageError", "Accept the terms and conditions");
-      modelAndView.setViewName("register");
-      return modelAndView;
-    }
-    userFacade.registerUserAndSendVerificationToken(basicInformation, email, password,
-        request.getContextPath());
+    userFacade.registerUserAndSendVerificationToken(profileDTO, request.getContextPath());
     modelAndView
-        .addObject("messageSuccess", String.format("The link was sent to %s", email.toLowerCase()));
+        .addObject("messageSuccess",
+            String.format(messageSource.getMessage("registerPage.success.linkToEmail", null, Locale
+                .getDefault()) + " %s", profileDTO.getEmail().toLowerCase()));
     modelAndView.setViewName("register");
     return modelAndView;
   }
@@ -62,19 +60,24 @@ public class RegisterController {
   @GetMapping(value = "/confirm-register")
   public ModelAndView confirmRegisterUser(ModelAndView modelAndView,
       @RequestParam("token") String token) {
-    VerificationToken verificationToken = verificationTokenFacade.getByToken(token);
+    Token verificationToken = tokenFacade.getByToken(token);
     if (verificationToken == null) {
-      modelAndView.addObject("messageError", "The link is invalid or broken");
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("token.error.invalidOrBroken", null, Locale
+              .getDefault()));
       modelAndView.setViewName("login");
       return modelAndView;
     }
-    if (verificationTokenFacade.isTokenExpired(token)) {
-      modelAndView.addObject("messageError", "The token has expired");
+    if (tokenFacade.isTokenExpired(token)) {
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("token.error.isExpired", null, Locale.getDefault()));
       modelAndView.setViewName("login");
       return modelAndView;
     }
     userFacade.confirmRegisterUser(token);
-    modelAndView.addObject("messageSuccess", "The confirmation is successful");
+    modelAndView.addObject("messageSuccess",
+        messageSource.getMessage("confirmation.success.confirmationSuccess", null, Locale
+            .getDefault()));
     modelAndView.setViewName("login");
     return modelAndView;
   }

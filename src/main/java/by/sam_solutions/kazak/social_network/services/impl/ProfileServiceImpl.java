@@ -45,6 +45,7 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public Profile getProfileByEmail(String email) {
+    logger.debug("get profile with email = {}", email);
     return profileDao.getProfileByEmail(email);
   }
 

@@ -1,7 +1,6 @@
 package by.sam_solutions.kazak.social_network.dto;
 
 import by.sam_solutions.kazak.social_network.entities.Role;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class UserDTO {

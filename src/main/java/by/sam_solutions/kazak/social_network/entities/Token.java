@@ -12,8 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "verification_token")
-public class VerificationToken {
+@Table(name = "token")
+public class Token {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class VerificationToken {
   @Column(name = "expiry_date", nullable = false)
   private LocalDateTime expiryDate;
 
-  public VerificationToken() {
+  public Token() {
   }
 
-  public VerificationToken(Long id, String token,
+  public Token(Long id, String token,
       User user, LocalDateTime expiryDate) {
     this.id = id;
     this.token = token;
@@ -81,7 +81,7 @@ public class VerificationToken {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VerificationToken that = (VerificationToken) o;
+    Token that = (Token) o;
     return Objects.equals(id, that.id) &&
         Objects.equals(token, that.token) &&
         Objects.equals(user, that.user) &&

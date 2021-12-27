@@ -5,16 +5,14 @@ import by.sam_solutions.kazak.social_network.dao.RoleDao;
 import by.sam_solutions.kazak.social_network.entities.Role;
 import java.util.List;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RoleDaoImpl extends AbstractBaseDao<Role> implements RoleDao {
 
-  private final SessionFactory sessionFactory;
-
-  public RoleDaoImpl(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+  @Autowired
+  private SessionFactory sessionFactory;
 
   @Override
   public void saveOrUpdate(Role obj) {

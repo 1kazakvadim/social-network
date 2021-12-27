@@ -19,17 +19,20 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <div>
-                    <c:if test="${messageError != null}">
-                        <div class="alert alert-danger" role="alert">
-                                ${messageError}
-                        </div>
-                    </c:if>
+                    <spring:hasBindErrors name="profileDTO">
+                        <c:forEach var="error" items="${errors.allErrors}">
+                            <div class="alert alert-danger" role="alert">
+                                <spring:message message="${error}"/>
+                            </div>
+                        </c:forEach>
+                    </spring:hasBindErrors>
                     <c:if test="${messageSuccess != null}">
                         <div class="alert alert-success" role="alert">
                                 ${messageSuccess}
                         </div>
                     </c:if>
-                    <form:form action="register" method="POST" modelAttribute="basicInformation">
+                    <form:form action="register" id="register" method="POST"
+                               modelAttribute="profileDTO">
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-floating">
@@ -76,7 +79,8 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-floating">
-                                <input type="email" id="email" class="form-control" name="email"/>
+                                <form:input path="email" type="email" id="email"
+                                            class="form-control" name="email"/>
                                 <label class="text-secondary" for="email"><spring:message
                                         code="registerPage.email"/></label>
                             </div>
@@ -84,16 +88,18 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="password" id="password" class="form-control"
-                                           name="password"/>
+                                    <form:input path="password" type="password" id="password"
+                                                class="form-control"
+                                                name="password"/>
                                     <label class="text-secondary" for="password"><spring:message
                                             code="registerPage.password"/></label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="password" id="confirm-password"
-                                           class="form-control" name="confirmPassword">
+                                    <form:input path="confirmPassword" type="password"
+                                                id="confirm-password"
+                                                class="form-control" name="confirmPassword"/>
                                     <label class="text-secondary"
                                            for="confirm-password"><spring:message
                                             code="registerPage.confirmPassword"/></label>
@@ -102,10 +108,11 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check mb-0">
-                                <input class="form-check-input me-2" type="checkbox"
-                                       value="true"
-                                       id="termsAndConditions" name="termsAndConditions"/>
-                                <label class="form-check-label" for="termsAndConditions">
+                                <form:checkbox path="termsAndConditions"
+                                               class="form-check-input me-2"
+                                               value="true"
+                                               id="terms" name="termsAndConditions"/>
+                                <label class="form-check-label" for="terms">
                                     <spring:message
                                             code="registerPage.termsAndConditions"/>
                                 </label>

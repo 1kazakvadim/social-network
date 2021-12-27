@@ -1,4 +1,4 @@
-package by.sam_solutions.kazak.social_network.config;
+package by.sam_solutions.kazak.social_network.filters;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

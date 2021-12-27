@@ -5,16 +5,14 @@ import by.sam_solutions.kazak.social_network.dao.ProfileDao;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import java.util.List;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileDao {
 
-  private final SessionFactory sessionFactory;
-
-  public ProfileDaoImpl(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+  @Autowired
+  private SessionFactory sessionFactory;
 
   @Override
   public void saveOrUpdate(Profile obj) {
