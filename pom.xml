@@ -23,6 +23,8 @@
     <jsp.version>2.3.3</jsp.version>
     <jstl.version>1.2.2</jstl.version>
     <javax.mail.version>1.6.2</javax.mail.version>
+    <commons-fileupload.version>1.4</commons-fileupload.version>
+    <aws-java-sdk.version>1.12.138</aws-java-sdk.version>
     <javax.validation.version>2.0.1.Final</javax.validation.version>
     <hibernate.validator.veriosn>7.0.1.Final</hibernate.validator.veriosn>
     <apache.taglibs.version>1.2.5</apache.taglibs.version>
@@ -118,6 +120,18 @@
     </dependency>
 
     <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>${commons-fileupload.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
+      <version>${aws-java-sdk.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>${javax.validation.version}</version>
@@ -129,14 +143,11 @@
       <version>${hibernate.validator.veriosn}</version>
     </dependency>
 
-
-
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.12.0</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.apache.taglibs</groupId>
@@ -240,7 +251,6 @@
           <path>/social-network</path>
         </configuration>
       </plugin>
-      <!--      TODO for local usage-->
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
