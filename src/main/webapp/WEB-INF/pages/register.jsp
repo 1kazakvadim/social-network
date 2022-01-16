@@ -2,7 +2,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="style" tagdir="/WEB-INF/tags" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ page import="by.sam_solutions.kazak.social_network.entities.Gender" %>
+<%@ page pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -56,21 +57,21 @@
                                 <label class="text-secondary" for="birthday"><spring:message
                                         code="registerPage.birthday"/></label>
                                 <form:input path="birthday" type="date"
-                                            class="form-control text-secondary" id="birthday"/>
+                                            class="form-control text-secondary p-1" id="birthday"/>
                             </div>
                             <div class="col">
                                 <p class="text-secondary mb-0"><spring:message
                                         code="registerPage.gender"/></p>
                                 <div class="btn-group">
                                     <form:radiobutton path="gender" checked="true" class="btn-check"
-                                                      name="gender" id="male"
-                                                      autocomplete="off" value="MALE"/>
+                                                      name="${Gender.MALE}" id="male"
+                                                      autocomplete="off" value="${Gender.MALE}"/>
                                     <label class="btn btn-outline-primary"
                                            for="male"><spring:message
                                             code="registerPage.gender.male"/></label>
                                     <form:radiobutton path="gender" class="btn-check"
-                                                      name="gender" id="female"
-                                                      autocomplete="off" value="FEMALE"/>
+                                                      name="${Gender.FEMALE}" id="female"
+                                                      autocomplete="off" value="${Gender.FEMALE}"/>
                                     <label class=" btn btn-outline-primary"
                                            for="female"><spring:message
                                             code="registerPage.gender.female"/></label>

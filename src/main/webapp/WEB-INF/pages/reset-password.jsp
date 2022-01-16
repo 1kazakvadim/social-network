@@ -25,27 +25,30 @@
                 <div>
                     <form:form action="${token}" method="POST">
                         <div class="row mb-3">
-                            <p>Enter a new Password</p>
+                            <p><spring:message
+                                    code="resetPasswordPage.title"/></p>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="password" id="new-password" class="form-control"
                                            name="newPassword"/>
-                                    <label class="text-secondary" for="new-password">New
-                                        Password</label>
+                                    <label class="text-secondary" for="new-password"><spring:message
+                                            code="resetPasswordPage.newPassword"/></label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="password" id="confirm-password"
                                            class="form-control" name="confirmPassword">
-                                    <label class="text-secondary" for="confirm-password">Confirm
-                                        Password</label>
+                                    <label class="text-secondary"
+                                           for="confirm-password"><spring:message
+                                            code="resetPasswordPage.confirmPassword"/></label>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <button type="submit" class="btn btn-primary btn-lg">
-                                <span class="p-4">Confirm</span>
+                                <span class="p-4"><spring:message
+                                        code="button.confirm"/></span>
                             </button>
                         </div>
                     </form:form>

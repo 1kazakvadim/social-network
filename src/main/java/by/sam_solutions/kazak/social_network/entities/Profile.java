@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "profile")
-public class Profile {
+public class Profile implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +32,9 @@ public class Profile {
   @Column(name = "job_title")
   private String jobTitle;
 
-  @Column(name = "country")
-  private String country;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "country_id")
+  private Country country;
 
   @Column(name = "city")
   private String city;
@@ -59,7 +60,7 @@ public class Profile {
   @Column(name = "skype_name")
   private String skypeName;
 
-  @Column(name = "friend_count")
+  @Column(name = "friend_count", columnDefinition = "0")
   private Integer friendCount;
 
   @Column(name = "profile_photo_name")
@@ -75,10 +76,11 @@ public class Profile {
   }
 
   public Profile(Long id, User user,
-      BasicInformation basicInformation, String jobTitle, String country, String city,
-      String mobilePhone, String homePhone, String githubName, String twitterName,
-      String instagramName, String facebookName, String skypeName, Integer friendCount,
-      String profilePhotoName, LocalDateTime timeRegistration, LocalDateTime updateTime) {
+      BasicInformation basicInformation, String jobTitle,
+      Country country, String city, String mobilePhone, String homePhone, String githubName,
+      String twitterName, String instagramName, String facebookName, String skypeName,
+      Integer friendCount, String profilePhotoName, LocalDateTime timeRegistration,
+      LocalDateTime updateTime) {
     this.id = id;
     this.user = user;
     this.basicInformation = basicInformation;
@@ -131,11 +133,11 @@ public class Profile {
     this.jobTitle = jobTitle;
   }
 
-  public String getCountry() {
+  public Country getCountry() {
     return country;
   }
 
-  public void setCountry(String country) {
+  public void setCountry(Country country) {
     this.country = country;
   }
 
@@ -233,43 +235,6 @@ public class Profile {
 
   public void setUpdateTime(LocalDateTime updateTime) {
     this.updateTime = updateTime;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Profile profile = (Profile) o;
-    return Objects.equals(id, profile.id) &&
-        Objects.equals(user, profile.user) &&
-        Objects.equals(basicInformation, profile.basicInformation) &&
-        Objects.equals(jobTitle, profile.jobTitle) &&
-        Objects.equals(country, profile.country) &&
-        Objects.equals(city, profile.city) &&
-        Objects.equals(mobilePhone, profile.mobilePhone) &&
-        Objects.equals(homePhone, profile.homePhone) &&
-        Objects.equals(githubName, profile.githubName) &&
-        Objects.equals(twitterName, profile.twitterName) &&
-        Objects.equals(instagramName, profile.instagramName) &&
-        Objects.equals(facebookName, profile.facebookName) &&
-        Objects.equals(skypeName, profile.skypeName) &&
-        Objects.equals(friendCount, profile.friendCount) &&
-        Objects.equals(profilePhotoName, profile.profilePhotoName) &&
-        Objects.equals(timeRegistration, profile.timeRegistration) &&
-        Objects.equals(updateTime, profile.updateTime);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects
-        .hash(id, user, basicInformation, jobTitle, country, city, mobilePhone, homePhone,
-            githubName,
-            twitterName, instagramName, facebookName, skypeName, friendCount, profilePhotoName,
-            timeRegistration, updateTime);
   }
 
 }

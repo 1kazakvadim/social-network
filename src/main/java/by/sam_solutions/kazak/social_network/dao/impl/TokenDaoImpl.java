@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.dao.impl;
 
 import by.sam_solutions.kazak.social_network.dao.AbstractBaseDao;
 import by.sam_solutions.kazak.social_network.dao.TokenDao;
-import by.sam_solutions.kazak.social_network.entities.User;
 import by.sam_solutions.kazak.social_network.entities.Token;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -32,13 +31,10 @@ public class TokenDaoImpl extends AbstractBaseDao<Token> implements
   }
 
   @Override
-  public User getUserByToken(String token) {
-    return (User)
-        sessionFactory
-            .getCurrentSession()
-            .createQuery("SELECT user FROM Token WHERE token = :token")
-            .setParameter("token", token)
-            .uniqueResult();
+  public void deleteByName(String token) {
+    sessionFactory.getCurrentSession().createQuery("DELETE Token WHERE token = :token")
+        .setParameter("token", token)
+        .executeUpdate();
   }
 
   @Override

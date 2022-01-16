@@ -15,4 +15,10 @@ public interface ProfileService {
 
   Profile getProfileByEmail(String email);
 
+  Profile getProfileByUserId(Long id);
+
+  boolean isFieldContainsSpecialCharacters(String string);
+
+  boolean isValidMaxFieldLength(String string);
+
 }

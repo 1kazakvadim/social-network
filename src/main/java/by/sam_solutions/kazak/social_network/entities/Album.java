@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "album")
-public class Album {
+public class Album implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,26 +70,6 @@ public class Album {
 
   public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Album album = (Album) o;
-    return Objects.equals(id, album.id) &&
-        Objects.equals(name, album.name) &&
-        Objects.equals(user, album.user) &&
-        Objects.equals(timeCreation, album.timeCreation);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, user, timeCreation);
   }
 
 }

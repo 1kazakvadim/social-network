@@ -1,6 +1,7 @@
 package by.sam_solutions.kazak.social_network.services;
 
 import by.sam_solutions.kazak.social_network.entities.BasicInformation;
+import by.sam_solutions.kazak.social_network.entities.Gender;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface BasicInformationService {
 
   void deleteById(Long id);
 
-  boolean isGenderValid(String gender);
+  boolean isGenderValid(Gender gender);
 
   boolean isBirthdayDateValid(LocalDate birthday);
 

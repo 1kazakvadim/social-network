@@ -1,5 +1,7 @@
 package by.sam_solutions.kazak.social_network.config;
 
+import by.sam_solutions.kazak.social_network.filters.EncodingFilter;
+import by.sam_solutions.kazak.social_network.services.impl.WebAppAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,9 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsService userDetailsService;
 
+  @Autowired
+  private WebAppAuthenticationSuccessHandler webAppAuthenticationSuccessHandler;
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -51,17 +56,19 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
-    http.authorizeRequests()
-        .antMatchers("/profile/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-        .antMatchers("/users/**").hasAnyRole(ROLE_ADMIN)
+    http.
+        authorizeRequests()
+//        .antMatchers("/profile").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+//        .antMatchers("/users/**").hasAnyRole(ROLE_ADMIN)
         .antMatchers("/**").permitAll()
-        .and().formLogin().loginProcessingUrl("/login").loginPage("/login")
-        .defaultSuccessUrl("/profile")
+        .and().formLogin().loginPage("/login").permitAll()
+        .successHandler(webAppAuthenticationSuccessHandler)
         .and()
         .logout().logoutSuccessUrl("/login")
         .and()
         .rememberMe().key(environment.getRequiredProperty("security.rememberMe.key"))
         .userDetailsService(userDetailsService);
+//        .and().exceptionHandling().accessDeniedPage("/errors/403");
   }
 
   @Override

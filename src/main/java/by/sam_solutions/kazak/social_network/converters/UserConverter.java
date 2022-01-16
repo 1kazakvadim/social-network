@@ -2,11 +2,15 @@ package by.sam_solutions.kazak.social_network.converters;
 
 import by.sam_solutions.kazak.social_network.dto.UserDTO;
 import by.sam_solutions.kazak.social_network.entities.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.binding.convert.converters.TwoWayConverter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserConverter implements TwoWayConverter {
+
+  private final Logger logger = LoggerFactory.getLogger(UserConverter.class);
 
   @Override
   public Class getSourceClass() {
@@ -21,13 +25,15 @@ public class UserConverter implements TwoWayConverter {
   @Override
   public Object convertTargetToSourceClass(Object target, Class sourceClass) throws Exception {
     if (target == null) {
-      throw new NullPointerException(
-          String.format("Null target argument %s", UserConverter.class.getName()));
+      logger.debug("IllegalArgumentException {}", UserConverter.class.getName());
+      throw new IllegalArgumentException(
+          String.format("IllegalArgumentException %s", UserConverter.class.getName()));
     }
     if (!this.getSourceClass().isAssignableFrom(sourceClass)
         || !this.getTargetClass().isAssignableFrom(target.getClass())) {
+      logger.debug("IllegalArgumentException {}", UserConverter.class.getName());
       throw new IllegalArgumentException(
-          String.format("Illegal arguments %s", UserConverter.class.getName()));
+          String.format("IllegalArgumentException %s", UserConverter.class.getName()));
     }
     UserDTO targetUser = (UserDTO) target;
     User sourceUser = (User) sourceClass.getDeclaredConstructor().newInstance();
@@ -42,10 +48,13 @@ public class UserConverter implements TwoWayConverter {
   @Override
   public Object convertSourceToTargetClass(Object source, Class targetClass) throws Exception {
     if (source == null) {
-      String.format("Null source argument %s", UserConverter.class.getName());
+      logger.debug("IllegalArgumentException {}", UserConverter.class.getName());
+      throw new IllegalArgumentException(
+          String.format("IllegalArgumentException %s", UserConverter.class.getName()));
     }
     if (!this.getSourceClass().isAssignableFrom(source.getClass())
         || !this.getTargetClass().isAssignableFrom(targetClass)) {
+      logger.debug("IllegalArgumentException {}", UserConverter.class.getName());
       throw new IllegalArgumentException(
           String.format("Illegal arguments %s", UserConverter.class.getName()));
     }

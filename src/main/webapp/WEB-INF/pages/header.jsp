@@ -4,17 +4,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand mb-4">
     <div class="container-lg">
-        <a class="navbar-brand" href="<c:url value='/profile'/>">Social Network</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item mr-4">
-                        <a class="nav-link nav-notification" href="#">
-                            <i class="icon-bell-alt icon-2x">
-                                <span class="badge bg-primary rounded-pill">23</span>
-                            </i>
-                        </a>
-                    </li>
+        <a class="navbar-brand" href="<c:url value='/'/>">Social Network</a>
+        <sec:authorize access="isAuthenticated()">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-profile" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,19 +18,20 @@
                             <li><a class="dropdown-item" href="#">
                                 <spring:message code="nav.profile"/>
                             </a></li>
-                            <li><a class="dropdown-item" href="#">
+                            <li><a class="dropdown-item" href="<c:url value='/edit/profile'/>">
                                 <spring:message code="nav.settings"/>
                             </a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="<c:url value='/logout'/>">
+                            <li><a class="dropdown-item"
+                                   href="<c:url value='/logout'/>">
                                 <spring:message code="nav.signOut"/>
                             </a></li>
                         </ul>
                     </li>
-                </sec:authorize>
-            </ul>
-        </div>
+                </ul>
+            </div>
+        </sec:authorize>
     </div>
 </nav>

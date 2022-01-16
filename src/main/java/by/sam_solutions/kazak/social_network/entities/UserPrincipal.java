@@ -56,4 +56,8 @@ public class UserPrincipal implements UserDetails {
     return true;
   }
 
+  public Long getId() {
+    return user.getId();
+  }
+
 }

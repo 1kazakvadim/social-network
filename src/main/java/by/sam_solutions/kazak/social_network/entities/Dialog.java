@@ -1,8 +1,8 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dialog")
-public class Dialog {
+public class Dialog implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,26 +69,6 @@ public class Dialog {
 
   public void setUsers(Set<User> users) {
     this.users = users;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Dialog dialog = (Dialog) o;
-    return Objects.equals(id, dialog.id) &&
-        Objects.equals(name, dialog.name) &&
-        Objects.equals(timeCreation, dialog.timeCreation);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, timeCreation);
   }
 
 }

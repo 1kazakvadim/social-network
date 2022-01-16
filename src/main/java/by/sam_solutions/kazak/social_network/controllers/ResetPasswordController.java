@@ -21,7 +21,7 @@ public class ResetPasswordController {
   private UserFacade userFacade;
 
   @Autowired
-  private TokenFacade passwordResetTokenFacade;
+  private TokenFacade tokenFacade;
 
   @Autowired
   private MessageSource messageSource;
@@ -33,44 +33,42 @@ public class ResetPasswordController {
 
   @PostMapping("/recover-password")
   public ModelAndView processRecoverPassword(HttpServletRequest request, ModelAndView modelAndView,
-      @RequestParam("email") String email) {
+      @RequestParam("email") String email, Locale locale) {
     if (!userFacade.isEmailExists(email)) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("recoverPasswordPage.error.noEmail", null, Locale
-              .getDefault()));
+          messageSource.getMessage("recoverPasswordPage.error.noEmail", null, locale));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
-    passwordResetTokenFacade.createAndSendPasswordResetToken(email, request.getContextPath());
+    tokenFacade.createAndSendPasswordResetToken(email, request.getContextPath(),
+        locale);
     modelAndView.addObject("messageSuccess",
-        messageSource.getMessage("recoverPasswordPage.success.emailSend", null, Locale
-            .getDefault()));
+        messageSource.getMessage("recoverPasswordPage.success.emailSend", null, locale));
     modelAndView.setViewName("recover-password");
     return modelAndView;
   }
 
   @GetMapping(value = "/confirm-reset")
   public ModelAndView confirmResetPasswordToken(ModelAndView modelAndView,
-      @RequestParam String token) {
-    Token resetPasswordToken = passwordResetTokenFacade.getByToken(token);
+      @RequestParam String token, Locale locale) {
+    Token resetPasswordToken = tokenFacade.getByToken(token);
     if (resetPasswordToken == null) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("token.error.invalidOrBroken", null, Locale
-              .getDefault()));
+          messageSource.getMessage("token.error.invalidOrBroken", null, locale));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
     if (resetPasswordToken.getUser() == null) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("token.error.invalidUser", null, Locale
-              .getDefault()));
+          messageSource.getMessage("token.error.invalidUser", null, locale));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
-    if (passwordResetTokenFacade.isTokenExpired(token)) {
+    if (tokenFacade.isTokenExpired(token)) {
+      tokenFacade.deleteByName(token);
       modelAndView
-          .addObject("messageError", messageSource.getMessage("token.error.isExpired", null, Locale
-              .getDefault()));
+          .addObject("messageError",
+              messageSource.getMessage("token.error.isExpired", null, locale));
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
@@ -79,7 +77,7 @@ public class ResetPasswordController {
   }
 
   @GetMapping(value = "/reset-password/{token}")
-  public ModelAndView getChangePasswordPage(ModelAndView modelAndView,
+  public ModelAndView getResetPasswordPage(ModelAndView modelAndView,
       @PathVariable("token") String token) {
     modelAndView.addObject("token", token);
     modelAndView.setViewName("reset-password");
@@ -87,17 +85,22 @@ public class ResetPasswordController {
   }
 
   @PostMapping("/reset-password/{token}")
-  public ModelAndView saveChangePassword(ModelAndView modelAndView,
+  public ModelAndView saveResetPassword(ModelAndView modelAndView,
       @PathVariable String token, @RequestParam("newPassword") String newPassword,
-      @RequestParam("confirmPassword") String confirmPassword) {
+      @RequestParam("confirmPassword") String confirmPassword, Locale locale) {
     if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("resetPasswordPage.error.passwordMatch", null, Locale
-              .getDefault()));
+          messageSource.getMessage("resetPasswordPage.error.passwordMatch", null, locale));
       modelAndView.setViewName("reset-password");
       return modelAndView;
     }
-    passwordResetTokenFacade.resetUserPassword(token, newPassword);
+    if (!userFacade.isPasswordValid(newPassword)) {
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("resetPasswordPage.error.isPasswordValid", null, locale));
+      modelAndView.setViewName("reset-password");
+      return modelAndView;
+    }
+    tokenFacade.resetUserPassword(token, newPassword);
     modelAndView.setViewName("redirect:/login");
     return modelAndView;
   }

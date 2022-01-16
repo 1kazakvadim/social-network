@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "token")
-public class Token {
+public class Token implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,26 +71,6 @@ public class Token {
 
   public void setExpiryDate(LocalDateTime expiryDate) {
     this.expiryDate = expiryDate;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Token that = (Token) o;
-    return Objects.equals(id, that.id) &&
-        Objects.equals(token, that.token) &&
-        Objects.equals(user, that.user) &&
-        Objects.equals(expiryDate, that.expiryDate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, token, user, expiryDate);
   }
 
 }

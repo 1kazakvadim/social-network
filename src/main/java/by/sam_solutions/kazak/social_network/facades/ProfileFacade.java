@@ -1,5 +1,6 @@
 package by.sam_solutions.kazak.social_network.facades;
 
+import by.sam_solutions.kazak.social_network.dto.ContactInformationDTO;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import java.util.List;
 
@@ -9,6 +10,8 @@ public interface ProfileFacade {
 
   Profile getById(Long id);
 
-  Profile getProfileByEmail(String email);
+  Profile getProfileByUserId(Long id);
+
+  void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO);
 
 }

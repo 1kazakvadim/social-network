@@ -45,6 +45,16 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
   }
 
   @Override
+  public User getByToken(String token) {
+    return (User)
+        sessionFactory
+            .getCurrentSession()
+            .createQuery("SELECT user FROM Token WHERE token = :token")
+            .setParameter("token", token)
+            .uniqueResult();
+  }
+
+  @Override
   public boolean isEmailExists(String email) {
     return sessionFactory
         .getCurrentSession().createQuery(

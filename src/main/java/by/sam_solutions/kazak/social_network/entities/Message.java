@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dialog")
-public class Message {
+public class Message implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,28 +95,6 @@ public class Message {
 
   public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Message message = (Message) o;
-    return Objects.equals(id, message.id) &&
-        Objects.equals(dialog, message.dialog) &&
-        Objects.equals(text, message.text) &&
-        Objects.equals(userFirstname, message.userFirstname) &&
-        Objects.equals(userLastname, message.userLastname) &&
-        Objects.equals(timeCreation, message.timeCreation);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, dialog, text, userFirstname, userLastname, timeCreation);
   }
 
 }

@@ -1,17 +1,18 @@
 package by.sam_solutions.kazak.social_network.dto;
 
+import by.sam_solutions.kazak.social_network.entities.Gender;
 import java.time.LocalDate;
-import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ProfileDTO {
 
+  private Long id;
   private String firstname;
   private String lastname;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
-  private String gender;
+  private Gender gender;
   private String email;
   private String password;
   private String confirmPassword;
@@ -20,8 +21,10 @@ public class ProfileDTO {
   public ProfileDTO() {
   }
 
-  public ProfileDTO(String firstname, String lastname, LocalDate birthday, String gender,
-      String email, String password, String confirmPassword, String termsAndConditions) {
+  public ProfileDTO(Long id, String firstname, String lastname, LocalDate birthday,
+      Gender gender, String email, String password, String confirmPassword,
+      String termsAndConditions) {
+    this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
     this.birthday = birthday;
@@ -30,6 +33,14 @@ public class ProfileDTO {
     this.password = password;
     this.confirmPassword = confirmPassword;
     this.termsAndConditions = termsAndConditions;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getFirstname() {
@@ -56,11 +67,11 @@ public class ProfileDTO {
     this.birthday = birthday;
   }
 
-  public String getGender() {
+  public Gender getGender() {
     return gender;
   }
 
-  public void setGender(String gender) {
+  public void setGender(Gender gender) {
     this.gender = gender;
   }
 
@@ -94,31 +105,6 @@ public class ProfileDTO {
 
   public void setTermsAndConditions(String termsAndConditions) {
     this.termsAndConditions = termsAndConditions;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ProfileDTO that = (ProfileDTO) o;
-    return Objects.equals(firstname, that.firstname) &&
-        Objects.equals(lastname, that.lastname) &&
-        Objects.equals(birthday, that.birthday) &&
-        Objects.equals(gender, that.gender) &&
-        Objects.equals(email, that.email) &&
-        Objects.equals(password, that.password) &&
-        Objects.equals(confirmPassword, that.confirmPassword) &&
-        Objects.equals(termsAndConditions, that.termsAndConditions);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstname, lastname, birthday, gender, email, password, confirmPassword,
-        termsAndConditions);
   }
 
 }

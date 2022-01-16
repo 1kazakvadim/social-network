@@ -2,8 +2,8 @@ package by.sam_solutions.kazak.social_network.controllers;
 
 import by.sam_solutions.kazak.social_network.dto.ProfileDTO;
 import by.sam_solutions.kazak.social_network.entities.Token;
-import by.sam_solutions.kazak.social_network.facades.UserFacade;
 import by.sam_solutions.kazak.social_network.facades.TokenFacade;
+import by.sam_solutions.kazak.social_network.facades.UserFacade;
 import by.sam_solutions.kazak.social_network.validators.ProfileDtoValidator;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
@@ -42,42 +42,42 @@ public class RegisterController {
 
   @PostMapping("/register")
   public ModelAndView registerUser(HttpServletRequest request, ModelAndView modelAndView,
-      @ModelAttribute("profileDTO") ProfileDTO profileDTO, BindingResult result) {
+      @ModelAttribute("profileDTO") ProfileDTO profileDTO, BindingResult result, Locale locale) {
     profileDtoValidator.validate(profileDTO, result);
     if (result.hasErrors()) {
       modelAndView.setViewName("register");
       return modelAndView;
     }
-    userFacade.registerUserAndSendVerificationToken(profileDTO, request.getContextPath());
+    userFacade.registerUserAndSendVerificationToken(profileDTO, request.getContextPath(), locale);
     modelAndView
         .addObject("messageSuccess",
-            String.format(messageSource.getMessage("registerPage.success.linkToEmail", null, Locale
-                .getDefault()) + " %s", profileDTO.getEmail().toLowerCase()));
+            String.format(
+                messageSource.getMessage("registerPage.success.linkToEmail", null, locale) + " %s",
+                profileDTO.getEmail().toLowerCase()));
     modelAndView.setViewName("register");
     return modelAndView;
   }
 
   @GetMapping(value = "/confirm-register")
   public ModelAndView confirmRegisterUser(ModelAndView modelAndView,
-      @RequestParam("token") String token) {
+      @RequestParam("token") String token, Locale locale) {
     Token verificationToken = tokenFacade.getByToken(token);
     if (verificationToken == null) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("token.error.invalidOrBroken", null, Locale
-              .getDefault()));
+          messageSource.getMessage("token.error.invalidOrBroken", null, locale));
       modelAndView.setViewName("login");
       return modelAndView;
     }
     if (tokenFacade.isTokenExpired(token)) {
+      tokenFacade.deleteByName(token);
       modelAndView.addObject("messageError",
-          messageSource.getMessage("token.error.isExpired", null, Locale.getDefault()));
+          messageSource.getMessage("token.error.isExpired", null, locale));
       modelAndView.setViewName("login");
       return modelAndView;
     }
     userFacade.confirmRegisterUser(token);
     modelAndView.addObject("messageSuccess",
-        messageSource.getMessage("confirmation.success.confirmationSuccess", null, Locale
-            .getDefault()));
+        messageSource.getMessage("confirmation.success.confirmationSuccess", null, locale));
     modelAndView.setViewName("login");
     return modelAndView;
   }

@@ -2,9 +2,11 @@ package by.sam_solutions.kazak.social_network.services.impl;
 
 import by.sam_solutions.kazak.social_network.dao.BasicInformationDao;
 import by.sam_solutions.kazak.social_network.entities.BasicInformation;
+import by.sam_solutions.kazak.social_network.entities.Gender;
 import by.sam_solutions.kazak.social_network.services.BasicInformationService;
 import java.time.LocalDate;
 import java.util.List;
+import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +47,13 @@ public class BasicInformationServiceImpl implements BasicInformationService {
   }
 
   @Override
-  public boolean isGenderValid(String gender) {
-    return gender.equals("MALE") || gender.equals("FEMALE");
+  public boolean isGenderValid(Gender gender) {
+    return EnumUtils.isValidEnum(Gender.class, gender.getName());
   }
 
   @Override
   public boolean isBirthdayDateValid(LocalDate birthday) {
-    return !birthday.isAfter(LocalDate.now());
+    return birthday.isBefore(LocalDate.now());
   }
 
 }

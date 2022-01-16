@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -52,6 +53,11 @@ public class AppContextConfig {
   @Bean
   public LocaleResolver localeResolver() {
     return new CookieLocaleResolver();
+  }
+
+  @Bean
+  public CommonsMultipartResolver filterMultipartResolver() {
+    return new CommonsMultipartResolver();
   }
 
   @Bean

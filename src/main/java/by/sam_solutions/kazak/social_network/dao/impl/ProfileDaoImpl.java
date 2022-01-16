@@ -42,4 +42,12 @@ public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileD
         .uniqueResult();
   }
 
+  @Override
+  public Profile getProfileByUserId(Long id) {
+    return (Profile) sessionFactory.getCurrentSession()
+        .createQuery("FROM Profile WHERE user.id = :id")
+        .setParameter("id", id)
+        .uniqueResult();
+  }
+
 }

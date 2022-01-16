@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,28 +96,6 @@ public class Comment {
 
   public void setTimeCreation(Timestamp timeCreation) {
     this.timeCreation = timeCreation;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Comment comment = (Comment) o;
-    return Objects.equals(id, comment.id) &&
-        Objects.equals(text, comment.text) &&
-        Objects.equals(user, comment.user) &&
-        Objects.equals(photo, comment.photo) &&
-        Objects.equals(likeCount, comment.likeCount) &&
-        Objects.equals(timeCreation, comment.timeCreation);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, text, user, photo, likeCount, timeCreation);
   }
 
 }

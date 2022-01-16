@@ -29,7 +29,8 @@
                 </c:if>
                 <form:form action="recover-password" method="POST">
                     <div class="mb-4">
-                        <p>We will be sending a reset password link to your email</p>
+                        <p><spring:message
+                            code="recoverPasswordPage.title"/></p>
                         <div class="form-floating">
                             <input type="email" id="email" class="form-control" name="email"/>
                             <label class="text-secondary" for="email"><spring:message
@@ -38,7 +39,8 @@
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <span class="p-4">Send</span>
+                            <span class="p-4"><spring:message
+                                    code="button.send"/></span>
                         </button>
                     </div>
                 </form:form>

@@ -6,4 +6,6 @@ public interface ProfileDao extends IAbstractBaseDao<Profile> {
 
   Profile getProfileByEmail(String email);
 
+  Profile getProfileByUserId(Long id);
+
 }

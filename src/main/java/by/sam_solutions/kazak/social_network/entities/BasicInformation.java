@@ -1,17 +1,20 @@
 package by.sam_solutions.kazak.social_network.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "basic_information")
-public class BasicInformation {
+public class BasicInformation implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +33,15 @@ public class BasicInformation {
   @Column(name = "gender")
   private String gender;
 
-  @Column(name = "relationship")
-  private String relationship;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "relationship_id")
+  private Relationship relationship;
 
   public BasicInformation() {
   }
 
   public BasicInformation(Long id, String firstname, String lastname, LocalDate birthday,
-      String gender, String relationship) {
+      String gender, Relationship relationship) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -86,35 +90,12 @@ public class BasicInformation {
     this.gender = gender;
   }
 
-  public String getRelationship() {
+  public Relationship getRelationship() {
     return relationship;
   }
 
-  public void setRelationship(String relationship) {
+  public void setRelationship(Relationship relationship) {
     this.relationship = relationship;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    BasicInformation that = (BasicInformation) o;
-    return Objects.equals(id, that.id) &&
-        Objects.equals(firstname, that.firstname) &&
-        Objects.equals(lastname, that.lastname) &&
-        Objects.equals(birthday, that.birthday) &&
-        Objects.equals(gender, that.gender) &&
-        Objects.equals(relationship, that.relationship);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstname, lastname, birthday, gender, relationship);
   }
 
 }

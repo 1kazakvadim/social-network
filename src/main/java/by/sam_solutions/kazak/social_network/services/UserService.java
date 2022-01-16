@@ -12,6 +12,8 @@ public interface UserService {
 
   List<User> getAll();
 
+  User getByToken(String token);
+
   void deleteById(Long id);
 
   User findByEmail(String email);
@@ -22,9 +24,15 @@ public interface UserService {
 
   boolean isPasswordValid(String password);
 
+  boolean isUserPassword(Long id, String password);
+
   boolean isPasswordMatchConfirmPassword(String password, String confirmPassword);
 
   void changePassword(User user, String password);
+
+  void changeEmail(User user, String email);
+
+  void disableUser(Long id);
 
   User registerUser(Profile profile);
 

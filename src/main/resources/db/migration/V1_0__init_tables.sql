@@ -1,4 +1,4 @@
-CREATE TABLE `role`
+CREATE TABLE IF NOT EXISTS `role`
 (
     `id`   bigint                                  NOT NULL AUTO_INCREMENT,
     `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE `role`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `user`
+CREATE TABLE IF NOT EXISTS `user`
 (
     `id`       bigint                                  NOT NULL AUTO_INCREMENT,
     `email`    varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `user`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `basic_information`
+CREATE TABLE IF NOT EXISTS `basic_information`
 (
     `id`           bigint NOT NULL AUTO_INCREMENT,
     `firstname`    varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `basic_information`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `profile`
+CREATE TABLE IF NOT EXISTS `profile`
 (
     `id`                   bigint   NOT NULL AUTO_INCREMENT,
     `user_id`              bigint                                  DEFAULT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `profile`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `friend`
+CREATE TABLE IF NOT EXISTS `friend`
 (
     `user_make_friend_request_id`   bigint                                        NOT NULL,
     `user_accept_friend_request_id` bigint                                        NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE `friend`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `dialog`
+CREATE TABLE IF NOT EXISTS `dialog`
 (
     `id`            bigint NOT NULL AUTO_INCREMENT,
     `name`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE `dialog`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `message`
+CREATE TABLE IF NOT EXISTS `message`
 (
     `id`             bigint NOT NULL AUTO_INCREMENT,
     `dialog_id`      bigint                                  DEFAULT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE `message`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `users_to_dialogs`
+CREATE TABLE IF NOT EXISTS `users_to_dialogs`
 (
     `user_id`   bigint NOT NULL,
     `dialog_id` bigint NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `users_to_dialogs`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `album`
+CREATE TABLE IF NOT EXISTS `album`
 (
     `id`            bigint NOT NULL AUTO_INCREMENT,
     `name`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE `album`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `photo`
+CREATE TABLE IF NOT EXISTS `photo`
 (
     `id`            bigint NOT NULL AUTO_INCREMENT,
     `image_name`    varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `photo`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `comment`
+CREATE TABLE IF NOT EXISTS `comment`
 (
     `id`            bigint NOT NULL AUTO_INCREMENT,
     `text`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE `comment`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `token`
+CREATE TABLE IF NOT EXISTS `token`
 (
     `id`          bigint                                  NOT NULL AUTO_INCREMENT,
     `token`       varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

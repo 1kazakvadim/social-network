@@ -10,19 +10,19 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="dropdown-item" href="?lang=en">
-                        <span><spring:message code="footer.language.english"/></span>
+                    <a class="dropdown-item d-flex justify-content-center" href="?lang=en">
+                        <span class="me-2"><spring:message code="footer.language.english"/></span>
                         <span class="flag-icon flag-icon-us"></span>
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="?lang=ru">
-                        <span><spring:message code="footer.language.russian"/></span>
+                    <a class="dropdown-item d-flex justify-content-center" href="?lang=ru">
+                        <span class="me-2"><spring:message code="footer.language.russian"/></span>
                         <span class="flag-icon flag-icon-ru"></span>
                     </a>
                 </li>
             </ul>
-            <span>© 2021 Vadim Kazak</span>
+            <span>© 2022 Vadim Kazak</span>
         </div>
     </div>
 </footer>

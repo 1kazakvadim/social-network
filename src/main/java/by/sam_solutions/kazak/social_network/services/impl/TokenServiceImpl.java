@@ -1,16 +1,18 @@
 package by.sam_solutions.kazak.social_network.services.impl;
 
 import by.sam_solutions.kazak.social_network.dao.TokenDao;
-import by.sam_solutions.kazak.social_network.entities.User;
 import by.sam_solutions.kazak.social_network.entities.Token;
-import by.sam_solutions.kazak.social_network.services.UserService;
+import by.sam_solutions.kazak.social_network.entities.User;
 import by.sam_solutions.kazak.social_network.services.TokenService;
+import by.sam_solutions.kazak.social_network.services.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,9 @@ public class TokenServiceImpl implements TokenService {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private MessageSource messageSource;
 
   @Override
   public void saveOrUpdate(Token token) {
@@ -52,6 +57,12 @@ public class TokenServiceImpl implements TokenService {
   public void deleteById(Long id) {
     logger.debug("delete token with id = {}", id);
     tokenDao.deleteById(id);
+  }
+
+  @Override
+  public void deleteByName(String token) {
+    logger.debug("delete token with name = {}", token);
+    tokenDao.deleteByName(token);
   }
 
   @Override
@@ -84,12 +95,6 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
-  public User getUserByToken(String token) {
-    logger.debug("get user with token = {}", token);
-    return tokenDao.getUserByToken(token);
-  }
-
-  @Override
   public boolean isTokenExpired(String token) {
     logger.debug("is token expired = {}", token);
     return LocalDateTime.now().isAfter(tokenDao.getByToken(token).getExpiryDate());
@@ -97,25 +102,26 @@ public class TokenServiceImpl implements TokenService {
 
   @Override
   public SimpleMailMessage constructVerificationTokenEmail(String appUrl, Token token,
-      User user) {
+      User user, Locale locale) {
     String confirmationUrl
         = appUrl + "/confirm-register?token=" + token.getToken();
-    String message = "To confirm your account, please click here:";
+    String message = messageSource.getMessage("verificationToken.email.text", null, locale);
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user.getEmail());
-    email.setSubject("Registration Confirmation");
+    email.setSubject(messageSource.getMessage("verificationToken.email.subject", null, locale));
     email.setText(message + "\r\n" + "http://localhost:8080" + confirmationUrl);
     return email;
   }
 
   @Override
-  public SimpleMailMessage constructPasswordResetTokenEmail(String appUrl, Token token, User user) {
+  public SimpleMailMessage constructPasswordResetTokenEmail(String appUrl, Token token, User user,
+      Locale locale) {
     String resetUrl
         = appUrl + "/confirm-reset?token=" + token.getToken();
-    String message = "To reset your password, please click here:";
+    String message = messageSource.getMessage("resetToken.email.text", null, locale);
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user.getEmail());
-    email.setSubject("Reset Password");
+    email.setSubject(messageSource.getMessage("resetToken.email.subject", null, locale));
     email.setText(message + "\r\n" + "http://localhost:8080" + resetUrl);
     return email;
   }
