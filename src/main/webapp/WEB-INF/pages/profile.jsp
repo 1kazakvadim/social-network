@@ -43,7 +43,7 @@
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="upload-profile-photo-label">
                                                                     <spring:message
-                                                                            code="profilePage.uploadProfilePhoto.title"/></h5>
+                                                                            code="uploadPage.title"/></h5>
                                                                 <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
@@ -59,7 +59,7 @@
                                                                            name="${_csrf.parameterName}"
                                                                            value="${_csrf.token}"/>
                                                                     <p><spring:message
-                                                                            code="profilePage.uploadProfilePhoto.text"/></p>
+                                                                            code="uploadPage.text"/></p>
                                                                     <input type="file" class="form-control"
                                                                            id="upload-photo" name="file"/>
                                                                     <button type="submit" class="btn btn-primary btn-sm mt-4">

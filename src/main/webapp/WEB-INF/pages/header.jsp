@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand mb-4">
     <div class="container-lg">
@@ -24,10 +25,18 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item"
-                                   href="<c:url value='/logout'/>">
-                                <spring:message code="nav.signOut"/>
-                            </a></li>
+                            <li class="dropdown-item text-center">
+                                <form:form action="logout" method="POST">
+                                    <input type="hidden"
+                                           name="${_csrf.parameterName}"
+                                           value="${_csrf.token}"/>
+                                    <button type="submit"
+                                            class="dropdown-item p-0">
+                                        <span class="p-4"><spring:message
+                                                code="nav.signOut"/></span>
+                                    </button>
+                                </form:form>
+                            </li>
                         </ul>
                     </li>
                 </ul>

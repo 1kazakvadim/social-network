@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,31 +20,31 @@ public class Photo implements Serializable {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "image_name")
-  private String imageName;
+  @Column(name = "name", nullable = false, unique = true)
+  private String name;
+
+  @ManyToOne
+  @JoinColumn(name = "profile_id", nullable = false)
+  private Profile profile;
 
   @Column(name = "description")
   private String description;
 
-  @ManyToOne
-  @JoinColumn(name = "album_id")
-  private Album album;
-
   @Column(name = "like_count")
   private Integer likeCount;
 
-  @Column(name = "time_creation")
-  private Timestamp timeCreation;
+  @Column(name = "time_creation", nullable = false)
+  private LocalDateTime timeCreation;
 
   public Photo() {
   }
 
-  public Photo(Long id, String imageName, String description,
-      Album album, Integer likeCount, Timestamp timeCreation) {
+  public Photo(Long id, String name, Profile profile, String description, Integer likeCount,
+      LocalDateTime timeCreation) {
     this.id = id;
-    this.imageName = imageName;
+    this.name = name;
+    this.profile = profile;
     this.description = description;
-    this.album = album;
     this.likeCount = likeCount;
     this.timeCreation = timeCreation;
   }
@@ -57,12 +57,20 @@ public class Photo implements Serializable {
     this.id = id;
   }
 
-  public String getImageName() {
-    return imageName;
+  public String getName() {
+    return name;
   }
 
-  public void setImageName(String imageName) {
-    this.imageName = imageName;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Profile getProfile() {
+    return profile;
+  }
+
+  public void setProfile(Profile profile) {
+    this.profile = profile;
   }
 
   public String getDescription() {
@@ -73,14 +81,6 @@ public class Photo implements Serializable {
     this.description = description;
   }
 
-  public Album getAlbum() {
-    return album;
-  }
-
-  public void setAlbum(Album album) {
-    this.album = album;
-  }
-
   public Integer getLikeCount() {
     return likeCount;
   }
@@ -89,11 +89,11 @@ public class Photo implements Serializable {
     this.likeCount = likeCount;
   }
 
-  public Timestamp getTimeCreation() {
+  public LocalDateTime getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(Timestamp timeCreation) {
+  public void setTimeCreation(LocalDateTime timeCreation) {
     this.timeCreation = timeCreation;
   }
 

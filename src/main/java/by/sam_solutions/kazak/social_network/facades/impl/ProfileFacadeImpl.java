@@ -40,7 +40,7 @@ public class ProfileFacadeImpl implements ProfileFacade {
 
   @Override
   public void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO) {
-    Profile profile = profileService.getProfileByUserId(contactInformationDTO.getId());
+    Profile profile = profileService.getById(contactInformationDTO.getId());
     Profile updatedProfile = new Profile();
     try {
       updatedProfile = (Profile) contactInformationConverter.convertTargetToSourceClass(

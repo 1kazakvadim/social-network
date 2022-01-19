@@ -21,19 +21,19 @@ public class BasicInformation implements Serializable {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "firstname")
+  @Column(name = "firstname", nullable = false)
   private String firstname;
 
-  @Column(name = "lastname")
+  @Column(name = "lastname", nullable = false)
   private String lastname;
 
-  @Column(name = "birthday")
+  @Column(name = "birthday", nullable = false)
   private LocalDate birthday;
 
   @Column(name = "gender")
   private String gender;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "relationship_id")
   private Relationship relationship;
 

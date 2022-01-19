@@ -6,11 +6,10 @@ import by.sam_solutions.kazak.social_network.entities.Profile;
 import by.sam_solutions.kazak.social_network.entities.UserPrincipal;
 import by.sam_solutions.kazak.social_network.facades.BasicInformationFacade;
 import by.sam_solutions.kazak.social_network.facades.CountryFacade;
+import by.sam_solutions.kazak.social_network.facades.PhotoFacade;
 import by.sam_solutions.kazak.social_network.facades.ProfileFacade;
 import by.sam_solutions.kazak.social_network.facades.RelationshipFacade;
-import by.sam_solutions.kazak.social_network.facades.StorageFacade;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
-import by.sam_solutions.kazak.social_network.services.FriendService;
 import by.sam_solutions.kazak.social_network.validators.BasicInformationDtoValidator;
 import java.util.Locale;
 import java.util.Map;
@@ -40,10 +39,7 @@ public class ProfileController {
   private UserFacade userFacade;
 
   @Autowired
-  private FriendService friendService;
-
-  @Autowired
-  private StorageFacade storageFacade;
+  private PhotoFacade photoFacade;
 
   @Autowired
   private CountryFacade countryFacade;
@@ -63,6 +59,7 @@ public class ProfileController {
   @GetMapping("/id{profileId}")
   public ModelAndView getProfilePage(ModelAndView modelAndView, @PathVariable Long profileId) {
     Profile profile = profileFacade.getById(profileId);
+    modelAndView.addObject("profileId", profileId);
     modelAndView.addObject("profile", profile);
     modelAndView.setViewName("profile");
     return modelAndView;
@@ -131,9 +128,7 @@ public class ProfileController {
   }
 
   @GetMapping("/edit/security/password-change")
-  public ModelAndView getProfilePasswordChangePage(ModelAndView modelAndView,
-      @AuthenticationPrincipal
-          UserPrincipal user) {
+  public ModelAndView getProfilePasswordChangePage(ModelAndView modelAndView) {
     modelAndView.setViewName("password-change");
     return modelAndView;
   }
@@ -216,18 +211,18 @@ public class ProfileController {
       @AuthenticationPrincipal UserPrincipal user, Locale locale) {
     if (null == file) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("profilePage.uploadProfilePhoto.error.empty", null, locale));
+          messageSource.getMessage("uploadPage.error.empty", null, locale));
       modelAndView.setViewName("profile");
       return modelAndView;
     }
-    if (!storageFacade.isMultipartFileValid(file)) {
+    if (!photoFacade.isMultipartFileValid(file)) {
       modelAndView.addObject("messageError",
-          messageSource.getMessage("profilePage.uploadProfilePhoto.error.isMultipartFileValid",
+          messageSource.getMessage("uploadPage.error.isMultipartFileValid",
               null, locale));
       modelAndView.setViewName("profile");
       return modelAndView;
     }
-    storageFacade.uploadProfilePhoto(file, user);
+    photoFacade.uploadProfilePhoto(file, user);
     modelAndView.setViewName("redirect:/id" + user.getId());
     return modelAndView;
   }
@@ -235,10 +230,9 @@ public class ProfileController {
   @GetMapping("/delete-profile-photo")
   public ModelAndView deleteProfilePhoto(ModelAndView modelAndView,
       @AuthenticationPrincipal UserPrincipal user) {
-    storageFacade.deleteProfilePhoto(user);
+    photoFacade.deleteProfilePhoto(user);
     modelAndView.setViewName("redirect:/id" + user.getId());
     return modelAndView;
   }
-
 
 }

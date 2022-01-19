@@ -64,7 +64,7 @@ public class ProfileServiceImpl implements ProfileService {
   public boolean isFieldContainsSpecialCharacters(String string) {
     Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);
     Matcher matcher = pattern.matcher(string);
-    return matcher.find();
+    return !matcher.find();
   }
 
   @Override

@@ -17,10 +17,10 @@ public class Country implements Serializable {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "name")
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
 
-  @Column(name = "iso_code")
+  @Column(name = "iso_code", nullable = false, unique = true)
   private String ISOCode;
 
   public Country() {

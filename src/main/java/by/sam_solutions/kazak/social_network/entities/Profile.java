@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "profile")
@@ -21,18 +22,20 @@ public class Profile implements Serializable {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_id")
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @JoinColumn(name = "user_id", nullable = false, unique = true)
   private User user;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "basic_information_id")
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @JoinColumn(name = "basic_information_id", nullable = false, unique = true)
   private BasicInformation basicInformation;
 
   @Column(name = "job_title")
   private String jobTitle;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "country_id")
   private Country country;
 
@@ -69,7 +72,7 @@ public class Profile implements Serializable {
   @Column(name = "time_registration", nullable = false)
   private LocalDateTime timeRegistration;
 
-  @Column(name = "update_time")
+  @Column(name = "update_time", nullable = false)
   private LocalDateTime updateTime;
 
   public Profile() {
