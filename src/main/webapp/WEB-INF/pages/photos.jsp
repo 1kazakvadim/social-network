@@ -28,11 +28,11 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         <h4 class="mb-0 align-content-center"><span><spring:message
                                                 code="photoPage.title"/></span></h4>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <button type="button" data-bs-target="#upload-photo"
                                                 data-bs-toggle="modal"
                                                 class="btn btn-primary btn-sm d-block mx-auto mb-3">

@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style:styles/>
-  <title>Social Network</title>
+    <style:styles/>
+    <title>Social Network</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -17,105 +17,150 @@
 <jsp:include page="header.jsp"/>
 
 <section>
-  <div class="container">
-    <div class="row">
-
-      <jsp:include page="side-nav.jsp"/>
-
-      <div class="col-sm-8">
+    <div class="container">
         <div class="row">
-          <div class="col-sm-12">
-            <div class="col-sm-12">
-              <div class="panel-white post">
-                <div class="post-heading">
-                  <div class="pull-left image">
-                    <img src="https://bootdey.com/img/Content/user_1.jpg"
-                         class="rounded-circle avatar"
-                         alt="user profile image">
-                  </div>
-                  <div class="pull-left meta">
-                    <div class="title h5">
-                      <a href="#"><b>Brian cartelly</b></a>
-                    </div>
-                    <h6 class="text-muted time">12:28</h6>
-                  </div>
-                </div>
-                <hr class="me-3 ms-3">
-                <!--                                -->
-                <div class="post-image d-flex justify-content-center">
-                  <img src="https://images.unsplash.com/photo-1622227614434-a7a26021879f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-                       class="image w-50" alt="image post">
-                </div>
-                <hr class="me-3 ms-3">
-                <div class="post-description">
-                  <h4>Foto title</h4>
-                  <p>Put here your foto description</p>
-                  <div class="stats">
-                    <a href="#" class="btn btn-default stat-item">
-                      <i class="icon-thumbs-up"></i> 228
-                    </a>
-                  </div>
-                </div>
-                <div class="post-footer">
-                  <div class="input-group">
-                    <input class="form-control"
-                           placeholder="Add a comment" type="text">
-                    <span class="input-group-addon">
-                            <a href="#"><i class="fa fa-edit"></i></a>
-                        </span>
-                  </div>
-                  <ul class="comments-list">
-                    <li class="comment">
-                      <a class="pull-left" href="#">
-                        <img class="avatar"
-                             src="https://bootdey.com/img/Content/user_3.jpg"
-                             alt="avatar">
-                      </a>
-                      <div class="comment-body">
-                        <div class="comment-heading">
-                          <h4 class="user">Full name 1</h4>
-                          <h5 class="time">7 minutes ago</h5>
-                        </div>
-                        <p>This is a comment bla bla bla</p>
-                      </div>
-                    </li>
-                    <li class="comment">
-                      <a class="pull-left" href="#">
-                        <img class="avatar"
-                             src="https://bootdey.com/img/Content/user_2.jpg"
-                             alt="avatar">
-                      </a>
-                      <div class="comment-body">
-                        <div class="comment-heading">
-                          <h4 class="user">Full name 2</h4>
-                          <h5 class="time">3 minutes ago</h5>
-                        </div>
-                        <p>This is another comment bla bla bla</p>
-                      </div>
-                    </li>
-                    <li class="comment">
-                      <a class="pull-left" href="#">
-                        <img class="avatar"
-                             src="https://bootdey.com/img/Content/user_3.jpg"
-                             alt="avatar">
-                      </a>
-                      <div class="comment-body">
-                        <div class="comment-heading">
-                          <h4 class="user">Full name 1</h4>
-                          <h5 class="time">10 seconds ago</h5>
-                        </div>
-                        <p>Wow! This is a comment</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
 
+            <jsp:include page="side-nav.jsp"/>
+
+            <div class="col-sm-8 mb-4">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="post">
+                                <div class="post-heading mb-4">
+                                    <div class="pull-left">
+                                        <a href="<c:url value="id${profile.id}"/>">
+                                            <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${profile.profilePhotoName}"/>"
+                                                 class="rounded-circle profile-photo">
+                                        </a>
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h6">
+                                            <a href="<c:url value="/id${profile.id}"/>"
+                                               class="text-black">
+                                                <b>${profile.basicInformation.firstname} ${profile.basicInformation.lastname}</b>
+                                            </a>
+                                        </div>
+                                        <h6 class="text-secondary time">${photo.timeCreation.toLocalDate()} ${photo.timeCreation.toLocalTime()}</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a class="nav-link nav-profile" href="#" id="photoDropdown"
+                                           role="button"
+                                           data-bs-toggle="dropdown" data-display="static"
+                                           aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                 stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-more-horizontal align-middle">
+                                                <circle cx="12" cy="12" r="1"></circle>
+                                                <circle cx="19" cy="12" r="1"></circle>
+                                                <circle cx="5" cy="12" r="1"></circle>
+                                            </svg>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="photoDropdown">
+                                            <li><a href="#" class="dropdown-item"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#description">Add description</a>
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                   href="<c:url value="/id${profile.id}/photos/${photo.id}/delete"/>">Delete</a>
+                                            </li>
+                                        </ul>
+                                        <div class="modal fade" id="description" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="description-label">
+                                                            Description</h5>
+                                                        <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form:form method="POST"
+                                                                   action="${photo.id}/add-description">
+                                                            <div>
+                                                                <textarea class="form-control"
+                                                                          name="description"
+                                                                          id="area-description"></textarea>
+                                                            </div>
+                                                            <button type="submit"
+                                                                    class="btn btn-primary btn-sm mt-4">
+                                                                <span class="p-4">Добавить</span>
+                                                            </button>
+                                                        </form:form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="me-3 ms-3">
+                                <div class="post-image d-flex justify-content-center">
+                                    <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${photo.name}"/>"
+                                         class="image w-50" alt="image post">
+                                </div>
+                                <hr>
+                                <div class="post-description">
+                                    <p>${photo.description}</p>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="#" class="btn btn-default stat-item">
+                                            <i class="icon-thumbs-up"></i> ${photo.likeCount}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control"
+                                               placeholder="Add a comment" type="text">
+                                        <span class="input-group-addon">
+                                            <a href="#"><i class="fa fa-edit"></i></a>
+                                        </span>
+                                    </div>
+                                    <c:if test="${message != null}">
+                                        <div class="col-12 d-flex justify-content-center align-content-center ">
+                                            <p class="text-secondary m-0 p-5">${message}</p>
+                                        </div>
+                                    </c:if>
+                                    <ul class="comments-list">
+                                        <c:forEach items="${comments}" var="comment">
+                                            <li class="comment">
+                                                <a class="pull-left"
+                                                   href="<c:url value="/id${comment.profile.id}"/>">
+                                                    <img class="profile-photo rounded-circle"
+                                                         src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${comment.profile.profilePhotoName}"/>"
+                                                         alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <a href="<c:url value="/id${comment.profile.id}"/>">
+                                                            <h4 class="user text-black">${comment.profile.basicInformation.firstname} ${comment.profile.basicInformation.lastname}</h4>
+                                                        </a>
+                                                        <h5 class="time text-secondary">${comment.timeCreation.toLocalDate()} ${comment.timeCreation.toLocalTime()}</h5>
+                                                    </div>
+                                                    <p>${comment.text}</p>
+                                                    <div class="d-flex justify-content-start">
+                                                        <a href="#"
+                                                           class="btn btn-default stat-item">
+                                                            <i class="icon-thumbs-up"></i> ${comment.likeCount}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
-      </div>
     </div>
-  </div>
 </section>
 
 <jsp:include page="footer.jsp"/>

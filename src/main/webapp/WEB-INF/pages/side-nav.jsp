@@ -22,7 +22,7 @@
             <span class="badge bg-primary rounded-pill">7</span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-           href="<c:url value='/id${profileId}/photos'/>">
+           href="<c:url value='/id${profile.id}/photos'/>">
             <i class="icon-picture icon-large"></i>
             <span><spring:message code="nav.photos"/></span>
         </a>

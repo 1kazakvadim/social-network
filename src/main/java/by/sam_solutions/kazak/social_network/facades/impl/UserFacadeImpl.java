@@ -124,6 +124,7 @@ public class UserFacadeImpl implements UserFacade {
           Profile.class.getName());
       e.printStackTrace();
     }
+    profile.setFriendCount(0);
     User user = userService.registerUser(profile);
     Token token = tokenService.createVerificationToken(user);
     mailSender.send(

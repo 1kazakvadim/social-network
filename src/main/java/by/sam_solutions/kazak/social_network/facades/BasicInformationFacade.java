@@ -6,6 +6,4 @@ public interface BasicInformationFacade {
 
   void updateBasicInformation(BasicInformationDTO basicInformationDTO);
 
-
-
 }

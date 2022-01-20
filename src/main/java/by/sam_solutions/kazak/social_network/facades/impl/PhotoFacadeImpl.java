@@ -9,6 +9,7 @@ import by.sam_solutions.kazak.social_network.services.ProfileService;
 import by.sam_solutions.kazak.social_network.services.StorageService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class PhotoFacadeImpl implements PhotoFacade {
 
-  private static String DEFAULT_PROFILE_PHOTO_NAME = "default-profile-photo";
+  private static final String DEFAULT_PROFILE_PHOTO_NAME = "default-profile-photo";
 
   @Autowired
   private StorageService storageService;
@@ -26,6 +27,13 @@ public class PhotoFacadeImpl implements PhotoFacade {
 
   @Autowired
   private ProfileService profileService;
+
+  @Override
+  public void updateDescriptionInPhoto(String description, Long photoId) {
+    Photo photo = photoService.getById(photoId);
+    photo.setDescription(description);
+    photoService.saveOrUpdate(photo);
+  }
 
   @Override
   public Photo getById(Long id) {
@@ -40,6 +48,13 @@ public class PhotoFacadeImpl implements PhotoFacade {
   @Override
   public List<Photo> getAllByProfileId(Long id) {
     return photoService.getAllByProfileId(id);
+  }
+
+  @Override
+  public void deleteById(Long id) {
+    Photo photo = photoService.getById(id);
+    storageService.delete(photo.getName());
+    photoService.deleteById(photo.getId());
   }
 
   @Override
@@ -67,6 +82,7 @@ public class PhotoFacadeImpl implements PhotoFacade {
     String photoName = storageService.upload(file);
     photo.setProfile(profileService.getById(profileId));
     photo.setName(photoName);
+    photo.setLikeCount(0);
     photo.setTimeCreation(LocalDateTime.now());
     photoService.saveOrUpdate(photo);
   }
@@ -74,6 +90,11 @@ public class PhotoFacadeImpl implements PhotoFacade {
   @Override
   public boolean isMultipartFileValid(MultipartFile file) {
     return storageService.isMultipartFileValid(file);
+  }
+
+  @Override
+  public boolean isPhotoBelongsProfile(Photo photo, Profile profile) {
+    return Objects.equals(photo.getProfile().getId(), profile.getId());
   }
 
 }

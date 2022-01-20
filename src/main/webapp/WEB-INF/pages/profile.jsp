@@ -229,7 +229,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <span>${profile.country}</span>
+                                                <span>${profile.country.name}</span>
                                             </div>
                                         </div>
                                     </c:if>
