@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +24,8 @@ public class Comment implements Serializable {
   private String text;
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  @JoinColumn(name = "profile_id")
+  private Profile profile;
 
   @ManyToOne
   @JoinColumn(name = "photo_id")
@@ -35,16 +35,16 @@ public class Comment implements Serializable {
   private Integer likeCount;
 
   @Column(name = "time_creation")
-  private Timestamp timeCreation;
+  private LocalDateTime timeCreation;
 
   public Comment() {
   }
 
-  public Comment(Long id, String text, User user,
-      Photo photo, Integer likeCount, Timestamp timeCreation) {
+  public Comment(Long id, String text, Profile profile,
+      Photo photo, Integer likeCount, LocalDateTime timeCreation) {
     this.id = id;
     this.text = text;
-    this.user = user;
+    this.profile = profile;
     this.photo = photo;
     this.likeCount = likeCount;
     this.timeCreation = timeCreation;
@@ -66,12 +66,12 @@ public class Comment implements Serializable {
     this.text = text;
   }
 
-  public User getUser() {
-    return user;
+  public Profile getProfile() {
+    return profile;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setProfile(Profile profile) {
+    this.profile = profile;
   }
 
   public Photo getPhoto() {
@@ -90,11 +90,11 @@ public class Comment implements Serializable {
     this.likeCount = likeCount;
   }
 
-  public Timestamp getTimeCreation() {
+  public LocalDateTime getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(Timestamp timeCreation) {
+  public void setTimeCreation(LocalDateTime timeCreation) {
     this.timeCreation = timeCreation;
   }
 
