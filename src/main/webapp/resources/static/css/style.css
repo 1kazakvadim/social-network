@@ -55,7 +55,6 @@ hr.solid {
 
 .nav-administration li {
   list-style-type: none;
-
 }
 
 .nav-administration a {
@@ -63,14 +62,17 @@ hr.solid {
 }
 
 .profile-image-wrap {
+  width: 170px;
+  height: 170px;
   position: relative;
   overflow: hidden;
 }
 
 .profile-image-wrap img {
   display: block;
-  width: 180px;
-  height: 180px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .profile-image-action {
@@ -102,6 +104,18 @@ hr.solid {
   color: rgba(255, 255, 255, 0.8);
 }
 
+.image-wrap {
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+}
+
+.image-wrap img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .profile-info-list {
   padding: 0;
   margin: 0;
@@ -130,29 +144,30 @@ hr.solid {
   text-decoration: none;
 }
 
-.friend-img-list {
-  text-align: center;
-  padding: 5px 0 5px;
-}
-
-.friend-img-list img {
-  max-width: 55px;
-  border-radius: 2.5rem;
-}
-
 .social-contact a {
   text-decoration: none;
 }
 
 .photo-title {
   font-size: 10px;
-  font-weight: 700;
-  padding: 10px 0 10px 12px;
 }
 
 .photo-title a {
-  color: #8a8a8f;
   text-decoration: none;
+}
+
+.friend-row img {
+  max-width: 55px;
+}
+
+.friend-count a {
+  text-decoration: none;
+  font-size:10px;
+}
+
+.friend-row a {
+  text-decoration: none;
+  font-size: 12px;
 }
 
 .footer {
@@ -238,7 +253,7 @@ footer p {
 
 .post .post-description p {
   font-size: 14px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .post .post-footer {
@@ -296,5 +311,211 @@ footer p {
 
 .comment-body {
   margin-left: 50px;
+}
+
+.delete-link {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.friend-img {
+  margin-right: 20px;
+}
+
+.friend-img img {
+  width: 80px;
+  height: 80px;
+}
+
+.friend-details a {
+  text-decoration: none;
+}
+
+.friend-details {
+  text-decoration: none;
+}
+
+.users-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.users {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+.users .person {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f4f8;
+  border-bottom: 1px solid #f0f4f8;
+}
+
+.users .person:hover {
+  background-color: #f7f9fb;
+}
+
+.users .person.active-user {
+  background-color: #f7f9fb;
+}
+
+.users .person .user {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+}
+
+.users .person .user img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+}
+
+.users .person p.name-time {
+  font-weight: 600;
+  font-size: .85rem;
+  display: inline-block;
+}
+
+.users .person p.name-time .time {
+  font-weight: 400;
+  font-size: .7rem;
+  text-align: right;
+  color: #8796af;
+}
+
+.selected-user {
+  width: 100%;
+  padding: 0 15px;
+  min-height: 64px;
+  line-height: 64px;
+  border-bottom: 1px solid #e6ecf3;
+  border-radius: 0 3px 0 0;
+}
+
+.selected-user span {
+  line-height: 100%;
+}
+
+.selected-user span.name {
+  font-weight: 700;
+}
+
+.chat-container li.chat-left,
+.chat-container li.chat-right {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.chat-box li:last-child {
+  margin-bottom: 0;
+}
+
+.chat-container li img {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
+}
+
+.chat-container li .chat-avatar {
+  margin-right: 20px;
+}
+
+.chat-container li.chat-right {
+  justify-content: flex-end;
+}
+
+.chat-container li.chat-right > .chat-avatar {
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+.chat-container li .chat-name {
+  font-size: .75rem;
+  color: #999999;
+  text-align: center;
+}
+
+.chat-container li .chat-text {
+  padding: .4rem 1rem;
+  border-radius: 4px;
+  background: #f4f5fb;
+  font-weight: 300;
+  line-height: 150%;
+  position: relative;
+}
+
+.chat-container li .chat-text:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 10px;
+  left: -20px;
+  border: 10px solid;
+  border-color: transparent #f4f5fb transparent transparent;
+}
+
+.chat-container li.chat-right > .chat-text {
+  text-align: right;
+}
+
+.chat-container li.chat-right > .chat-text:before {
+  right: -20px;
+  border-color: transparent transparent transparent #f4f5fb;
+  left: inherit;
+}
+
+.chat-container li .chat-hour {
+  padding: 0;
+  font-size: .75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0 15px;
+}
+
+.chat-container li.chat-right > .chat-hour {
+  margin: 0 15px 0 0;
+}
+
+.chat-container textarea {
+  padding: 10px;
+}
+
+.profile-table td {
+  position: relative;
+}
+
+.profile-table tr:hover,
+.profile-table tr:focus-within {
+  outline: none;
+}
+
+.profile-table td > .row-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.profile-table td > .row-link:focus {
+  outline: 0;
+}
+
+.profile-table td > a:not(.row-link) {
+  position: relative;
+  z-index: 1;
 }
 

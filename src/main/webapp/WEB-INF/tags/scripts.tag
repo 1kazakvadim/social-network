@@ -2,4 +2,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <spring:url value="/resources/static/js/bootstrap.bundle.min.js" var="bootstrap"/>
+<spring:url value="/resources/static/js/jquery-3.3.1.min.js" var="jquery"/>
 <script src="${bootstrap}"></script>
+<script src="${jquery}"></script>

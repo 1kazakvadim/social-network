@@ -77,14 +77,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User findByEmail(String email) {
+  public User getByEmail(String email) {
     logger.debug("get user with email = {}", email);
-    return userDao.findByEmail(email.toLowerCase());
+    return userDao.getByEmail(email.toLowerCase());
   }
 
   @Override
   public boolean isEmailExists(String email) {
-    logger.debug("check if user exists with email = {}", email.toLowerCase());
+    logger.debug("check if user exists with email = {}", email);
     return userDao.isEmailExists(email);
   }
 

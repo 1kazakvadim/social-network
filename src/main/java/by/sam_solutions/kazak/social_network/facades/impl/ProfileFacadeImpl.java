@@ -2,8 +2,10 @@ package by.sam_solutions.kazak.social_network.facades.impl;
 
 import by.sam_solutions.kazak.social_network.converters.ContactInformationConverter;
 import by.sam_solutions.kazak.social_network.dto.ContactInformationDTO;
+import by.sam_solutions.kazak.social_network.entities.FriendStatus;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import by.sam_solutions.kazak.social_network.facades.ProfileFacade;
+import by.sam_solutions.kazak.social_network.services.FriendService;
 import by.sam_solutions.kazak.social_network.services.ProfileService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,9 @@ public class ProfileFacadeImpl implements ProfileFacade {
 
   @Autowired
   private ProfileService profileService;
+
+  @Autowired
+  private FriendService friendService;
 
   @Autowired
   private ContactInformationConverter contactInformationConverter;
@@ -39,6 +44,12 @@ public class ProfileFacadeImpl implements ProfileFacade {
   }
 
   @Override
+  public List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus) {
+    return profileService.getUniqueFriendsProfiles(
+        friendService.getAllByProfileIdAndFriendStatus(id, friendStatus), id);
+  }
+
+  @Override
   public void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO) {
     Profile profile = profileService.getById(contactInformationDTO.getId());
     Profile updatedProfile = new Profile();
@@ -52,7 +63,6 @@ public class ProfileFacadeImpl implements ProfileFacade {
     }
     updatedProfile.setUser(profile.getUser());
     updatedProfile.setBasicInformation(profile.getBasicInformation());
-    updatedProfile.setFriendCount(profile.getFriendCount());
     updatedProfile.setProfilePhotoName(profile.getProfilePhotoName());
     updatedProfile.setTimeRegistration(profile.getTimeRegistration());
     updatedProfile.setUpdateTime(LocalDateTime.now());

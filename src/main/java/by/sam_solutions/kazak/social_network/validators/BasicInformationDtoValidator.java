@@ -34,23 +34,19 @@ public class BasicInformationDtoValidator implements Validator {
 
     if (StringUtils.isBlank(basicInformationDTO.getFirstname())) {
       errors.rejectValue("firstname", "basicInformationEditPage.error.firstname",
-          messageSource.getMessage("basicInformationEditPage.error.firstname", null, Locale.getDefault()));
-    } else if (profileService.isValidMaxFieldLength(basicInformationDTO.getFirstname())) {
-      errors.rejectValue("firstname", "basicInformationEditPage.error.maxLengthFirstname",
-          messageSource.getMessage("basicInformationEditPage.error.maxLengthFirstname", null,
+          messageSource.getMessage("basicInformationEditPage.error.firstname", null,
               Locale.getDefault()));
-    } else if (profileService.isFieldContainsSpecialCharacters(basicInformationDTO.getFirstname())) {
+    } else if (profileService.isFieldContainsSpecialCharacters(
+        basicInformationDTO.getFirstname())) {
       errors.rejectValue("firstname", "basicInformationEditPage.error.specialCharactersFirstname",
-          messageSource.getMessage("basicInformationEditPage.error.specialCharactersFirstname", null,
+          messageSource.getMessage("basicInformationEditPage.error.specialCharactersFirstname",
+              null,
               Locale.getDefault()));
     }
 
     if (StringUtils.isBlank(basicInformationDTO.getLastname())) {
       errors.rejectValue("lastname", "basicInformationEditPage.error.lastname",
-          messageSource.getMessage("basicInformationEditPage.error.lastname", null, Locale.getDefault()));
-    } else if (profileService.isValidMaxFieldLength(basicInformationDTO.getLastname())) {
-      errors.rejectValue("lastname", "basicInformationEditPage.error.maxLengthLastname",
-          messageSource.getMessage("basicInformationEditPage.error.maxLengthLastname", null,
+          messageSource.getMessage("basicInformationEditPage.error.lastname", null,
               Locale.getDefault()));
     } else if (profileService.isFieldContainsSpecialCharacters(basicInformationDTO.getLastname())) {
       errors.rejectValue("lastname", "basicInformationEditPage.error.specialCharactersLastname",
@@ -66,11 +62,13 @@ public class BasicInformationDtoValidator implements Validator {
 
     if (null == basicInformationDTO.getBirthday()) {
       errors.rejectValue("birthday", "basicInformationEditPage.error.birthday",
-          messageSource.getMessage("basicInformationEditPage.error.birthday", null, Locale.getDefault()));
+          messageSource.getMessage("basicInformationEditPage.error.birthday", null,
+              Locale.getDefault()));
     } else if (!basicInformationService.isBirthdayDateValid(basicInformationDTO.getBirthday())) {
       errors.rejectValue("birthday", "basicInformationEditPage.error.birthdayDate",
           messageSource.getMessage("basicInformationEditPage.error.birthdayDate", null,
               Locale.getDefault()));
     }
   }
+
 }

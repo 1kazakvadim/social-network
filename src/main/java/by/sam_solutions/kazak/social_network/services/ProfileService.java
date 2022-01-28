@@ -1,5 +1,6 @@
 package by.sam_solutions.kazak.social_network.services;
 
+import by.sam_solutions.kazak.social_network.entities.Friend;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public interface ProfileService {
 
   Profile getProfileByUserId(Long id);
 
-  boolean isFieldContainsSpecialCharacters(String string);
+  List<Profile> getUniqueFriendsProfiles(List<Friend> friends, Long id);
 
-  boolean isValidMaxFieldLength(String string);
+  boolean isFieldContainsSpecialCharacters(String string);
 
 }

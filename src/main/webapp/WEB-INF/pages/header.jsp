@@ -26,7 +26,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="dropdown-item text-center">
-                                <form:form action="logout" method="POST">
+                                <form action="${pageContext.request.contextPath}/logout" method="POST">
                                     <input type="hidden"
                                            name="${_csrf.parameterName}"
                                            value="${_csrf.token}"/>
@@ -35,7 +35,7 @@
                                         <span class="p-4"><spring:message
                                                 code="nav.signOut"/></span>
                                     </button>
-                                </form:form>
+                                </form>
                             </li>
                         </ul>
                     </li>

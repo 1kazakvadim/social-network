@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "photo")
@@ -21,6 +22,7 @@ public class Photo implements Serializable {
   private Long id;
 
   @Column(name = "name", nullable = false, unique = true)
+  @Length(min = 1, max = 255)
   private String name;
 
   @ManyToOne
@@ -28,10 +30,8 @@ public class Photo implements Serializable {
   private Profile profile;
 
   @Column(name = "description")
+  @Length(max = 255)
   private String description;
-
-  @Column(name = "like_count")
-  private Integer likeCount;
 
   @Column(name = "time_creation", nullable = false)
   private LocalDateTime timeCreation;
@@ -39,13 +39,12 @@ public class Photo implements Serializable {
   public Photo() {
   }
 
-  public Photo(Long id, String name, Profile profile, String description, Integer likeCount,
+  public Photo(Long id, String name, Profile profile, String description,
       LocalDateTime timeCreation) {
     this.id = id;
     this.name = name;
     this.profile = profile;
     this.description = description;
-    this.likeCount = likeCount;
     this.timeCreation = timeCreation;
   }
 
@@ -79,14 +78,6 @@ public class Photo implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public Integer getLikeCount() {
-    return likeCount;
-  }
-
-  public void setLikeCount(Integer likeCount) {
-    this.likeCount = likeCount;
   }
 
   public LocalDateTime getTimeCreation() {

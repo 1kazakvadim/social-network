@@ -16,7 +16,7 @@ public interface UserService {
 
   void deleteById(Long id);
 
-  User findByEmail(String email);
+  User getByEmail(String email);
 
   boolean isEmailExists(String email);
 

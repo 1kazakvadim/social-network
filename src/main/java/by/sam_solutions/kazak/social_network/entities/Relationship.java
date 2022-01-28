@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "relationship")
@@ -18,6 +19,7 @@ public class Relationship implements Serializable {
   private Long id;
 
   @Column(name = "name", nullable = false, unique = true)
+  @Length(min = 1, max = 45)
   private String name;
 
   public Relationship() {

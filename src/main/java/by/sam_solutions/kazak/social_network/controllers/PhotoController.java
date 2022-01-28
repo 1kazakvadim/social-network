@@ -40,15 +40,16 @@ public class PhotoController {
   @Autowired
   private MessageSource messageSource;
 
-  @GetMapping("/id{profileId}/photos")
+  @GetMapping("/id{userId}/photos")
   public ModelAndView getPhotosPage(HttpServletRequest request, ModelAndView modelAndView,
-      @PathVariable Long profileId, Locale locale) {
-    if (null == profileFacade.getById(profileId)) {
+      @PathVariable Long userId, Locale locale) {
+    Profile profile = profileFacade.getProfileByUserId(userId);
+    if (null == profile) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
-    List<Photo> photos = photoFacade.getAllByProfileId(profileId);
-    if (photos.size() == 0) {
+    List<Photo> photos = photoFacade.getAllByProfileId(profile.getId());
+    if (photos.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoPage.message", null,
               locale));
@@ -64,52 +65,52 @@ public class PhotoController {
     return modelAndView;
   }
 
-  @PostMapping("/id{profileId}/photos/upload-photo")
-  public ModelAndView uploadPhoto(ModelAndView modelAndView, @PathVariable Long profileId,
+  @PostMapping("/id{userId}/photos/upload-photo")
+  public ModelAndView uploadPhoto(ModelAndView modelAndView, @PathVariable Long userId,
       @RequestParam("file") MultipartFile file, @AuthenticationPrincipal UserPrincipal user,
       RedirectAttributes redirectAttributes, Locale locale) {
-    if (!Objects.equals(user.getId(), profileFacade.getById(profileId).getUser().getId())) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+    if (!Objects.equals(user.getId(), userId)) {
+      modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
     if (null == file) {
       redirectAttributes.addFlashAttribute("messageError",
           messageSource.getMessage("uploadPage.error.empty", null,
               locale));
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+      modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
     if (!photoFacade.isMultipartFileValid(file)) {
       redirectAttributes.addFlashAttribute("messageError",
           messageSource.getMessage("uploadPage.error.isMultipartFileValid", null,
               locale));
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+      modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
-    photoFacade.uploadInPhotos(file, profileId);
-    modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+    photoFacade.uploadInPhotos(file, profileFacade.getProfileByUserId(userId).getId());
+    modelAndView.setViewName("redirect:/id" + userId + "/photos");
     return modelAndView;
   }
 
-  @GetMapping("/id{profileId}/photos/{photoId}")
-  public ModelAndView getViewPhotoPage(ModelAndView modelAndView, @PathVariable Long profileId,
+  @GetMapping("/id{userId}/photos/{photoId}")
+  public ModelAndView getViewPhotoPage(ModelAndView modelAndView, @PathVariable Long userId,
       @PathVariable Long photoId, Locale locale) {
-    Profile profile = profileFacade.getById(profileId);
+    Profile profile = profileFacade.getProfileByUserId(userId);
     if (null == profile) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
     Photo photo = photoFacade.getById(photoId);
     if (null == photo) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+      modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
     if (!photoFacade.isPhotoBelongsProfile(photo, profile)) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos");
+      modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
     List<Comment> comments = commentFacade.getAllByPhotoId(photoId);
-    if (comments.size() == 0) {
+    if (comments.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoView.message", null,
               locale));
@@ -121,32 +122,55 @@ public class PhotoController {
     return modelAndView;
   }
 
-  @PostMapping("/id{profileId}/photos/{photoId}/add-description")
-  public ModelAndView addPhotoDescription(ModelAndView modelAndView, @PathVariable Long profileId,
-      @PathVariable Long photoId, @RequestParam String description,
+  @PostMapping("/id{userId}/photos/{photoId}/add-comment")
+  public ModelAndView addComment(ModelAndView modelAndView, @PathVariable Long userId,
+      @PathVariable Long photoId, @RequestParam String text,
       @AuthenticationPrincipal UserPrincipal user) {
-    if (!Objects.equals(user.getId(), profileFacade.getById(profileId).getUser().getId())) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos/" + photoId);
-      return modelAndView;
-    }
-    photoFacade.updateDescriptionInPhoto(description, photoId);
-    modelAndView.setViewName("redirect:/id" + profileId + "/photos/" + photoId);
+    commentFacade.addComment(text, photoId, user.getId());
+    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
     return modelAndView;
   }
 
-  @GetMapping("/id{profileId}/photos/{photoId}/delete")
-  public ModelAndView deletePhoto(ModelAndView modelAndView, @PathVariable Long profileId,
+  @PostMapping("/id{userId}/photos/{photoId}/delete-comment")
+  public ModelAndView deleteComment(ModelAndView modelAndView, @PathVariable Long userId,
+      @PathVariable Long photoId, @RequestParam Long commentId,
+      @AuthenticationPrincipal UserPrincipal user) {
+    Profile profile = profileFacade.getProfileByUserId(user.getId());
+    if (null == profile) {
+      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+      return modelAndView;
+    }
+    commentFacade.deleteComment(commentId, profile);
+    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+    return modelAndView;
+  }
+
+  @PostMapping("/id{userId}/photos/{photoId}/add-description")
+  public ModelAndView addPhotoDescription(ModelAndView modelAndView, @PathVariable Long userId,
+      @PathVariable Long photoId, @RequestParam String description,
+      @AuthenticationPrincipal UserPrincipal user) {
+    if (!Objects.equals(user.getId(), userId)) {
+      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+      return modelAndView;
+    }
+    photoFacade.updateDescriptionInPhoto(description, photoId);
+    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+    return modelAndView;
+  }
+
+  @GetMapping("/id{userId}/photos/{photoId}/delete")
+  public ModelAndView deletePhoto(ModelAndView modelAndView, @PathVariable Long userId,
       @PathVariable Long photoId, @AuthenticationPrincipal UserPrincipal user) {
-    if (!Objects.equals(user.getId(), profileFacade.getById(profileId).getUser().getId())) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos/" + photoId);
+    if (!Objects.equals(user.getId(), userId)) {
+      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
       return modelAndView;
     }
     if (null == photoFacade.getById(photoId)) {
-      modelAndView.setViewName("redirect:/id" + profileId + "/photos/");
+      modelAndView.setViewName("redirect:/id" + userId + "/photos/");
       return modelAndView;
     }
     photoFacade.deleteById(photoId);
-    modelAndView.setViewName("redirect:/id" + profileId + "/photos/");
+    modelAndView.setViewName("redirect:/id" + userId + "/photos/");
     return modelAndView;
   }
 

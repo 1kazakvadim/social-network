@@ -25,8 +25,8 @@
     <javax.mail.version>1.6.2</javax.mail.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
     <aws-java-sdk.version>1.12.138</aws-java-sdk.version>
-    <javax.validation.version>2.0.1.Final</javax.validation.version>
-    <hibernate.validator.veriosn>7.0.1.Final</hibernate.validator.veriosn>
+    <javax.validation.version>2.0.0.Final</javax.validation.version>
+    <hibernate.validator.veriosn>6.0.1.Final</hibernate.validator.veriosn>
     <apache.taglibs.version>1.2.5</apache.taglibs.version>
     <hibernate.version>5.6.1.Final</hibernate.version>
     <mysql-connector-java.version>8.0.25</mysql-connector-java.version>

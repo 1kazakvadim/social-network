@@ -1,17 +1,37 @@
 package by.sam_solutions.kazak.social_network.dto;
 
+import javax.validation.constraints.Size;
+
 public class ContactInformationDTO {
 
   private Long id;
   private Long countryId;
+
+  @Size(max = 255)
   private String city;
+
+  @Size(max = 45)
   private String jobTitle;
+
+  @Size(max = 45)
   private String mobilePhone;
+
+  @Size(max = 45)
   private String homePhone;
+
+  @Size(max = 45)
   private String githubName;
+
+  @Size(max = 45)
   private String twitterName;
+
+  @Size(max = 45)
   private String instagramName;
+
+  @Size(max = 45)
   private String facebookName;
+
+  @Size(max = 45)
   private String skypeName;
 
   public ContactInformationDTO() {

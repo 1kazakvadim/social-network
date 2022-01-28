@@ -13,17 +13,16 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
     <div class="container">
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
-            <div class="col-sm-8">
+            <div class="col-8">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-4 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
@@ -37,32 +36,42 @@
                                                     <span><spring:message
                                                             code="profilePage.uploadPhoto"/></span>
                                                 </a>
-                                                <div class="modal fade" id="upload-profile-photo" tabindex="-1">
+                                                <div class="modal fade" id="upload-profile-photo"
+                                                     tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="upload-profile-photo-label">
+                                                                <h5 class="modal-title"
+                                                                    id="upload-profile-photo-label">
                                                                     <spring:message
                                                                             code="uploadPage.title"/></h5>
-                                                                <button type="button" class="btn-close"
+                                                                <button type="button"
+                                                                        class="btn-close"
                                                                         data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                             </div>
                                                             <c:if test="${messageError != null}">
-                                                                <div class="alert alert-danger" role="alert">
+                                                                <div class="alert alert-danger"
+                                                                     role="alert">
                                                                         ${messageError}
                                                                 </div>
                                                             </c:if>
                                                             <div class="modal-body">
-                                                                <form:form action="upload-profile-photo" method="POST" enctype="multipart/form-data">
+                                                                <form:form
+                                                                        action="upload-profile-photo"
+                                                                        method="POST"
+                                                                        enctype="multipart/form-data">
                                                                     <input type="hidden"
                                                                            name="${_csrf.parameterName}"
                                                                            value="${_csrf.token}"/>
                                                                     <p><spring:message
                                                                             code="uploadPage.text"/></p>
-                                                                    <input type="file" class="form-control"
-                                                                           id="upload-photo" name="file"/>
-                                                                    <button type="submit" class="btn btn-primary btn-sm mt-4">
+                                                                    <input type="file"
+                                                                           class="form-control"
+                                                                           id="upload-photo"
+                                                                           name="file"/>
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary btn-sm mt-4">
                                                                         <span class="p-4"><spring:message
                                                                                 code="button.upload"/></span>
                                                                     </button>
@@ -78,41 +87,67 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button class="btn btn-primary">
-                                                <spring:message
-                                                        code="profilePage.add"/></button>
-                                            <button class="btn btn-primary"><spring:message
+                                        <div class="mt-4 d-flex flex-column w-100">
+                                            <c:if test="${noButton == true}">
+                                            </c:if>
+                                            <c:if test="${inFriendButton == true}">
+                                                <a href="<c:url value="/id${userId}/unfriend" />">
+                                                    <button class="btn btn-danger w-100 mb-1">
+                                                        <spring:message
+                                                                code="profilePage.button.unfriend"/></button>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${requestButton == true}">
+                                                <a href="<c:url value="/id${userId}/cancel-request"/>">
+                                                    <button class="btn btn-secondary w-100 mb-1">
+                                                        <spring:message
+                                                                code="profilePage.button.inRequest"/>
+                                                    </button>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${addButton == true}">
+                                                <a href="<c:url value="/id${userId}/add-to-friends" />">
+                                                    <button class="btn btn-primary w-100 mb-1">
+                                                        <spring:message
+                                                                code="profilePage.button.add"/></button>
+                                                </a>
+                                            </c:if>
+                                            <button class="btn btn-primary w-100"><spring:message
                                                     code="profilePage.message"/></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-3">
-                                <div class="hidden-xs hidden-sm">
-                                    <ul class="profile-info-list">
-                                        <li class="friend-title"><a href="#"><spring:message
-                                                code="profilePage.friends"/> (${profile.friendCount})</a>
-                                        </li>
-                                        <li class="friend-img-list">
-                                            <div class="friend-row">
-                                                <a href="#"><img
-                                                        src="<c:url value="/resources/static/images/friend1.png"/>"
-                                                        alt=""/></a>
-                                                <a href="#"><img
-                                                        src="<c:url value="/resources/static/images/friend2.png"/>"
-                                                        alt=""/></a>
-                                                <a href="#"><img
-                                                        src="<c:url value="/resources/static/images/friend3.png"/>"
-                                                        alt=""/></a>
-                                                <a href="#"><img
-                                                        src="<c:url value="/resources/static/images/friend4.png"/>"
-                                                        alt=""/></a>
-                                            </div>
-                                        </li>
-                                    </ul>
+                            <c:if test="${friendCount != 0}">
+                                <div class="card mt-3">
+                                    <div class="row friend-count">
+                                        <a href="<c:url value="/id${userId}/friends"/>"
+                                           class="text-secondary m-2"><spring:message
+                                                code="profilePage.friends"/> (${friendCount})</a>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <c:forEach items="${friends}" var="friend" begin="0"
+                                                       end="3">
+                                                <div class="col-3">
+                                                    <div class="friend-row d-flex flex-column">
+                                                        <div class="d-flex justify-content-center">
+                                                            <a href="<c:url value="/id${friend.user.id}"/>"><img
+                                                                    src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friend.profilePhotoName}"/>"
+                                                                    class="rounded-circle"
+                                                                    alt=""/></a>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <a href=""
+                                                               class="text-secondary friend-name">${friend.basicInformation.firstname}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:if>
                             <div class="card mt-3">
                                 <ul class="list-group list-group-flush social-contact">
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -168,7 +203,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-8">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="row">
@@ -249,39 +284,35 @@
                                     <hr>
                                 </div>
                             </div>
-                            <div class="card mb-3">
-                                <div class="card-body pt-0">
-                                    <div class="row">
-                                        <div>
-                                            <div class="row">
-                                                <div class="photo-title"><a href="#"><spring:message
-                                                        code="profilePage.photos"/> (159)</a></div>
-                                                <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                                                    <div class="rounded">
-                                                        <a href="#"><img
-                                                                src="<c:url value="/resources/static/images/photo1.jpg"/>"
-                                                                class="w-100"/></a>
+                            <c:if test="${photoCount != 0}">
+                                <div class="card mb-3">
+                                    <div class="card-body pt-0">
+                                        <div class="row">
+                                            <div>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="photo-title m-2"><a
+                                                            href="<c:url value="/id${userId}/photos"/>"
+                                                            class="text-secondary"><spring:message
+                                                            code="profilePage.photos"/>
+                                                        (${photoCount})</a>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-4 mb-4 mb-lg-0">
-                                                    <div class="rounded">
-                                                        <a href="#"><img
-                                                                src="<c:url value="/resources/static/images/photo2.jpg"/>"
-                                                                class="w-100"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 mb-4 mb-lg-0">
-                                                    <div class="rounded">
-                                                        <a href="#"><img
-                                                                src="<c:url value="/resources/static/images/photo3.png"/>"
-                                                                class="w-100"/></a>
-                                                    </div>
+                                                    <c:forEach items="${photos}" var="photo"
+                                                               begin="0"
+                                                               end="2">
+                                                        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 image-wrap">
+                                                            <div>
+                                                                <a href="<c:url value="/id${userId}/photos/${photo.id}"/>"><img
+                                                                        src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${photo.name}"/>"
+                                                                        class="w-100"/></a>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

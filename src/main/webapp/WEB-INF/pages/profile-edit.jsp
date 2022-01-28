@@ -23,11 +23,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h4 class="mb-0"><span>Profile</span></h4>
+                                <h4 class="mb-0"><span><spring:message
+                                        code="profileEditPage.title"/></span></h4>
                             </div>
                         </div>
                         <hr>
-                        <spring:hasBindErrors name="basicInformationDTO">
+                        <spring:hasBindErrors name="contactInformationDTO">
                             <c:forEach var="error" items="${errors.allErrors}">
                                 <div class="alert alert-danger" role="alert">
                                     <spring:message message="${error}"/>
@@ -47,7 +48,8 @@
                             <div class="row mb-3 mx-auto">
                                 <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span>Country</span>
+                                        <span><spring:message
+                                                code="profileEditPage.country"/></span>
                                     </h6>
                                 </div>
                                 <div class="col-sm-8 form-outline">
@@ -64,7 +66,7 @@
                             <div class="row mb-3 mx-auto">
                                 <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span>City</span>
+                                        <span><spring:message code="profileEditPage.city"/></span>
                                     </h6>
                                 </div>
                                 <div class="col-sm-8 form-outline">
@@ -76,7 +78,7 @@
                             <div class="row mb-3 mx-auto">
                                 <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span>Job</span>
+                                        <span><spring:message code="profileEditPage.job"/></span>
                                     </h6>
                                 </div>
                                 <div class="col-sm-8 form-outline">
@@ -89,7 +91,7 @@
                             <div class="row mb-3 mx-auto">
                                 <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span>Mobile</span></h6>
+                                        <span><spring:message code="profileEditPage.mobile"/></span></h6>
                                 </div>
                                 <div class="col-sm-8 form-outline">
                                     <form:input path="mobilePhone" type="text" class="form-control"
@@ -100,7 +102,7 @@
                             <div class="row mb-3 mx-auto">
                                 <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span>Home phone</span>
+                                        <span><spring:message code="profileEditPage.homePhone"/></span>
                                     </h6>
                                 </div>
                                 <div class="col-sm-8 form-outline">

@@ -14,6 +14,7 @@ import by.sam_solutions.kazak.social_network.validators.BasicInformationDtoValid
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 @Controller
-public class ProfileController {
+public class SettingController {
 
   @Autowired
   private ProfileFacade profileFacade;
@@ -56,39 +56,40 @@ public class ProfileController {
   @Autowired
   private MessageSource messageSource;
 
-  @GetMapping("/id{profileId}")
-  public ModelAndView getProfilePage(ModelAndView modelAndView, @PathVariable Long profileId) {
-    Profile profile = profileFacade.getById(profileId);
-    modelAndView.addObject("profileId", profileId);
-    modelAndView.addObject("profile", profile);
-    modelAndView.setViewName("profile");
-    return modelAndView;
-  }
-
   @GetMapping("/edit/profile")
-  public ModelAndView getProfileEditPage(ModelAndView modelAndView, @AuthenticationPrincipal
-      UserPrincipal user) {
+  public ModelAndView getProfileEditPage(HttpServletRequest request, ModelAndView modelAndView,
+      @AuthenticationPrincipal UserPrincipal user) {
     ContactInformationDTO contactInformationDTO = new ContactInformationDTO();
     modelAndView.addObject("contactInformationDTO", contactInformationDTO);
     modelAndView.addObject("profile", profileFacade.getProfileByUserId(user.getId()));
     modelAndView.addObject("countries", countryFacade.getAll());
+    Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+    if (inputFlashMap != null) {
+      modelAndView.addObject("messageSuccess", inputFlashMap.get("messageSuccess"));
+    }
     modelAndView.setViewName("profile-edit");
     return modelAndView;
   }
 
   @PostMapping("/edit/profile")
   public ModelAndView saveProfileEdit(ModelAndView modelAndView,
-      @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
+      @Valid @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
+    if (result.hasErrors()) {
+      modelAndView.setViewName("profile-edit");
+      return modelAndView;
+    }
     profileFacade.updateContactInformationInProfile(contactInformationDTO);
-    modelAndView.setViewName("profile-edit");
+    redirectAttributes.addFlashAttribute("messageSuccess",
+        messageSource.getMessage("profileEditPage.success.informationUpdated", null,
+            locale));
+    modelAndView.setViewName("redirect:/edit/profile-edit");
     return modelAndView;
   }
 
   @GetMapping("/edit/basic")
   public ModelAndView getProfileEditBasicPage(HttpServletRequest request, ModelAndView modelAndView,
-      @AuthenticationPrincipal
-          UserPrincipal user) {
+      @AuthenticationPrincipal UserPrincipal user) {
     BasicInformationDTO basicInformationDTO = new BasicInformationDTO();
     modelAndView.addObject("basicInformationDTO", basicInformationDTO);
     modelAndView.addObject("profile", profileFacade.getProfileByUserId(user.getId()));
@@ -103,7 +104,7 @@ public class ProfileController {
 
   @PostMapping("/edit/basic")
   public ModelAndView saveProfileEditBasic(ModelAndView modelAndView,
-      @ModelAttribute("basicInformationDTO") BasicInformationDTO basicInformationDTO,
+      @Valid @ModelAttribute("basicInformationDTO") BasicInformationDTO basicInformationDTO,
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
     basicInformationDtoValidator.validate(basicInformationDTO, result);
     if (result.hasErrors()) {
@@ -165,10 +166,9 @@ public class ProfileController {
 
   @GetMapping("/edit/security/email-change")
   public ModelAndView getProfileEmailChangePage(ModelAndView modelAndView,
-      @AuthenticationPrincipal
-          UserPrincipal user) {
+      @AuthenticationPrincipal UserPrincipal user) {
     modelAndView.addObject("email",
-        profileFacade.getProfileByUserId(user.getId()).getUser().getEmail());
+        user.getUsername());
     modelAndView.setViewName("email-change");
     return modelAndView;
   }
@@ -201,7 +201,7 @@ public class ProfileController {
   public ModelAndView deleteProfile(ModelAndView modelAndView,
       @AuthenticationPrincipal UserPrincipal user) {
     userFacade.disableUser(user);
-    modelAndView.setViewName("redirect:/logout");
+    modelAndView.setViewName("redirect:/login");
     return modelAndView;
   }
 
@@ -222,7 +222,8 @@ public class ProfileController {
       modelAndView.setViewName("profile");
       return modelAndView;
     }
-    photoFacade.uploadProfilePhoto(file, user);
+    Profile profile = profileFacade.getProfileByUserId(user.getId());
+    photoFacade.uploadProfilePhoto(file, profile);
     modelAndView.setViewName("redirect:/id" + user.getId());
     return modelAndView;
   }
@@ -230,7 +231,8 @@ public class ProfileController {
   @GetMapping("/delete-profile-photo")
   public ModelAndView deleteProfilePhoto(ModelAndView modelAndView,
       @AuthenticationPrincipal UserPrincipal user) {
-    photoFacade.deleteProfilePhoto(user);
+    Profile profile = profileFacade.getProfileByUserId(user.getId());
+    photoFacade.deleteProfilePhoto(profile);
     modelAndView.setViewName("redirect:/id" + user.getId());
     return modelAndView;
   }

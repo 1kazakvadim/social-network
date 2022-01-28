@@ -35,7 +35,7 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
   }
 
   @Override
-  public User findByEmail(String email) {
+  public User getByEmail(String email) {
     return (User)
         sessionFactory
             .getCurrentSession()

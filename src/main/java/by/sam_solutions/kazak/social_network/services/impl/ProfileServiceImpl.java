@@ -1,9 +1,14 @@
 package by.sam_solutions.kazak.social_network.services.impl;
 
 import by.sam_solutions.kazak.social_network.dao.ProfileDao;
+import by.sam_solutions.kazak.social_network.entities.Friend;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import by.sam_solutions.kazak.social_network.services.ProfileService;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -18,8 +23,7 @@ public class ProfileServiceImpl implements ProfileService {
 
   private final Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
 
-  private static final String SPECIAL_CHARACTERS_PATTERN = "[^A-Za-z0-9]";
-  private static final int MAX_FIELD_LENGTH = 255;
+  private static final String SPECIAL_CHARACTERS_PATTERN = "[^A-Za-zа-яА-ЯёЁ0-9]";
 
   @Autowired
   private ProfileDao profileDao;
@@ -61,15 +65,24 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public boolean isFieldContainsSpecialCharacters(String string) {
-    Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);
-    Matcher matcher = pattern.matcher(string);
-    return !matcher.find();
+  public List<Profile> getUniqueFriendsProfiles(List<Friend> friends, Long id) {
+    Set<Profile> friendsProfiles = new HashSet<>();
+    for (Friend friend : friends) {
+      if (!Objects.equals(friend.getAcceptRequestProfile().getId(), id)) {
+        friendsProfiles.add(friend.getAcceptRequestProfile());
+      }
+      if (!Objects.equals(friend.getMakeRequestProfile().getId(), id)) {
+        friendsProfiles.add(friend.getMakeRequestProfile());
+      }
+    }
+    return new ArrayList<>(friendsProfiles);
   }
 
   @Override
-  public boolean isValidMaxFieldLength(String string) {
-    return string.length() >= MAX_FIELD_LENGTH;
+  public boolean isFieldContainsSpecialCharacters(String string) {
+    Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);
+    Matcher matcher = pattern.matcher(string);
+    return matcher.find();
   }
 
 }

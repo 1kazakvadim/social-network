@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "profile")
@@ -33,6 +34,7 @@ public class Profile implements Serializable {
   private BasicInformation basicInformation;
 
   @Column(name = "job_title")
+  @Length(max = 45)
   private String jobTitle;
 
   @ManyToOne
@@ -40,33 +42,39 @@ public class Profile implements Serializable {
   private Country country;
 
   @Column(name = "city")
+  @Length(max = 255)
   private String city;
 
   @Column(name = "mobile_phone")
+  @Length(max = 45)
   private String mobilePhone;
 
   @Column(name = "home_phone")
+  @Length(max = 45)
   private String homePhone;
 
   @Column(name = "github_name")
+  @Length(max = 45)
   private String githubName;
 
   @Column(name = "twitter_name")
+  @Length(max = 45)
   private String twitterName;
 
   @Column(name = "instagram_name")
+  @Length(max = 45)
   private String instagramName;
 
   @Column(name = "facebook_name")
+  @Length(max = 45)
   private String facebookName;
 
   @Column(name = "skype_name")
+  @Length(max = 45)
   private String skypeName;
 
-  @Column(name = "friend_count", columnDefinition = "0")
-  private Integer friendCount;
-
   @Column(name = "profile_photo_name")
+  @Length(max = 255)
   private String profilePhotoName;
 
   @Column(name = "time_registration", nullable = false)
@@ -82,7 +90,7 @@ public class Profile implements Serializable {
       BasicInformation basicInformation, String jobTitle,
       Country country, String city, String mobilePhone, String homePhone, String githubName,
       String twitterName, String instagramName, String facebookName, String skypeName,
-      Integer friendCount, String profilePhotoName, LocalDateTime timeRegistration,
+      String profilePhotoName, LocalDateTime timeRegistration,
       LocalDateTime updateTime) {
     this.id = id;
     this.user = user;
@@ -97,7 +105,6 @@ public class Profile implements Serializable {
     this.instagramName = instagramName;
     this.facebookName = facebookName;
     this.skypeName = skypeName;
-    this.friendCount = friendCount;
     this.profilePhotoName = profilePhotoName;
     this.timeRegistration = timeRegistration;
     this.updateTime = updateTime;
@@ -206,14 +213,6 @@ public class Profile implements Serializable {
 
   public void setSkypeName(String skypeName) {
     this.skypeName = skypeName;
-  }
-
-  public Integer getFriendCount() {
-    return friendCount;
-  }
-
-  public void setFriendCount(Integer friendCount) {
-    this.friendCount = friendCount;
   }
 
   public String getProfilePhotoName() {

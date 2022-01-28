@@ -2,6 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<sec:authentication var="user" property="principal"/>
+
 <div class="col-sm-2 offset-sm-1">
     <div class="list-group list-group-flush">
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
@@ -16,7 +19,7 @@
             <span class="badge bg-primary rounded-pill">14</span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-           href="#">
+           href="<c:url value='/id${user.id}/friends'/>">
             <i class="icon-group icon-large"></i>
             <span><spring:message code="nav.friends"/></span>
             <span class="badge bg-primary rounded-pill">7</span>
@@ -33,20 +36,21 @@
         </a>
         <sec:authorize access="hasRole('ADMIN')">
             <a class="list-group-item list-group-item-action list-group-item-light border-0 dropdown-toggle"
-               data-bs-toggle="collapse" href="#" role="button" aria-expanded="false">
+               data-bs-toggle="collapse" href="#" role="button" aria-expanded="false"
+               aria-controls="collapseMenu">
                 <i class="icon-cogs icon-large "></i>
                 <span><spring:message code="nav.administration"/></span>
             </a>
-            <div class="collapse">
+            <div class="collapse" id="collapseMenu">
                 <div>
                     <ul class="nav-administration">
                         <li><a class="dropdown-item rounded"
-                               href="<c:url value='/users'/>"><spring:message
+                               href="<c:url value='/admin/profiles'/>"><spring:message
                                 code="nav.users"/></a></li>
                     </ul>
                 </div>
             </div>
-        </sec:authorize>
         <hr class="solid">
+        </sec:authorize>
     </div>
 </div>

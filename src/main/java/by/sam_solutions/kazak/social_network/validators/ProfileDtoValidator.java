@@ -39,10 +39,6 @@ public class ProfileDtoValidator implements Validator {
     if (StringUtils.isBlank(profileDTO.getFirstname())) {
       errors.rejectValue("firstname", "registerPage.error.firstname",
           messageSource.getMessage("registerPage.error.firstname", null, Locale.getDefault()));
-    } else if (profileService.isValidMaxFieldLength(profileDTO.getFirstname())) {
-      errors.rejectValue("firstname", "registerPage.error.maxLengthFirstname",
-          messageSource.getMessage("registerPage.error.maxLengthFirstname", null,
-              Locale.getDefault()));
     } else if (profileService.isFieldContainsSpecialCharacters(profileDTO.getFirstname())) {
       errors.rejectValue("firstname", "registerPage.error.specialCharactersFirstname",
           messageSource.getMessage("registerPage.error.specialCharactersFirstname", null,
@@ -52,10 +48,6 @@ public class ProfileDtoValidator implements Validator {
     if (StringUtils.isBlank(profileDTO.getLastname())) {
       errors.rejectValue("lastname", "registerPage.error.lastname",
           messageSource.getMessage("registerPage.error.lastname", null, Locale.getDefault()));
-    } else if (profileService.isValidMaxFieldLength(profileDTO.getLastname())) {
-      errors.rejectValue("lastname", "registerPage.error.maxLengthLastname",
-          messageSource.getMessage("registerPage.error.maxLengthLastname", null,
-              Locale.getDefault()));
     } else if (profileService.isFieldContainsSpecialCharacters(profileDTO.getLastname())) {
       errors.rejectValue("lastname", "registerPage.error.specialCharactersLastname",
           messageSource.getMessage("registerPage.error.specialCharactersLastname", null,
@@ -71,7 +63,7 @@ public class ProfileDtoValidator implements Validator {
               Locale.getDefault()));
     }
 
-     if (!basicInformationService.isGenderValid(profileDTO.getGender())) {
+    if (!basicInformationService.isGenderValid(profileDTO.getGender())) {
       errors.rejectValue("gender", "registerPage.error.genderType",
           messageSource.getMessage("registerPage.error.genderType", null,
               Locale.getDefault()));

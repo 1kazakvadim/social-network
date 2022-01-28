@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "comment")
@@ -21,6 +24,7 @@ public class Comment implements Serializable {
   private Long id;
 
   @Column(name = "text")
+  @Length(min = 1, max = 255)
   private String text;
 
   @ManyToOne
@@ -28,11 +32,9 @@ public class Comment implements Serializable {
   private Profile profile;
 
   @ManyToOne
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinColumn(name = "photo_id")
   private Photo photo;
-
-  @Column(name = "like_count")
-  private Integer likeCount;
 
   @Column(name = "time_creation")
   private LocalDateTime timeCreation;
@@ -41,12 +43,11 @@ public class Comment implements Serializable {
   }
 
   public Comment(Long id, String text, Profile profile,
-      Photo photo, Integer likeCount, LocalDateTime timeCreation) {
+      Photo photo, LocalDateTime timeCreation) {
     this.id = id;
     this.text = text;
     this.profile = profile;
     this.photo = photo;
-    this.likeCount = likeCount;
     this.timeCreation = timeCreation;
   }
 
@@ -80,14 +81,6 @@ public class Comment implements Serializable {
 
   public void setPhoto(Photo photo) {
     this.photo = photo;
-  }
-
-  public Integer getLikeCount() {
-    return likeCount;
-  }
-
-  public void setLikeCount(Integer likeCount) {
-    this.likeCount = likeCount;
   }
 
   public LocalDateTime getTimeCreation() {

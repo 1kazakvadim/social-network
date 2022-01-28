@@ -2,12 +2,17 @@ package by.sam_solutions.kazak.social_network.dto;
 
 import by.sam_solutions.kazak.social_network.entities.Gender;
 import java.time.LocalDate;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class BasicInformationDTO {
 
   private Long id;
+
+  @Size(min = 1, max = 255)
   private String firstname;
+
+  @Size(min = 1, max = 255)
   private String lastname;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")

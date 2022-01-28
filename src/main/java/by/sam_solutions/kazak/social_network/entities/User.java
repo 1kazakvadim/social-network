@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "user")
@@ -25,9 +26,11 @@ public class User implements Serializable {
   private Long id;
 
   @Column(name = "email", nullable = false, unique = true)
+  @Length(min = 1, max = 255)
   private String email;
 
   @Column(name = "password", nullable = false)
+  @Length(min = 1, max = 100)
   private String password;
 
   @ManyToOne

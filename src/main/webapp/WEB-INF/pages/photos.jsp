@@ -13,7 +13,6 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
@@ -84,13 +83,13 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <c:if test="${message != null}">
-                                                <div class="col-12 d-flex justify-content-center align-content-center ">
+                                                <div class="col-12 d-flex justify-content-center align-content-center">
                                                     <p class="text-secondary m-0 p-5">${message}</p>
                                                 </div>
                                             </c:if>
                                             <c:forEach items="${photos}" var="photo">
                                                 <div class="col-12 col-sm-6 col-lg-3 p-1">
-                                                    <a href="<c:url value="/id${profileId}/photos/${photo.id}"/>">
+                                                    <a href="<c:url value="/id${userId}/photos/${photo.id}"/>">
                                                         <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${photo.name}"/>"
                                                              class="d-block w-100">
                                                     </a>

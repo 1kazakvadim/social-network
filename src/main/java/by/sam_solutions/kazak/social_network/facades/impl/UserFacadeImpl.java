@@ -60,7 +60,7 @@ public class UserFacadeImpl implements UserFacade {
 
   @Override
   public UserDTO findByEmail(String email) {
-    User user = userService.findByEmail(email);
+    User user = userService.getByEmail(email);
     UserDTO userDTO = new UserDTO();
     try {
       userDTO = (UserDTO) userConverter.convertSourceToTargetClass(user, UserDTO.class);
@@ -124,7 +124,6 @@ public class UserFacadeImpl implements UserFacade {
           Profile.class.getName());
       e.printStackTrace();
     }
-    profile.setFriendCount(0);
     User user = userService.registerUser(profile);
     Token token = tokenService.createVerificationToken(user);
     mailSender.send(

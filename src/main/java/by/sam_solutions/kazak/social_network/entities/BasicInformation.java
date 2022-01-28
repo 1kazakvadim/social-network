@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "basic_information")
@@ -22,15 +22,18 @@ public class BasicInformation implements Serializable {
   private Long id;
 
   @Column(name = "firstname", nullable = false)
+  @Length(min = 1, max = 255)
   private String firstname;
 
   @Column(name = "lastname", nullable = false)
+  @Length(min = 1, max = 255)
   private String lastname;
 
   @Column(name = "birthday", nullable = false)
   private LocalDate birthday;
 
   @Column(name = "gender")
+  @Length(max = 45)
   private String gender;
 
   @ManyToOne

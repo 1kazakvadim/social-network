@@ -2,7 +2,6 @@ package by.sam_solutions.kazak.social_network.facades.impl;
 
 import by.sam_solutions.kazak.social_network.entities.Photo;
 import by.sam_solutions.kazak.social_network.entities.Profile;
-import by.sam_solutions.kazak.social_network.entities.UserPrincipal;
 import by.sam_solutions.kazak.social_network.facades.PhotoFacade;
 import by.sam_solutions.kazak.social_network.services.PhotoService;
 import by.sam_solutions.kazak.social_network.services.ProfileService;
@@ -58,16 +57,14 @@ public class PhotoFacadeImpl implements PhotoFacade {
   }
 
   @Override
-  public void uploadProfilePhoto(MultipartFile file, UserPrincipal user) {
-    Profile profile = profileService.getProfileByUserId(user.getId());
+  public void uploadProfilePhoto(MultipartFile file, Profile profile) {
     String photoName = storageService.upload(file);
     profile.setProfilePhotoName(photoName);
     profileService.saveOrUpdate(profile);
   }
 
   @Override
-  public void deleteProfilePhoto(UserPrincipal user) {
-    Profile profile = profileService.getProfileByUserId(user.getId());
+  public void deleteProfilePhoto(Profile profile) {
     if (profile.getProfilePhotoName().equals(DEFAULT_PROFILE_PHOTO_NAME)) {
       return;
     }
@@ -82,7 +79,6 @@ public class PhotoFacadeImpl implements PhotoFacade {
     String photoName = storageService.upload(file);
     photo.setProfile(profileService.getById(profileId));
     photo.setName(photoName);
-    photo.setLikeCount(0);
     photo.setTimeCreation(LocalDateTime.now());
     photoService.saveOrUpdate(photo);
   }

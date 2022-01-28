@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class PhotoDaoImpl extends AbstractBaseDao<Photo> implements PhotoDao {
@@ -37,7 +36,6 @@ public class PhotoDaoImpl extends AbstractBaseDao<Photo> implements PhotoDao {
 
   @Override
   public List<Photo> getAllByProfileId(Long id) {
-
     return sessionFactory.getCurrentSession()
         .createQuery(
             "FROM Photo photo WHERE photo.profile.id = :id")

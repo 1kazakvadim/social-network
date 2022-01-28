@@ -23,8 +23,8 @@ public class TokenServiceImpl implements TokenService {
 
   private final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
-  private final long DAYS_OF_VERIFICATION_TOKEN_EXPIRATION_DATE = 1;
-  private final long HOURS_OF_PASSWORD_RESET_TOKEN_EXPIRATION_DATE = 1;
+  private static final long DAYS_OF_VERIFICATION_TOKEN_EXPIRATION_DATE = 1;
+  private static final long HOURS_OF_PASSWORD_RESET_TOKEN_EXPIRATION_DATE = 1;
 
   @Autowired
   private TokenDao tokenDao;
@@ -81,7 +81,7 @@ public class TokenServiceImpl implements TokenService {
     logger.debug("create password reset token for user with email = {}", email);
     Token token = new Token();
     token.setToken(UUID.randomUUID().toString());
-    token.setUser(userService.findByEmail(email.toLowerCase()));
+    token.setUser(userService.getByEmail(email.toLowerCase()));
     token.setExpiryDate(
         LocalDateTime.now().plusHours(HOURS_OF_PASSWORD_RESET_TOKEN_EXPIRATION_DATE));
     tokenDao.saveOrUpdate(token);
@@ -109,7 +109,7 @@ public class TokenServiceImpl implements TokenService {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user.getEmail());
     email.setSubject(messageSource.getMessage("verificationToken.email.subject", null, locale));
-    email.setText(message + "\r\n" + "http://localhost:8080" + confirmationUrl);
+    email.setText(message + System.lineSeparator() + "http://localhost:8080" + confirmationUrl);
     return email;
   }
 
@@ -122,7 +122,7 @@ public class TokenServiceImpl implements TokenService {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user.getEmail());
     email.setSubject(messageSource.getMessage("resetToken.email.subject", null, locale));
-    email.setText(message + "\r\n" + "http://localhost:8080" + resetUrl);
+    email.setText(message + System.lineSeparator() + "http://localhost:8080" + resetUrl);
     return email;
   }
 
