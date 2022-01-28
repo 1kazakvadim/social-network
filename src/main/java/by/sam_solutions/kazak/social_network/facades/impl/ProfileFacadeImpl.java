@@ -69,4 +69,10 @@ public class ProfileFacadeImpl implements ProfileFacade {
     profileService.saveOrUpdate(updatedProfile);
   }
 
+  @Override
+  public void changeProfileLock(Profile profile, boolean isLocked) {
+    profile.getUser().setLocked(isLocked);
+    profileService.saveOrUpdate(profile);
+  }
+
 }

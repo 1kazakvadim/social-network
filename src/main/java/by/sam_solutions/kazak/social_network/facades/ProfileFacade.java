@@ -17,4 +17,6 @@ public interface ProfileFacade {
 
   void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO);
 
+  void changeProfileLock(Profile profile, boolean isLocked);
+
 }
