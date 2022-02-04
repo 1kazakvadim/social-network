@@ -21,12 +21,12 @@
 
             <jsp:include page="side-nav.jsp"/>
 
-            <div class="col-sm-8 mb-4">
-                <div class="col-sm-12">
+            <div class="col-8 mb-4">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-12">
                                     <h4><span><spring:message code="friendPage.title"/></span></h4>
                                 </div>
                             </div>

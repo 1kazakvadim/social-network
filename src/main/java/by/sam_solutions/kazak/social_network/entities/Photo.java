@@ -39,15 +39,6 @@ public class Photo implements Serializable {
   public Photo() {
   }
 
-  public Photo(Long id, String name, Profile profile, String description,
-      LocalDateTime timeCreation) {
-    this.id = id;
-    this.name = name;
-    this.profile = profile;
-    this.description = description;
-    this.timeCreation = timeCreation;
-  }
-
   public Long getId() {
     return id;
   }

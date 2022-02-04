@@ -21,8 +21,8 @@
 
             <jsp:include page="side-nav.jsp"/>
 
-            <div class="col-sm-8 mb-4">
-                <div class="col-sm-12">
+            <div class="col-8 mb-4">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="post">
@@ -86,7 +86,8 @@
                                                                    action="${photo.id}/add-description">
                                                             <div>
                                                                 <textarea class="form-control"
-                                                                          rows="3"
+                                                                          rows="3" maxlength="255"
+                                                                          aria-label="photo-description"
                                                                           name="description"
                                                                           id="area-description">${photo.description}</textarea>
                                                             </div>
@@ -116,7 +117,8 @@
                                                action="${photo.id}/add-comment">
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="text"
-                                                   placeholder="Add a comment">
+                                                   maxlength="255" aria-label="comment-text"
+                                                   placeholder="<spring:message code="photoView.placeholder.addComment"/>">
                                             <span class="input-group-addon">
                                             <a href="#"><i class="fa fa-edit"></i></a>
                                         </span>

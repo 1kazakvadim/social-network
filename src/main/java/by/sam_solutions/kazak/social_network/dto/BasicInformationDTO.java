@@ -23,16 +23,6 @@ public class BasicInformationDTO {
   public BasicInformationDTO() {
   }
 
-  public BasicInformationDTO(Long id, String firstname, String lastname, LocalDate birthday,
-      Gender gender, Long relationshipId) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.birthday = birthday;
-    this.gender = gender;
-    this.relationshipId = relationshipId;
-  }
-
   public Long getId() {
     return id;
   }

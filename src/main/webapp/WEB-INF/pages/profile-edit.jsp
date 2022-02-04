@@ -18,23 +18,25 @@
     <div class="container">
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
-            <div class="col-sm-6">
+            <div class="col-6">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-8">
                                 <h4 class="mb-0"><span><spring:message
                                         code="profileEditPage.title"/></span></h4>
                             </div>
                         </div>
                         <hr>
-                        <spring:hasBindErrors name="contactInformationDTO">
-                            <c:forEach var="error" items="${errors.allErrors}">
-                                <div class="alert alert-danger" role="alert">
+                        <c:if test="${errors != null}">
+                            <c:forEach var="error"
+                                       items="${errors.allErrors}">
+                                <div class="alert alert-danger"
+                                     role="alert">
                                     <spring:message message="${error}"/>
                                 </div>
                             </c:forEach>
-                        </spring:hasBindErrors>
+                        </c:if>
                         <c:if test="${messageSuccess != null}">
                             <div class="alert alert-success" role="alert">
                                     ${messageSuccess}
@@ -46,13 +48,13 @@
                                         class="form-control"
                                         value="${profile.id}"/>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span><spring:message
                                                 code="profileEditPage.country"/></span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:select path="countryId" class="form-select form-select">
                                         <c:forEach items="${countries}" var="country">
                                             <option name="${country.id}" value="${country.id}"
@@ -64,109 +66,120 @@
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span><spring:message code="profileEditPage.city"/></span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="city" type="text" class="form-control"
+                                                maxlength="500" aria-label="city"
                                                 id="city"
                                                 value="${profile.city}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span><spring:message code="profileEditPage.job"/></span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="jobTitle" type="text" class="form-control"
+                                                maxlength="45" aria-label="jobTitle"
                                                 id="jobTitle"
                                                 value="${profile.jobTitle}"/>
                                 </div>
                             </div>
                             <hr>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span><spring:message code="profileEditPage.mobile"/></span></h6>
+                                        <span><spring:message code="profileEditPage.mobile"/></span>
+                                    </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="mobilePhone" type="text" class="form-control"
+                                                maxlength="45" aria-label="mobilePhone"
                                                 id="mobilePhone"
                                                 value="${profile.mobilePhone}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
-                                        <span><spring:message code="profileEditPage.homePhone"/></span>
+                                        <span><spring:message
+                                                code="profileEditPage.homePhone"/></span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="homePhone" type="text" class="form-control"
+                                                maxlength="45" aria-label="homePhone"
                                                 id="homePhone"
                                                 value="${profile.homePhone}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span>GitHub</span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="githubName" type="text" class="form-control"
+                                                maxlength="45" aria-label="githubName"
                                                 id="github"
                                                 value="${profile.githubName}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span>Twitter</span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="twitterName" type="text" class="form-control"
+                                                maxlength="45" aria-label="twitterName"
                                                 id="twitter"
                                                 value="${profile.twitterName}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span>Instagram</span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
-                                    <form:input path="instagramName" type="text"
+                                <div class="col-8 form-outline">
+                                    <form:input path="instagramName" type="text" maxlength="45"
+                                                aria-label="instagramName"
                                                 class="form-control" id="instagram"
                                                 value="${profile.instagramName}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span>Facebook</span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="facebookName" type="text" class="form-control"
+                                                maxlength="45" aria-label="facebookName"
                                                 id="facebook"
                                                 value="${profile.facebookName}"/>
                                 </div>
                             </div>
                             <div class="row mb-3 mx-auto">
-                                <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
                                     <h6 class="mb-0 text-secondary">
                                         <span>Skype</span>
                                     </h6>
                                 </div>
-                                <div class="col-sm-8 form-outline">
+                                <div class="col-8 form-outline">
                                     <form:input path="skypeName" type="text" class="form-control"
+                                                maxlength="45" aria-label="skypeName"
                                                 id="skype"
                                                 value="${profile.skypeName}"/>
                                 </div>

@@ -50,10 +50,10 @@
                                                                         data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                             </div>
-                                                            <c:if test="${messageError != null}">
+                                                            <c:if test="${error != null}">
                                                                 <div class="alert alert-danger"
                                                                      role="alert">
-                                                                        ${messageError}
+                                                                        ${error}
                                                                 </div>
                                                             </c:if>
                                                             <div class="modal-body">
@@ -207,12 +207,12 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-sm-10">
+                                        <div class="col-10">
                                             <h4 class="mb-0">
                                                 <span>${profile.basicInformation.firstname} ${profile.basicInformation.lastname}</span>
                                             </h4>
                                         </div>
-                                        <div class="col-sm-2 profile-edit">
+                                        <div class="col-2 profile-edit">
                                             <c:if test="${user.id == profile.user.id}">
                                                 <a class=""
                                                    href="<c:url value='/edit/profile'/>"><spring:message
@@ -222,61 +222,61 @@
                                     </div>
                                     <hr>
                                     <div class="row mb-2">
-                                        <div class="col-sm-3">
+                                        <div class="col-3">
                                             <h6 class="mb-0"><span><spring:message
                                                     code="profilePage.email"/></span></h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
+                                        <div class="col-9 text-secondary">
                                             <span>${profile.user.email}</span>
                                         </div>
                                     </div>
                                     <c:if test="${profile.homePhone != null}">
                                         <div class="row mb-2">
-                                            <div class="col-sm-3">
+                                            <div class="col-3">
                                                 <h6 class="mb-0">
                                                 <span><spring:message
                                                         code="profilePage.phone"/></span>
                                                 </h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div class="col-9 text-secondary">
                                                 <span>${profile.homePhone}</span>
                                             </div>
                                         </div>
                                     </c:if>
                                     <c:if test="${profile.mobilePhone != null}">
                                         <div class="row mb-2">
-                                            <div class="col-sm-3">
+                                            <div class="col-3">
                                                 <h6 class="mb-0">
                                                 <span><spring:message
                                                         code="profilePage.mobile"/></span></h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div class="col-9 text-secondary">
                                                 <span>${profile.mobilePhone}</span>
                                             </div>
                                         </div>
                                     </c:if>
                                     <c:if test="${profile.country != null}">
                                         <div class="row mb-2">
-                                            <div class="col-sm-3">
+                                            <div class="col-3">
                                                 <h6 class="mb-0">
                                                 <span><spring:message
                                                         code="profilePage.country"/></span>
                                                 </h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div class="col-9 text-secondary">
                                                 <span>${profile.country.name}</span>
                                             </div>
                                         </div>
                                     </c:if>
                                     <c:if test="${profile.city != null}">
                                         <div class="row mb-2">
-                                            <div class="col-sm-3">
+                                            <div class="col-3">
                                                 <h6 class="mb-0">
                                                 <span><spring:message
                                                         code="profilePage.city"/></span>
                                                 </h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div class="col-9 text-secondary">
                                                 <span>${profile.city}</span>
                                             </div>
                                         </div>

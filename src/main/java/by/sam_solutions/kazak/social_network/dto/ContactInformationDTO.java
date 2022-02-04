@@ -7,7 +7,7 @@ public class ContactInformationDTO {
   private Long id;
   private Long countryId;
 
-  @Size(max = 255)
+  @Size(max = 255, message = "{registration.email.size}")
   private String city;
 
   @Size(max = 45)
@@ -35,22 +35,6 @@ public class ContactInformationDTO {
   private String skypeName;
 
   public ContactInformationDTO() {
-  }
-
-  public ContactInformationDTO(Long id, Long countryId, String city, String jobTitle,
-      String mobilePhone, String homePhone, String githubName, String twitterName,
-      String instagramName, String facebookName, String skypeName) {
-    this.id = id;
-    this.countryId = countryId;
-    this.city = city;
-    this.jobTitle = jobTitle;
-    this.mobilePhone = mobilePhone;
-    this.homePhone = homePhone;
-    this.githubName = githubName;
-    this.twitterName = twitterName;
-    this.instagramName = instagramName;
-    this.facebookName = facebookName;
-    this.skypeName = skypeName;
   }
 
   public Long getId() {

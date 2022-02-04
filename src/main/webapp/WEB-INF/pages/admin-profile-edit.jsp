@@ -19,12 +19,12 @@
     <div class="container">
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
-            <div class="col-sm-8 mb-4">
-                <div class="col-sm-12">
+            <div class="col-8 mb-4">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-12">
                                     <h4><span><spring:message
                                             code="adminProfileEditPage.title"/></span></h4>
                                 </div>
@@ -101,14 +101,14 @@
                                                                 class="form-control"
                                                                 value="${profile.id}"/>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span><spring:message
                                                                         code="adminProfileEditPage.tab.profile.country"/>
                                                                 </span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:select path="countryId"
                                                                          class="form-select form-select">
                                                                 <c:forEach items="${countries}"
@@ -123,128 +123,142 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span><spring:message
                                                                         code="adminProfileEditPage.tab.profile.city"/></span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="city" type="text"
+                                                                        maxlength="255"
                                                                         class="form-control"
+                                                                        aria-label="city"
                                                                         id="city"
                                                                         value="${profile.city}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span><spring:message
                                                                         code="adminProfileEditPage.tab.profile.job"/></span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="jobTitle" type="text"
+                                                                        maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="jobTitle"
                                                                         id="jobTitle"
                                                                         value="${profile.jobTitle}"/>
                                                         </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span><spring:message
                                                                         code="adminProfileEditPage.tab.profile.mobile"/></span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="mobilePhone"
+                                                                        maxlength="45"
                                                                         type="text"
                                                                         class="form-control"
+                                                                        aria-label="mobilePhone"
                                                                         id="mobilePhone"
                                                                         value="${profile.mobilePhone}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span><spring:message
                                                                         code="adminProfileEditPage.tab.profile.homePhone"/></span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="homePhone" type="text"
+                                                                        maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="homePhone"
                                                                         id="homePhone"
                                                                         value="${profile.homePhone}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span>GitHub</span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="githubName"
-                                                                        type="text"
+                                                                        type="text" maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="githubName"
                                                                         id="github"
                                                                         value="${profile.githubName}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span>Twitter</span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="twitterName"
-                                                                        type="text"
+                                                                        type="text" maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="twitterName"
                                                                         id="twitter"
                                                                         value="${profile.twitterName}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span>Instagram</span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="instagramName"
-                                                                        type="text"
+                                                                        type="text" maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="instagramName"
                                                                         id="instagram"
                                                                         value="${profile.instagramName}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span>Facebook</span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="facebookName"
-                                                                        type="text"
+                                                                        type="text" maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="facebookName"
                                                                         id="facebook"
                                                                         value="${profile.facebookName}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                                        <div class="col-3 d-flex align-items-center justify-content-end">
                                                             <h6 class="mb-0 text-secondary">
                                                                 <span>Skype</span>
                                                             </h6>
                                                         </div>
-                                                        <div class="col-sm-8 form-outline">
+                                                        <div class="col-8 form-outline">
                                                             <form:input path="skypeName" type="text"
+                                                                        maxlength="45"
                                                                         class="form-control"
+                                                                        aria-label="skypeName"
                                                                         id="skype"
                                                                         value="${profile.skypeName}"/>
                                                         </div>
@@ -286,33 +300,43 @@
                                                         <form:input path="id" type="hidden" id="id"
                                                                     class="form-control"
                                                                     value="${profile.basicInformation.id}"/>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-6">
                                                             <label for="firstname"
                                                                    class="text-secondary"><spring:message
                                                                     code="adminProfileEditPage.tab.basicInfo.firstname"/></label>
                                                             <form:input path="firstname" type="text"
+                                                                        maxlength="255"
                                                                         id="firstname"
                                                                         class="form-control"
+                                                                        aria-label="firstname"
                                                                         value="${profile.basicInformation.firstname}"/>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-6">
                                                             <label for="lastname"
                                                                    class="text-secondary"><spring:message
                                                                     code="adminProfileEditPage.tab.basicInfo.lastname"/></label>
                                                             <form:input path="lastname" type="text"
+                                                                        maxlength="255"
                                                                         id="lastname"
                                                                         class="form-control"
+                                                                        aria-label="lastname"
                                                                         value="${profile.basicInformation.lastname}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-6">
+                                                        <div class="col-6">
                                                             <label for="gender"
                                                                    class="text-secondary"><spring:message
                                                                     code="adminProfileEditPage.tab.basicInfo.gender"/></label>
                                                             <form:select path="gender"
                                                                          class="form-select form-select"
                                                                          id="gender">
+                                                                <option name="${Gender.NOT_KNOWN}"
+                                                                        value="${Gender.NOT_KNOWN}"
+                                                                        <c:if
+                                                                                test="${profile.basicInformation.gender == Gender.NOT_KNOWN.name()}"> selected </c:if>>
+                                                                    Not known
+                                                                </option>
                                                                 <option name="${Gender.MALE}"
                                                                         value="${Gender.MALE}" <c:if
                                                                         test="${profile.basicInformation.gender == Gender.MALE.name()}"> selected </c:if>>
@@ -324,20 +348,28 @@
                                                                                 test="${profile.basicInformation.gender == Gender.FEMALE.name()}"> selected </c:if>>
                                                                     Female
                                                                 </option>
+                                                                <option name="${Gender.NOT_APPLICABLE}"
+                                                                        value="${Gender.NOT_APPLICABLE}"
+                                                                        <c:if
+                                                                                test="${profile.basicInformation.gender == Gender.NOT_APPLICABLE.name()}"> selected </c:if>>
+                                                                    Not applicable
+                                                                </option>
                                                             </form:select>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-6">
                                                             <label for="birthday"
                                                                    class="text-secondary"><spring:message
                                                                     code="adminProfileEditPage.tab.basicInfo.birthday"/></label>
                                                             <form:input path="birthday" type="date"
+                                                                        pattern="\d{4}-\d{2}-\d{2}"
+                                                                        aria-label="birthday"
                                                                         class="form-control p-1"
                                                                         id="birthday"
                                                                         value="${profile.basicInformation.birthday}"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3 mx-auto">
-                                                        <div class="col-sm-6">
+                                                        <div class="col-6">
                                                             <label for="relationship"
                                                                    class="text-secondary"><spring:message
                                                                     code="adminProfileEditPage.tab.basicInfo.relationship"/></label>
@@ -393,9 +425,9 @@
                                                             <p class="text-secondary">
                                                                 <spring:message
                                                                         code="adminProfileEditPage.tab.security.currentEmail"/>: ${profile.user.email}</p>
-                                                            <div class="col-sm-6">
-                                                                <input type="text" id="email"
-                                                                       class="form-control"
+                                                            <div class="col-6">
+                                                                <input type="text" id="email" maxlength="255"
+                                                                       class="form-control" aria-label="email"
                                                                        name="email"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.newEmail"/>"/>
                                                             </div>
@@ -433,19 +465,19 @@
                                                             <p class="text-secondary">
                                                                 <spring:message
                                                                         code="adminProfileEditPage.tab.security.createPassword"/></p>
-                                                            <div class="col-sm-8">
-                                                                <input type="password"
+                                                            <div class="col-8">
+                                                                <input type="password" maxlength="20"
                                                                        id="new-password"
-                                                                       class="form-control"
+                                                                       class="form-control" aria-label="password"
                                                                        name="newPassword"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.newPassword"/>"/>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3 mx-auto justify-content-center text-center">
-                                                            <div class="col-sm-8">
-                                                                <input type="password"
+                                                            <div class="col-8">
+                                                                <input type="password" maxlength="20"
                                                                        id="re-password"
-                                                                       class="form-control"
+                                                                       class="form-control" aria-label="re-password"
                                                                        name="confirmPassword"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.confirmPassword"/>"/>
                                                             </div>

@@ -5,6 +5,7 @@ import by.sam_solutions.kazak.social_network.entities.Role;
 import by.sam_solutions.kazak.social_network.facades.RoleFacade;
 import by.sam_solutions.kazak.social_network.services.ProfileService;
 import by.sam_solutions.kazak.social_network.services.RoleService;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class RoleFacadeImpl implements RoleFacade {
   @Override
   public void changeProfileRole(Profile profile, Long roleId) {
     profile.getUser().setRole(roleService.getById(roleId));
+    profile.setUpdateTime(LocalDateTime.now());
     profileService.saveOrUpdate(profile);
   }
 

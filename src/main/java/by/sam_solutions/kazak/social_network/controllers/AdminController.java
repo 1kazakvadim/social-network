@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,12 +24,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 @Controller
+@RequestMapping("/admin/profiles")
 public class AdminController {
 
   @Autowired
@@ -57,14 +58,14 @@ public class AdminController {
   @Autowired
   private MessageSource messageSource;
 
-  @GetMapping("/admin/profiles")
+  @GetMapping("/")
   public String getProfilesPage(Model model) {
     List<Profile> profiles = profileFacade.getAll();
     model.addAttribute("profiles", profiles);
     return "profiles";
   }
 
-  @GetMapping("/admin/profiles/{profileId}/edit")
+  @GetMapping("/{profileId}/edit")
   public ModelAndView getProfileEditPageByAdmin(HttpServletRequest request,
       ModelAndView modelAndView, @PathVariable Long profileId) {
     ContactInformationDTO contactInformationDTO = new ContactInformationDTO();
@@ -92,7 +93,7 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/profile")
+  @PostMapping("/{profileId}/edit/profile")
   public ModelAndView saveProfileInfoByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId,
       @Valid @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
@@ -110,7 +111,7 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/basic")
+  @PostMapping("/{profileId}/edit/basic")
   public ModelAndView saveProfileBasicInfoByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId,
       @Valid @ModelAttribute("basicInformationDTO") BasicInformationDTO basicInformationDTO,
@@ -129,7 +130,7 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/email-change")
+  @PostMapping("/{profileId}/edit/email-change")
   public ModelAndView saveProfileEmailChangeByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId,
       @RequestParam("email") String email, RedirectAttributes redirectAttributes, Locale locale) {
@@ -158,13 +159,13 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/password-change")
+  @PostMapping("/{profileId}/edit/password-change")
   public ModelAndView saveProfilePasswordChangeByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId, @RequestParam("newPassword") String newPassword,
       @RequestParam("confirmPassword") String confirmPassword,
       RedirectAttributes redirectAttributes, Locale locale) {
     Profile profile = profileFacade.getById(profileId);
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/admin/profiles/");
       return modelAndView;
     }
@@ -188,12 +189,12 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/role-change")
+  @PostMapping("/{profileId}/edit/role-change")
   public ModelAndView saveProfileRoleChangeByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId,
       @RequestParam("role") Long roleId, RedirectAttributes redirectAttributes, Locale locale) {
     Profile profile = profileFacade.getById(profileId);
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/admin/profiles/");
       return modelAndView;
     }
@@ -205,18 +206,17 @@ public class AdminController {
     return modelAndView;
   }
 
-  @PostMapping("/admin/profiles/{profileId}/edit/lock-change")
+  @PostMapping("/{profileId}/edit/lock-change")
   public ModelAndView saveProfileLockingChangeByAdmin(ModelAndView modelAndView,
       @PathVariable Long profileId,
       @RequestParam("isLocked") boolean isLocked, RedirectAttributes redirectAttributes,
       Locale locale) {
     Profile profile = profileFacade.getById(profileId);
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/admin/profiles/");
       return modelAndView;
     }
     profileFacade.changeProfileLock(profile, isLocked);
-    System.err.println(isLocked);
     redirectAttributes.addFlashAttribute("lockMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.lockChanged", null,
             locale));

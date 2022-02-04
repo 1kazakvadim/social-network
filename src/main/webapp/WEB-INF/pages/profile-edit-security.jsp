@@ -17,18 +17,18 @@
     <div class="container">
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
-            <div class="col-sm-6">
+            <div class="col-6">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-8">
                                 <h4 class="mb-0"><span><spring:message
                                         code="securityPage.title"/></span></h4>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-12">
                                 <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded mb-1"
                                    href="<c:url value='/edit/security/password-change'/>">
                                     <i class="icon-unlock icon-large nav-profile-side-icon"></i>
@@ -36,9 +36,9 @@
                                 <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded mb-1 d-flex"
                                    href="<c:url value='/edit/security/email-change'/>">
                                     <i class="icon-envelope icon-large nav-profile-side-icon"></i>
-                                    <span class="col-sm-6"><spring:message
+                                    <span class="col-6"><spring:message
                                             code="securityPage.email"/></span>
-                                    <span class="col-sm-6">${profile.user.email}</span>
+                                    <span class="col-6">${profile.user.email}</span>
                                 </a>
                                 <a class="list-group-item list-group-item-action list-group-item-danger border-0 rounded mb-1 delete-link"
                                    data-bs-toggle="modal" data-bs-target="#delete-account" href="#">

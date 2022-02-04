@@ -18,11 +18,11 @@
     <div class="container">
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
-            <div class="col-sm-6">
+            <div class="col-6">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-8">
                                 <h4 class="mb-0"><span><spring:message
                                         code="emailChangePage.title"/></span></h4>
                             </div>
@@ -42,8 +42,9 @@
                             <div class="row mb-3 mx-auto justify-content-center text-center">
                                 <p class="text-secondary"><spring:message
                                         code="emailChangePage.currentEmail"/>: ${email}</p>
-                                <div class="col-sm-6">
+                                <div class="col-6">
                                     <input type="text" id="email" class="form-control" name="email"
+                                           maxlength="255" aria-label="email"
                                            placeholder="<spring:message
                                         code="emailChangePage.placeholder.newEmail"/>"/>
                                 </div>

@@ -1,17 +1,12 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
@@ -39,13 +34,6 @@ public class User implements Serializable {
 
   @Column(name = "locked", nullable = false)
   private boolean isLocked;
-
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-      name = "users_to_dialogs",
-      joinColumns = {@JoinColumn(name = "user_id")},
-      inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
-  private Set<Dialog> dialogs = new HashSet<>();
 
   public User() {}
 
@@ -100,14 +88,6 @@ public class User implements Serializable {
 
   public void setLocked(boolean locked) {
     isLocked = locked;
-  }
-
-  public Set<Dialog> getProjects() {
-    return dialogs;
-  }
-
-  public void setProjects(Set<Dialog> projects) {
-    this.dialogs = projects;
   }
 
 }

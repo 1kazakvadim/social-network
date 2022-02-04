@@ -33,7 +33,7 @@ public class FriendController {
   public ModelAndView modelAndView(ModelAndView modelAndView, @PathVariable Long userId,
       Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
-    if (null == profileFacade.getById(profile.getId())) {
+    if (profileFacade.getById(profile.getId()) == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
@@ -62,7 +62,7 @@ public class FriendController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
-    if (null == acceptFriendRequestProfile) {
+    if (acceptFriendRequestProfile == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
@@ -100,7 +100,7 @@ public class FriendController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
-    if (null == acceptFriendRequestProfile) {
+    if (acceptFriendRequestProfile == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
@@ -111,7 +111,7 @@ public class FriendController {
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
-    if (null == friend) {
+    if (friend == null) {
       modelAndView.setViewName("redirect:/id" + userId);
       return modelAndView;
     }
@@ -136,7 +136,7 @@ public class FriendController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
-    if (null == acceptFriendRequestProfile) {
+    if (acceptFriendRequestProfile == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
@@ -147,7 +147,7 @@ public class FriendController {
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
-    if (null == friend) {
+    if (friend == null) {
       modelAndView.setViewName("redirect:/id" + userId);
       return modelAndView;
     }
@@ -183,7 +183,7 @@ public class FriendController {
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
-    if (null == friend) {
+    if (friend == null) {
       modelAndView.setViewName("redirect:/id" + userId);
       return modelAndView;
     }

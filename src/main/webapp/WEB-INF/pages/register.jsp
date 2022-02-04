@@ -16,7 +16,7 @@
 <jsp:include page="header.jsp"/>
 
 <section>
-    <div class="container-lg">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <div>
@@ -33,20 +33,26 @@
                         </div>
                     </c:if>
                     <form:form action="register" id="register" method="POST"
-                               modelAttribute="profileDTO">
+                               modelAttribute="profileDTO" class="needs-validation"
+                               novalidate="novalidate"
+                               oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "error" : "")'>
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-floating">
-                                    <form:input path="firstname" type="text" id="firstname"
-                                                class="form-control"/>
+                                    <form:input path="firstname" type="text" id="firstname" min="1"
+                                                maxlength="255"
+                                                class="form-control" aria-label="firstname"
+                                                required="required"/>
                                     <label class="text-secondary" for="firstname"><spring:message
                                             code="registerPage.firstname"/></label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <form:input path="lastname" type="text" id="lastname"
-                                                class="form-control"/>
+                                    <form:input path="lastname" type="text" id="lastname" min="1"
+                                                maxlength="255"
+                                                class="form-control" aria-label="lastname"
+                                                required="required"/>
                                     <label class="text-secondary" for="lastname"><spring:message
                                             code="registerPage.lastname"/></label>
                                 </div>
@@ -56,32 +62,41 @@
                             <div class="col">
                                 <label class="text-secondary" for="birthday"><spring:message
                                         code="registerPage.birthday"/></label>
-                                <form:input path="birthday" type="date"
-                                            class="form-control text-secondary p-1" id="birthday"/>
+                                <form:input path="birthday" type="date" pattern="\d{4}-\d{2}-\d{2}"
+                                            aria-label="birthday"
+                                            class="form-control text-secondary p-1" id="birthday"
+                                            required="required"/>
                             </div>
                             <div class="col">
                                 <p class="text-secondary mb-0"><spring:message
                                         code="registerPage.gender"/></p>
                                 <div class="btn-group">
-                                    <form:radiobutton path="gender" checked="true" class="btn-check"
-                                                      name="${Gender.MALE}" id="male"
-                                                      autocomplete="off" value="${Gender.MALE}"/>
-                                    <label class="btn btn-outline-primary"
-                                           for="male"><spring:message
-                                            code="registerPage.gender.male"/></label>
-                                    <form:radiobutton path="gender" class="btn-check"
-                                                      name="${Gender.FEMALE}" id="female"
-                                                      autocomplete="off" value="${Gender.FEMALE}"/>
-                                    <label class=" btn btn-outline-primary"
-                                           for="female"><spring:message
-                                            code="registerPage.gender.female"/></label>
+                                    <form:select path="gender" class="form-select form-select"
+                                                 id="gender" required="required">
+                                        <option name="${Gender.NOT_KNOWN}"
+                                                value="${Gender.NOT_KNOWN}">
+                                            Not known
+                                        </option>
+                                        <option name="${Gender.MALE}" value="${Gender.MALE}">
+                                            Male
+                                        </option>
+                                        <option name="${Gender.FEMALE}" value="${Gender.FEMALE}">
+                                            Female
+                                        </option>
+                                        <option name="${Gender.NOT_APPLICABLE}"
+                                                value="${Gender.NOT_APPLICABLE}">
+                                            Not applicable
+                                        </option>
+                                    </form:select>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-floating">
-                                <form:input path="email" type="email" id="email"
-                                            class="form-control" name="email"/>
+                                <form:input path="email" type="email" id="email" min="1"
+                                            maxlength="255"
+                                class="form-control" aria-label="email" name="email"
+                                required="required"/>
                                 <label class="text-secondary" for="email"><spring:message
                                         code="registerPage.email"/></label>
                             </div>
@@ -90,8 +105,9 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <form:input path="password" type="password" id="password"
-                                                class="form-control"
-                                                name="password"/>
+                                                maxlength="20"
+                                                class="form-control" aria-label="password"
+                                                name="password" required="required"/>
                                     <label class="text-secondary" for="password"><spring:message
                                             code="registerPage.password"/></label>
                                 </div>
@@ -99,8 +115,10 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <form:input path="confirmPassword" type="password"
-                                                id="confirm-password"
-                                                class="form-control" name="confirmPassword"/>
+                                                id="confirm-password" min="1" maxlength="20"
+                                                class="form-control" aria-label="confirm-password"
+                                                name="confirmPassword"
+                                                required="required"/>
                                     <label class="text-secondary"
                                            for="confirm-password"><spring:message
                                             code="registerPage.confirmPassword"/></label>
@@ -112,7 +130,8 @@
                                 <form:checkbox path="termsAndConditions"
                                                class="form-check-input me-2"
                                                value="true"
-                                               id="terms" name="termsAndConditions"/>
+                                               id="terms" name="termsAndConditions"
+                                               required="required"/>
                                 <label class="form-check-label" for="terms">
                                     <spring:message
                                             code="registerPage.termsAndConditions"/>
@@ -135,6 +154,7 @@
 <jsp:include page="footer.jsp"/>
 
 <style:scripts/>
+<style:register-form-validation/>
 
 </body>
 </html>

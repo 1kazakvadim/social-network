@@ -36,24 +36,24 @@
                         <c:forEach items="${profiles}" var="profile">
                             <tr>
                                 <td>${profile.user.id}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         class="row-link"></a></td>
                                 <td>${profile.basicInformation.firstname}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1"
                                         class="row-link"></a>
                                 </td>
                                 <td>${profile.basicInformation.lastname}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1"
                                         class="row-link"></a>
                                 </td>
                                 <td>${profile.user.email}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1"
                                         class="row-link"></a></td>
                                 <td>${profile.user.role.name}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1"
                                         class="row-link"></a></td>
                                 <td><c:choose>
@@ -63,13 +63,13 @@
                                     <c:otherwise>
                                         <spring:message code="profilesPage.isLocked.no"/>
                                     </c:otherwise>
-                                </c:choose><a href="<c:url value="profiles/${profile.id}/edit"/>"
+                                </c:choose><a href="<c:url value="${profile.id}/edit"/>"
                                               tabindex="-1" class="row-link"></a></td>
                                 <td>${profile.timeRegistration.toLocalDate()} ${profile.timeRegistration.toLocalTime()}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1" class="row-link"></a></td>
                                 <td>${profile.updateTime.toLocalDate()} ${profile.updateTime.toLocalTime()}<a
-                                        href="<c:url value="profiles/${profile.id}/edit"/>"
+                                        href="<c:url value="${profile.id}/edit"/>"
                                         tabindex="-1" class="row-link"></a></td>
                             </tr>
                         </c:forEach>

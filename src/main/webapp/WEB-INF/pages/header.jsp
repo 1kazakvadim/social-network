@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand mb-4">
-    <div class="container-lg">
+    <div class="container">
         <a class="navbar-brand" href="<c:url value='/'/>">Social Network</a>
         <sec:authorize access="isAuthenticated()">
             <div class="collapse navbar-collapse">
@@ -32,6 +32,7 @@
                                            value="${_csrf.token}"/>
                                     <button type="submit"
                                             class="dropdown-item p-0">
+                                        <i class="icon-signout icon-large"></i>
                                         <span class="p-4"><spring:message
                                                 code="nav.signOut"/></span>
                                     </button>

@@ -44,7 +44,7 @@ public class PhotoController {
   public ModelAndView getPhotosPage(HttpServletRequest request, ModelAndView modelAndView,
       @PathVariable Long userId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
@@ -73,7 +73,7 @@ public class PhotoController {
       modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
-    if (null == file) {
+    if (file == null) {
       redirectAttributes.addFlashAttribute("messageError",
           messageSource.getMessage("uploadPage.error.empty", null,
               locale));
@@ -96,12 +96,12 @@ public class PhotoController {
   public ModelAndView getViewPhotoPage(ModelAndView modelAndView, @PathVariable Long userId,
       @PathVariable Long photoId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/");
       return modelAndView;
     }
     Photo photo = photoFacade.getById(photoId);
-    if (null == photo) {
+    if (photo == null) {
       modelAndView.setViewName("redirect:/id" + userId + "/photos");
       return modelAndView;
     }
@@ -136,7 +136,7 @@ public class PhotoController {
       @PathVariable Long photoId, @RequestParam Long commentId,
       @AuthenticationPrincipal UserPrincipal user) {
     Profile profile = profileFacade.getProfileByUserId(user.getId());
-    if (null == profile) {
+    if (profile == null) {
       modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
       return modelAndView;
     }

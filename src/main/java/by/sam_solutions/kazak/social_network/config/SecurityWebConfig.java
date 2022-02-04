@@ -1,6 +1,7 @@
 package by.sam_solutions.kazak.social_network.config;
 
 import by.sam_solutions.kazak.social_network.filters.EncodingFilter;
+import by.sam_solutions.kazak.social_network.services.impl.WebAppAccessDeniedHandler;
 import by.sam_solutions.kazak.social_network.services.impl.WebAppAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 @Configuration
@@ -48,6 +50,11 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     return authProvider;
   }
 
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return new WebAppAccessDeniedHandler();
+  }
+
   @Override
   protected void configure(AuthenticationManagerBuilder auth) {
     auth.authenticationProvider(authProvider());
@@ -56,19 +63,23 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
-    http.
-        authorizeRequests()
-//        .antMatchers("/profile").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-//        .antMatchers("/users/**").hasAnyRole(ROLE_ADMIN)
-        .antMatchers("/**").permitAll()
+    http.csrf().and()
+        . authorizeRequests()
+        .antMatchers("/id{userId}/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+        .antMatchers("/edit/**").hasAnyRole(ROLE_USER)
+        .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN)
+        .antMatchers("/register/**").permitAll()
+        .antMatchers("/confirm-register/**").permitAll()
+        .antMatchers("/recover-password/**").permitAll()
+        .antMatchers("/confirm-reset/**").permitAll()
         .and().formLogin().loginPage("/login").permitAll()
         .successHandler(webAppAuthenticationSuccessHandler)
         .and()
         .logout().logoutSuccessUrl("/login")
         .and()
         .rememberMe().key(environment.getRequiredProperty("security.rememberMe.key"))
-        .userDetailsService(userDetailsService);
-//        .and().exceptionHandling().accessDeniedPage("/errors/403");
+        .userDetailsService(userDetailsService)
+        .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
 
   @Override

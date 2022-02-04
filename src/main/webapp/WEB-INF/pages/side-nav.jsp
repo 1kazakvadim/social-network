@@ -5,7 +5,7 @@
 
 <sec:authentication var="user" property="principal"/>
 
-<div class="col-sm-2 offset-sm-1">
+<div class="col-2 offset-1">
     <div class="list-group list-group-flush">
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
            href="<c:url value='/'/>">
@@ -13,19 +13,17 @@
             <span><spring:message code="nav.profile"/></span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-           href="#">
+           href="<c:url value='/id${user.id}/messages'/>">
             <i class="icon-comment-alt icon-large"></i>
             <span><spring:message code="nav.messages"/></span>
-            <span class="badge bg-primary rounded-pill">14</span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
            href="<c:url value='/id${user.id}/friends'/>">
             <i class="icon-group icon-large"></i>
             <span><spring:message code="nav.friends"/></span>
-            <span class="badge bg-primary rounded-pill">7</span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-           href="<c:url value='/id${profile.id}/photos'/>">
+           href="<c:url value='/id${user.id}/photos'/>">
             <i class="icon-picture icon-large"></i>
             <span><spring:message code="nav.photos"/></span>
         </a>
@@ -35,22 +33,11 @@
             <span><spring:message code="nav.settings"/></span>
         </a>
         <sec:authorize access="hasRole('ADMIN')">
-            <a class="list-group-item list-group-item-action list-group-item-light border-0 dropdown-toggle"
-               data-bs-toggle="collapse" href="#" role="button" aria-expanded="false"
-               aria-controls="collapseMenu">
+            <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
+               href="<c:url value='/admin/profiles/' />">
                 <i class="icon-cogs icon-large "></i>
                 <span><spring:message code="nav.administration"/></span>
             </a>
-            <div class="collapse" id="collapseMenu">
-                <div>
-                    <ul class="nav-administration">
-                        <li><a class="dropdown-item rounded"
-                               href="<c:url value='/admin/profiles'/>"><spring:message
-                                code="nav.users"/></a></li>
-                    </ul>
-                </div>
-            </div>
-        <hr class="solid">
         </sec:authorize>
     </div>
 </div>

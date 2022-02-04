@@ -21,17 +21,17 @@
 
             <jsp:include page="side-nav.jsp"/>
 
-            <div class="col-sm-8">
+            <div class="col-8">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-9">
                                         <h4 class="mb-0 align-content-center"><span><spring:message
                                                 code="photoPage.title"/></span></h4>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-3">
                                         <button type="button" data-bs-target="#upload-photo"
                                                 data-bs-toggle="modal"
                                                 class="btn btn-primary btn-sm d-block mx-auto mb-3">
@@ -88,7 +88,7 @@
                                                 </div>
                                             </c:if>
                                             <c:forEach items="${photos}" var="photo">
-                                                <div class="col-12 col-sm-6 col-lg-3 p-1">
+                                                <div class="col-12 col-6 col-lg-3 p-1">
                                                     <a href="<c:url value="/id${userId}/photos/${photo.id}"/>">
                                                         <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${photo.name}"/>"
                                                              class="d-block w-100">

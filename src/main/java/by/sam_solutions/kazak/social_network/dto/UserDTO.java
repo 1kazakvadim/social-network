@@ -13,15 +13,6 @@ public class UserDTO {
   public UserDTO() {
   }
 
-  public UserDTO(Long id, String email, String password,
-      Role role, boolean isLocked) {
-    this.id = id;
-    this.email = email;
-    this.password = password;
-    this.role = role;
-    this.isLocked = isLocked;
-  }
-
   public Long getId() {
     return id;
   }

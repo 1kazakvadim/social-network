@@ -65,6 +65,7 @@ public class SettingController {
     modelAndView.addObject("countries", countryFacade.getAll());
     Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
     if (inputFlashMap != null) {
+      modelAndView.addObject("errors", inputFlashMap.get("errors"));
       modelAndView.addObject("messageSuccess", inputFlashMap.get("messageSuccess"));
     }
     modelAndView.setViewName("profile-edit");
@@ -76,14 +77,15 @@ public class SettingController {
       @Valid @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
     if (result.hasErrors()) {
-      modelAndView.setViewName("profile-edit");
+      redirectAttributes.addFlashAttribute("errors", result);
+      modelAndView.setViewName("redirect:/edit/profile");
       return modelAndView;
     }
     profileFacade.updateContactInformationInProfile(contactInformationDTO);
     redirectAttributes.addFlashAttribute("messageSuccess",
         messageSource.getMessage("profileEditPage.success.informationUpdated", null,
             locale));
-    modelAndView.setViewName("redirect:/edit/profile-edit");
+    modelAndView.setViewName("redirect:/edit/profile");
     return modelAndView;
   }
 
@@ -96,6 +98,7 @@ public class SettingController {
     modelAndView.addObject("relationships", relationshipFacade.getAll());
     Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
     if (inputFlashMap != null) {
+      modelAndView.addObject("errors", inputFlashMap.get("errors"));
       modelAndView.addObject("messageSuccess", inputFlashMap.get("messageSuccess"));
     }
     modelAndView.setViewName("profile-edit-basic");
@@ -108,8 +111,8 @@ public class SettingController {
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
     basicInformationDtoValidator.validate(basicInformationDTO, result);
     if (result.hasErrors()) {
-      modelAndView.addObject("relationships", relationshipFacade.getAll());
-      modelAndView.setViewName("profile-edit-basic");
+      redirectAttributes.addFlashAttribute("errors", result);
+      modelAndView.setViewName("redirect:/edit/basic");
       return modelAndView;
     }
     basicInformationFacade.updateBasicInformation(basicInformationDTO);
@@ -207,19 +210,18 @@ public class SettingController {
 
   @PostMapping("/upload-profile-photo")
   public ModelAndView uploadProfilePhoto(ModelAndView modelAndView,
-      @RequestParam("file") MultipartFile file,
+      @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
       @AuthenticationPrincipal UserPrincipal user, Locale locale) {
-    if (null == file) {
-      modelAndView.addObject("messageError",
+    if (file == null) {
+      redirectAttributes.addFlashAttribute("error",
           messageSource.getMessage("uploadPage.error.empty", null, locale));
-      modelAndView.setViewName("profile");
+      modelAndView.setViewName("redirect:/id" + user.getId());
       return modelAndView;
     }
     if (!photoFacade.isMultipartFileValid(file)) {
-      modelAndView.addObject("messageError",
-          messageSource.getMessage("uploadPage.error.isMultipartFileValid",
-              null, locale));
-      modelAndView.setViewName("profile");
+      redirectAttributes.addFlashAttribute("error",
+          messageSource.getMessage("uploadPage.error.isMultipartFileValid", null, locale));
+      modelAndView.setViewName("redirect:/id" + user.getId());
       return modelAndView;
     }
     Profile profile = profileFacade.getProfileByUserId(user.getId());

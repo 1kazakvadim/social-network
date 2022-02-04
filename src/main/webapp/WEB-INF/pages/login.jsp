@@ -14,7 +14,7 @@
 <jsp:include page="header.jsp"/>
 
 <section>
-    <div class="container-lg">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <c:if test="${param.error != null}">
@@ -38,7 +38,8 @@
                            value="${_csrf.token}"/>
                     <div class="mb-4">
                         <div class="form-floating">
-                            <input type="email" id="email" class="form-control form-control-lg"
+                            <input type="email" id="email" maxlength="255"
+                                   class="form-control form-control-lg" aria-label="email"
                                    name="username"/>
                             <label class="text-secondary" for="email"><spring:message
                                     code="loginPage.email"/></label>
@@ -46,7 +47,8 @@
                     </div>
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input type="password" id="password"
+                            <input type="password" id="password" maxlength="20"
+                                   aria-label="password"
                                    class="form-control form-control-lg" name="password"/>
                             <label class="text-secondary" for="password"><spring:message
                                     code="loginPage.password"/></label>
@@ -55,6 +57,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check mb-0">
                             <input class="form-check-input me-2" type="checkbox" name="remember-me"
+                                   aria-label="remember-me"
                                    id="remember-me"/>
                             <label class="form-check-label" for="remember-me">
                                 <spring:message code="loginPage.rememberMe"/>

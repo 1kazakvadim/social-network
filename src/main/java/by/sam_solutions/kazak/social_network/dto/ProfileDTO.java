@@ -21,20 +21,6 @@ public class ProfileDTO {
   public ProfileDTO() {
   }
 
-  public ProfileDTO(Long id, String firstname, String lastname, LocalDate birthday,
-      Gender gender, String email, String password, String confirmPassword,
-      String termsAndConditions) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.birthday = birthday;
-    this.gender = gender;
-    this.email = email;
-    this.password = password;
-    this.confirmPassword = confirmPassword;
-    this.termsAndConditions = termsAndConditions;
-  }
-
   public Long getId() {
     return id;
   }

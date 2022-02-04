@@ -14,7 +14,7 @@
 <jsp:include page="header.jsp"/>
 
 <section>
-    <div class="container-lg">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <c:if test="${messageError != null}">
@@ -30,6 +30,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="password" id="new-password" class="form-control"
+                                           maxlength="20" aria-label="password"
                                            name="newPassword"/>
                                     <label class="text-secondary" for="new-password"><spring:message
                                             code="resetPasswordPage.newPassword"/></label>
@@ -37,7 +38,8 @@
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="password" id="confirm-password"
+                                    <input type="password" id="confirm-password" maxlength="20"
+                                           aria-label="confirm-password"
                                            class="form-control" name="confirmPassword">
                                     <label class="text-secondary"
                                            for="confirm-password"><spring:message

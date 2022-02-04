@@ -14,7 +14,7 @@
 <jsp:include page="header.jsp"/>
 
 <section>
-    <div class="container-lg">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <c:if test="${messageError != null}">
@@ -30,9 +30,10 @@
                 <form:form action="recover-password" method="POST">
                     <div class="mb-4">
                         <p><spring:message
-                            code="recoverPasswordPage.title"/></p>
+                                code="recoverPasswordPage.title"/></p>
                         <div class="form-floating">
-                            <input type="email" id="email" class="form-control" name="email"/>
+                            <input type="email" id="email" maxlength="255" aria-label="email"
+                                   class="form-control" name="email"/>
                             <label class="text-secondary" for="email"><spring:message
                                     code="loginPage.email"/></label>
                         </div>
