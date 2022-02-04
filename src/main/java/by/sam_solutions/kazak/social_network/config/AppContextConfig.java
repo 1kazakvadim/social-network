@@ -1,5 +1,6 @@
 package by.sam_solutions.kazak.social_network.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -71,11 +71,21 @@ public class AppContextConfig {
 
   @Bean
   public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    HikariDataSource dataSource = new HikariDataSource();
     dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+    dataSource.setJdbcUrl(environment.getRequiredProperty("jdbc.url"));
     dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
     dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+    dataSource.setMinimumIdle(
+        Integer.parseInt(environment.getRequiredProperty("hikari.minimum-idle")));
+    dataSource.setMaximumPoolSize(
+        Integer.parseInt(environment.getRequiredProperty("hikari.maximum-pool-size")));
+    dataSource.setAutoCommit(
+        Boolean.parseBoolean(environment.getRequiredProperty("hikari.auto-commit")));
+    dataSource.setIdleTimeout(
+        Long.parseLong(environment.getRequiredProperty("hikari.idle-timeout")));
+    dataSource.setMaxLifetime(
+        Long.parseLong(environment.getRequiredProperty("hikari.max-lifetime")));
     return dataSource;
   }
 
