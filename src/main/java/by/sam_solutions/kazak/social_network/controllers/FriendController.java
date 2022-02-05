@@ -33,8 +33,8 @@ public class FriendController {
   public ModelAndView modelAndView(ModelAndView modelAndView, @PathVariable Long userId,
       Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
-    if (profileFacade.getById(profile.getId()) == null) {
-      modelAndView.setViewName("redirect:/");
+    if (profile == null) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     List<Profile> friends = profileFacade.getProfilesByFriendStatus(profile.getId(),
@@ -63,33 +63,33 @@ public class FriendController {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
     if (acceptFriendRequestProfile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     if (Objects.equals(makeFriendRequestProfile.getId(), acceptFriendRequestProfile.getId())) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
-    if (null == friend) {
+    if (friend == null) {
       friendFacade.createFriendWithFriendStatus(makeFriendRequestProfile,
           acceptFriendRequestProfile, FriendStatus.FRIEND_REQUEST);
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isNonFriend(friend)) {
       friendFacade.changeFriendStatus(friend, FriendStatus.FRIEND_REQUEST);
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.hasFriendRequest(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     return modelAndView;
@@ -101,31 +101,31 @@ public class FriendController {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
     if (acceptFriendRequestProfile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     if (Objects.equals(makeFriendRequestProfile.getId(), acceptFriendRequestProfile.getId())) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
     if (friend == null) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isNonFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.hasFriendRequest(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isFriend(friend)) {
       friendFacade.changeFriendStatus(friend, FriendStatus.NON_FRIEND);
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     return modelAndView;
@@ -137,31 +137,31 @@ public class FriendController {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
     if (acceptFriendRequestProfile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     if (Objects.equals(makeFriendRequestProfile.getId(), acceptFriendRequestProfile.getId())) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
     if (friend == null) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isNonFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.hasFriendRequest(friend)) {
       friendFacade.changeFriendStatus(friend, FriendStatus.NON_FRIEND);
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     return modelAndView;
@@ -173,31 +173,31 @@ public class FriendController {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
     if (null == acceptFriendRequestProfile) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     if (Objects.equals(makeFriendRequestProfile.getId(), acceptFriendRequestProfile.getId())) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         makeFriendRequestProfile.getId(),
         acceptFriendRequestProfile.getId());
     if (friend == null) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isNonFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.isFriend(friend)) {
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     if (friendFacade.hasFriendRequest(friend)) {
       friendFacade.changeFriendStatus(friend, FriendStatus.IN_FRIEND);
-      modelAndView.setViewName("redirect:/id" + userId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId);
       return modelAndView;
     }
     return modelAndView;

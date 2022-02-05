@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
@@ -29,63 +30,66 @@
                                         <div class="profile-image-wrap">
                                             <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${profile.profilePhotoName}"/>"
                                                  class="rounded-circle" alt="profile-photo">
-                                            <div class="profile-image-action list-group">
-                                                <a href="#" data-bs-toggle="modal"
-                                                   data-bs-target="#upload-profile-photo">
-                                                    <i class="icon-upload"></i>
-                                                    <span><spring:message
-                                                            code="profilePage.uploadPhoto"/></span>
-                                                </a>
-                                                <div class="modal fade" id="upload-profile-photo"
-                                                     tabindex="-1">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="upload-profile-photo-label">
-                                                                    <spring:message
-                                                                            code="uploadPage.title"/></h5>
-                                                                <button type="button"
-                                                                        class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                            </div>
-                                                            <c:if test="${error != null}">
-                                                                <div class="alert alert-danger"
-                                                                     role="alert">
-                                                                        ${error}
+                                            <c:if test="${user.id == profile.user.id}">
+                                                <div class="profile-image-action list-group">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                       data-bs-target="#upload-profile-photo">
+                                                        <i class="icon-upload"></i>
+                                                        <span><spring:message
+                                                                code="profilePage.uploadPhoto"/></span>
+                                                    </a>
+                                                    <div class="modal fade"
+                                                         id="upload-profile-photo"
+                                                         tabindex="-1">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="upload-profile-photo-label">
+                                                                        <spring:message
+                                                                                code="uploadPage.title"/></h5>
+                                                                    <button type="button"
+                                                                            class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
                                                                 </div>
-                                                            </c:if>
-                                                            <div class="modal-body">
-                                                                <form:form
-                                                                        action="upload-profile-photo"
-                                                                        method="POST"
-                                                                        enctype="multipart/form-data">
-                                                                    <input type="hidden"
-                                                                           name="${_csrf.parameterName}"
-                                                                           value="${_csrf.token}"/>
-                                                                    <p><spring:message
-                                                                            code="uploadPage.text"/></p>
-                                                                    <input type="file"
-                                                                           class="form-control"
-                                                                           id="upload-photo"
-                                                                           name="file"/>
-                                                                    <button type="submit"
-                                                                            class="btn btn-primary btn-sm mt-4">
+                                                                <c:if test="${error != null}">
+                                                                    <div class="alert alert-danger"
+                                                                         role="alert">
+                                                                            ${error}
+                                                                    </div>
+                                                                </c:if>
+                                                                <div class="modal-body">
+                                                                    <form:form
+                                                                            action="upload-profile-photo"
+                                                                            method="POST"
+                                                                            enctype="multipart/form-data">
+                                                                        <input type="hidden"
+                                                                               name="${_csrf.parameterName}"
+                                                                               value="${_csrf.token}"/>
+                                                                        <p><spring:message
+                                                                                code="uploadPage.text"/></p>
+                                                                        <input type="file"
+                                                                               class="form-control"
+                                                                               id="upload-photo"
+                                                                               name="file"/>
+                                                                        <button type="submit"
+                                                                                class="btn btn-primary btn-sm mt-4">
                                                                         <span class="p-4"><spring:message
                                                                                 code="button.upload"/></span>
-                                                                    </button>
-                                                                </form:form>
+                                                                        </button>
+                                                                    </form:form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <a href="<c:url value='/delete-profile-photo'/>">
+                                                        <i class="icon-remove-sign"></i>
+                                                        <span><spring:message
+                                                                code="profilePage.deletePhoto"/></span>
+                                                    </a>
                                                 </div>
-                                                <a href="<c:url value='/delete-profile-photo'/>">
-                                                    <i class="icon-remove-sign"></i>
-                                                    <span><spring:message
-                                                            code="profilePage.deletePhoto"/></span>
-                                                </a>
-                                            </div>
+                                            </c:if>
                                         </div>
                                         <div class="mt-4 d-flex flex-column w-100">
                                             <c:if test="${noButton == true}">
@@ -148,60 +152,6 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <div class="card mt-3">
-                                <ul class="list-group list-group-flush social-contact">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <i class="icon-github icon-large"></i>
-                                            <span>Github</span>
-                                        </h6>
-                                        <c:if test="${profile.githubName != null}">
-                                            <a class="text-secondary"
-                                               href="#">${profile.githubName}</a>
-                                        </c:if>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <i class="icon-twitter icon-large"></i>
-                                            <span>Twitter</span>
-                                        </h6>
-                                        <c:if test="${profile.twitterName != null}">
-                                            <a class="text-secondary"
-                                               href="#">${profile.twitterName}</a>
-                                        </c:if>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <i class="icon-instagram icon-large"></i>
-                                            <span>Instagram</span>
-                                        </h6>
-                                        <c:if test="${profile.instagramName != null}">
-                                            <a class="text-secondary"
-                                               href="#">${profile.instagramName}</a>
-                                        </c:if>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <i class="icon-facebook icon-large"></i>
-                                            <span>Facebook</span>
-                                        </h6>
-                                        <c:if test="${profile.facebookName != null}">
-                                            <a class="text-secondary"
-                                               href="#">${profile.facebookName}</a>
-                                        </c:if>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <i class="icon-skype icon-large"></i>
-                                            <span>Skype</span>
-                                        </h6>
-                                        <c:if test="${profile.skypeName != null}">
-                                            <a class="text-secondary"
-                                               href="#">${profile.skypeName}</a>
-                                        </c:if>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                         <div class="col-8">
                             <div class="card mb-3">
@@ -222,66 +172,175 @@
                                     </div>
                                     <hr>
                                     <div class="row mb-2">
-                                        <div class="col-3">
-                                            <h6 class="mb-0"><span><spring:message
-                                                    code="profilePage.email"/></span></h6>
+                                        <div class="col-4">
+                                            <h6 class="mb-0">
+                                                <span class="text-secondary"><spring:message
+                                                        code="profilePage.birthday"/></span>
+                                            </h6>
                                         </div>
-                                        <div class="col-9 text-secondary">
-                                            <span>${profile.user.email}</span>
+                                        <div class="col-8">
+                                            <span>${profile.basicInformation.birthday}</span>
                                         </div>
                                     </div>
-                                    <c:if test="${profile.homePhone != null}">
+                                    <c:if test="${not empty profile.country}">
                                         <div class="row mb-2">
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <h6 class="mb-0">
-                                                <span><spring:message
-                                                        code="profilePage.phone"/></span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-9 text-secondary">
-                                                <span>${profile.homePhone}</span>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${profile.mobilePhone != null}">
-                                        <div class="row mb-2">
-                                            <div class="col-3">
-                                                <h6 class="mb-0">
-                                                <span><spring:message
-                                                        code="profilePage.mobile"/></span></h6>
-                                            </div>
-                                            <div class="col-9 text-secondary">
-                                                <span>${profile.mobilePhone}</span>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${profile.country != null}">
-                                        <div class="row mb-2">
-                                            <div class="col-3">
-                                                <h6 class="mb-0">
-                                                <span><spring:message
+                                                <span class="text-secondary"><spring:message
                                                         code="profilePage.country"/></span>
                                                 </h6>
                                             </div>
-                                            <div class="col-9 text-secondary">
+                                            <div class="col-8">
                                                 <span>${profile.country.name}</span>
                                             </div>
                                         </div>
                                     </c:if>
-                                    <c:if test="${profile.city != null}">
+                                    <c:if test="${not empty profile.city}">
                                         <div class="row mb-2">
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <h6 class="mb-0">
-                                                <span><spring:message
-                                                        code="profilePage.city"/></span>
-                                                </h6>
+                                                <span class="text-secondary"><spring:message
+                                                        code="profilePage.city"/></span></h6>
                                             </div>
-                                            <div class="col-9 text-secondary">
+                                            <div class="col-8">
                                                 <span>${profile.city}</span>
                                             </div>
                                         </div>
                                     </c:if>
-                                    <hr>
+                                    <c:if test="${not empty profile.basicInformation.relationship}">
+                                        <div class="row mb-2">
+                                            <div class="col-4">
+                                                <h6 class="mb-0">
+                                                <span class="text-secondary"><spring:message
+                                                        code="profilePage.relationship"/></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>${profile.basicInformation.relationship.name}</span>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${not empty profile.jobTitle}">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <h6 class="mb-0">
+                                                                                    <span class="text-secondary"><spring:message
+                                                                                            code="profilePage.job"/></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>${profile.jobTitle}</span>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <button class="btn collapse-contact-info-button mt-3 mb-3"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-contact-info"
+                                            aria-expanded="false" aria-controls="collapseExample">
+                                        <spring:message
+                                                code="profilePage.collapse.title"/>
+                                    </button>
+                                    <div class="row mt-2 collapse" id="collapse-contact-info">
+                                        <div class="contact-info">
+                                            <div class="col-sm-12">
+                                                <div class="contact-info-header mb-3">
+                                                    <span><spring:message
+                                                            code="profilePage.contact.title"/></span>
+                                                </div>
+                                                <c:if test="${not empty profile.mobilePhone}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0">
+                                                                                                        <span class="text-secondary"><spring:message
+                                                                                                                code="profilePage.mobile"/></span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <span>${profile.mobilePhone}</span>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.homePhone}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0">
+                                                                                                        <span class="text-secondary"><spring:message
+                                                                                                                code="profilePage.phone"/></span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <span>${profile.homePhone}</span>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.githubName}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0 text-secondary">
+                                                                <i class="icon-github icon-large"></i>
+                                                                <span>Github</span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="#">${profile.githubName}</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.twitterName}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0 text-secondary">
+                                                                <i class="icon-twitter icon-large"></i>
+                                                                <span>Twitter</span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="#">${profile.twitterName}</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.instagramName}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0 text-secondary">
+                                                                <i class="icon-instagram icon-large"></i>
+                                                                <span>Instagram</span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="#">${profile.instagramName}</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.facebookName}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0 text-secondary">
+                                                                <i class="icon-facebook icon-large"></i>
+                                                                <span>Facebook</span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="#">${profile.facebookName}</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty profile.skypeName}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <h6 class="mb-0 text-secondary">
+                                                                <i class="icon-skype icon-large"></i>
+                                                                <span>Skype</span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <a href="#">${profile.skypeName}</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <c:if test="${photoCount != 0}">

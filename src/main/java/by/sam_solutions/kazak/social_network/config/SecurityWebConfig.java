@@ -64,10 +64,11 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
     http.csrf().and()
-        . authorizeRequests()
-        .antMatchers("/id{userId}/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
-        .antMatchers("/edit/**").hasAnyRole(ROLE_USER)
+        .authorizeRequests()
         .antMatchers("/admin/**").hasAnyRole(ROLE_ADMIN)
+        .antMatchers("/id{userId}/photos/{photoId}/delete").hasAnyRole(ROLE_ADMIN)
+        .antMatchers("/id{userId}/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+        .antMatchers("/edit/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
         .antMatchers("/register/**").permitAll()
         .antMatchers("/confirm-register/**").permitAll()
         .antMatchers("/recover-password/**").permitAll()

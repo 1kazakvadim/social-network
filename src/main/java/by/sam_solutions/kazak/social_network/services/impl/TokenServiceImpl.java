@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class TokenServiceImpl implements TokenService {
 
   private final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
@@ -36,36 +35,42 @@ public class TokenServiceImpl implements TokenService {
   private MessageSource messageSource;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Token token) {
     logger.debug("saveOrUpdate({})", token);
     tokenDao.saveOrUpdate(token);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Token getById(Long id) {
     logger.debug("get token by id = {}", id);
     return tokenDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Token> getAll() {
     logger.debug("get all tokens");
     return tokenDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete token with id = {}", id);
     tokenDao.deleteById(id);
   }
 
   @Override
+  @Transactional
   public void deleteByName(String token) {
     logger.debug("delete token with name = {}", token);
     tokenDao.deleteByName(token);
   }
 
   @Override
+  @Transactional
   public Token createVerificationToken(User user) {
     logger.debug("create verification token for user with id = {}", user.getId());
     Token token = new Token();
@@ -77,6 +82,7 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
+  @Transactional
   public Token createPasswordResetToken(String email) {
     logger.debug("create password reset token for user with email = {}", email);
     Token token = new Token();
@@ -89,6 +95,7 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Token getByToken(String token) {
     logger.debug("get token = {}", token);
     return tokenDao.getByToken(token);
@@ -103,6 +110,8 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public SimpleMailMessage constructVerificationTokenEmail(String appUrl, Token token,
       User user, Locale locale) {
+    logger.debug("construct verification token email to user with id = {}, token name {}", user.getId(),
+        token.getToken());
     String confirmationUrl
         = appUrl + "/confirm-register?token=" + token.getToken();
     String message = messageSource.getMessage("verificationToken.email.text", null, locale);
@@ -116,6 +125,8 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public SimpleMailMessage constructPasswordResetTokenEmail(String appUrl, Token token, User user,
       Locale locale) {
+    logger.debug("construct password reset token email to user with id = {}, token name {}", user.getId(),
+        token.getToken());
     String resetUrl
         = appUrl + "/confirm-reset?token=" + token.getToken();
     String message = messageSource.getMessage("resetToken.email.text", null, locale);

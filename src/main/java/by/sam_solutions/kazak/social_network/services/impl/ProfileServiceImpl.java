@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ProfileServiceImpl implements ProfileService {
 
   private final Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
@@ -29,36 +28,42 @@ public class ProfileServiceImpl implements ProfileService {
   private ProfileDao profileDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Profile profile) {
     logger.debug("saveOrUpdate({})", profile);
     profileDao.saveOrUpdate(profile);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Profile getById(Long id) {
     logger.debug("get profile by id = {}", id);
     return profileDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Profile> getAll() {
     logger.debug("get all profiles");
     return profileDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete profile with id = {}", id);
     profileDao.deleteById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Profile getProfileByEmail(String email) {
     logger.debug("get profile with email = {}", email);
     return profileDao.getProfileByEmail(email);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Profile getProfileByUserId(Long id) {
     logger.debug("get profile by user with id = {}", id);
     return profileDao.getProfileByUserId(id);
@@ -66,6 +71,7 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public List<Profile> getUniqueFriendsProfiles(List<Friend> friends, Long id) {
+    logger.debug("get unique friends profiles by id = {}", id);
     Set<Profile> friendsProfiles = new HashSet<>();
     for (Friend friend : friends) {
       if (!Objects.equals(friend.getAcceptRequestProfile().getId(), id)) {
@@ -80,6 +86,7 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public boolean isFieldContainsSpecialCharacters(String string) {
+    logger.debug("is field contains special characters = {}", string);
     Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);
     Matcher matcher = pattern.matcher(string);
     return matcher.find();

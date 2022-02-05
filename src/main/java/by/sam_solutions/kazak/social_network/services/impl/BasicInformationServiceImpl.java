@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class BasicInformationServiceImpl implements BasicInformationService {
 
   private final Logger logger = LoggerFactory.getLogger(BasicInformationServiceImpl.class);
@@ -23,24 +22,28 @@ public class BasicInformationServiceImpl implements BasicInformationService {
   private BasicInformationDao basicInformationDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(BasicInformation basicInformation) {
     logger.debug("saveOrUpdate({})", basicInformation);
     basicInformationDao.saveOrUpdate(basicInformation);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public BasicInformation getById(Long id) {
     logger.debug("get basic information by id = {}", id);
     return basicInformationDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<BasicInformation> getAll() {
     logger.debug("get all basic information");
     return basicInformationDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete basic information with id = {}", id);
     basicInformationDao.deleteById(id);
@@ -48,11 +51,13 @@ public class BasicInformationServiceImpl implements BasicInformationService {
 
   @Override
   public boolean isGenderValid(Gender gender) {
+    logger.debug("is gender valid = {}", gender.getName());
     return EnumUtils.isValidEnum(Gender.class, gender.getName());
   }
 
   @Override
   public boolean isBirthdayDateValid(LocalDate birthday) {
+    logger.debug("is birthday date valid = {}", birthday);
     return birthday.isBefore(LocalDate.now());
   }
 

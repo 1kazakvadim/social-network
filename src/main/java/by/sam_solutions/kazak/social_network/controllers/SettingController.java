@@ -78,14 +78,14 @@ public class SettingController {
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
     if (result.hasErrors()) {
       redirectAttributes.addFlashAttribute("errors", result);
-      modelAndView.setViewName("redirect:/edit/profile");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_EDIT_PROFILE);
       return modelAndView;
     }
     profileFacade.updateContactInformationInProfile(contactInformationDTO);
     redirectAttributes.addFlashAttribute("messageSuccess",
         messageSource.getMessage("profileEditPage.success.informationUpdated", null,
             locale));
-    modelAndView.setViewName("redirect:/edit/profile");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_EDIT_PROFILE);
     return modelAndView;
   }
 
@@ -112,14 +112,14 @@ public class SettingController {
     basicInformationDtoValidator.validate(basicInformationDTO, result);
     if (result.hasErrors()) {
       redirectAttributes.addFlashAttribute("errors", result);
-      modelAndView.setViewName("redirect:/edit/basic");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_EDIT_BASIC);
       return modelAndView;
     }
     basicInformationFacade.updateBasicInformation(basicInformationDTO);
     redirectAttributes.addFlashAttribute("messageSuccess",
         messageSource.getMessage("basicInformationEditPage.success.informationUpdated", null,
             locale));
-    modelAndView.setViewName("redirect:/edit/basic");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_EDIT_BASIC);
     return modelAndView;
   }
 
@@ -204,7 +204,7 @@ public class SettingController {
   public ModelAndView deleteProfile(ModelAndView modelAndView,
       @AuthenticationPrincipal UserPrincipal user) {
     userFacade.disableUser(user);
-    modelAndView.setViewName("redirect:/login");
+    modelAndView.setViewName(WebConstants.REDIRECT_PREFIX + "/login");
     return modelAndView;
   }
 
@@ -215,18 +215,18 @@ public class SettingController {
     if (file == null) {
       redirectAttributes.addFlashAttribute("error",
           messageSource.getMessage("uploadPage.error.empty", null, locale));
-      modelAndView.setViewName("redirect:/id" + user.getId());
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     if (!photoFacade.isMultipartFileValid(file)) {
       redirectAttributes.addFlashAttribute("error",
           messageSource.getMessage("uploadPage.error.isMultipartFileValid", null, locale));
-      modelAndView.setViewName("redirect:/id" + user.getId());
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
       return modelAndView;
     }
     Profile profile = profileFacade.getProfileByUserId(user.getId());
     photoFacade.uploadProfilePhoto(file, profile);
-    modelAndView.setViewName("redirect:/id" + user.getId());
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
     return modelAndView;
   }
 
@@ -235,7 +235,7 @@ public class SettingController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile profile = profileFacade.getProfileByUserId(user.getId());
     photoFacade.deleteProfilePhoto(profile);
-    modelAndView.setViewName("redirect:/id" + user.getId());
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + user.getId());
     return modelAndView;
   }
 

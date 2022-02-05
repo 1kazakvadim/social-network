@@ -519,3 +519,43 @@ footer p {
   z-index: 1;
 }
 
+.contact-info a {
+  text-decoration: none;
+  color: black;
+}
+
+.contact-info-header {
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.contact-info-header span {
+  display: inline-block;
+}
+
+.contact-info-header:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  position: relative;
+}
+
+.contact-info-header:after {
+  margin-right: -100%;
+  right: -8px;
+}
+
+.collapse-contact-info-button {
+  width: 100%;
+}
+
+.collapse-contact-info-button:hover {
+  background: #d6d6e0;
+}
+
+.collapse-contact-info-button:focus, .collapse-contact-info-button:active {
+  box-shadow: none !important;
+}

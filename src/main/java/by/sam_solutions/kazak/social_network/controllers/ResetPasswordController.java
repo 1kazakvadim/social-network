@@ -72,7 +72,7 @@ public class ResetPasswordController {
       modelAndView.setViewName("recover-password");
       return modelAndView;
     }
-    modelAndView.setViewName("redirect:/reset-password/" + token);
+    modelAndView.setViewName(WebConstants.REDIRECT_PREFIX + "/reset-password/" + token);
     return modelAndView;
   }
 
@@ -101,7 +101,7 @@ public class ResetPasswordController {
       return modelAndView;
     }
     tokenFacade.resetUserPassword(token, newPassword);
-    modelAndView.setViewName("redirect:/login");
+    modelAndView.setViewName(WebConstants.REDIRECT_PREFIX + "/login");
     return modelAndView;
   }
 

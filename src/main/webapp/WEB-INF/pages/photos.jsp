@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
@@ -31,55 +32,60 @@
                                         <h4 class="mb-0 align-content-center"><span><spring:message
                                                 code="photoPage.title"/></span></h4>
                                     </div>
-                                    <div class="col-3">
-                                        <button type="button" data-bs-target="#upload-photo"
-                                                data-bs-toggle="modal"
-                                                class="btn btn-primary btn-sm d-block mx-auto mb-3">
+                                    <c:if test="${user.id == userId}">
+                                        <div class="col-3">
+
+                                            <button type="button" data-bs-target="#upload-photo"
+                                                    data-bs-toggle="modal"
+                                                    class="btn btn-primary btn-sm d-block mx-auto mb-3">
                                             <span class="p-1"><spring:message
                                                     code="button.addPhoto"/></span>
-                                        </button>
-                                        <div class="modal fade" id="upload-photo" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="upload-photo-label">
-                                                            <spring:message
-                                                                    code="uploadPage.title"/></h5>
-                                                        <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-                                                    <c:if test="${messageError != null}">
-                                                        <div class="alert alert-danger"
-                                                             role="alert">
-                                                                ${messageError}
+                                            </button>
+
+                                            <div class="modal fade" id="upload-photo" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="upload-photo-label">
+                                                                <spring:message
+                                                                        code="uploadPage.title"/></h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
                                                         </div>
-                                                    </c:if>
-                                                    <div class="modal-body">
-                                                        <form:form action="photos/upload-photo"
-                                                                   id="upload-photo"
-                                                                   method="POST"
-                                                                   enctype="multipart/form-data">
-                                                            <input type="hidden"
-                                                                   name="${_csrf.parameterName}"
-                                                                   value="${_csrf.token}"/>
-                                                            <p><spring:message
-                                                                    code="uploadPage.text"/></p>
-                                                            <input type="file" class="form-control"
-                                                                   id=photo" name="file"/>
-                                                            <button type="submit"
-                                                                    class="btn btn-primary btn-sm mt-4">
+                                                        <c:if test="${messageError != null}">
+                                                            <div class="alert alert-danger"
+                                                                 role="alert">
+                                                                    ${messageError}
+                                                            </div>
+                                                        </c:if>
+                                                        <div class="modal-body">
+                                                            <form:form action="photos/upload-photo"
+                                                                       id="upload-photo"
+                                                                       method="POST"
+                                                                       enctype="multipart/form-data">
+                                                                <input type="hidden"
+                                                                       name="${_csrf.parameterName}"
+                                                                       value="${_csrf.token}"/>
+                                                                <p><spring:message
+                                                                        code="uploadPage.text"/></p>
+                                                                <input type="file"
+                                                                       class="form-control"
+                                                                       id=photo" name="file"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-primary btn-sm mt-4">
                                                                         <span class="p-4"><spring:message
                                                                                 code="button.upload"/></span>
-                                                            </button>
-                                                        </form:form>
+                                                                </button>
+                                                            </form:form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
+                                    </c:if>
+                                    <hr class="mt-2">
                                     <div class="container-fluid">
                                         <div class="row">
                                             <c:if test="${message != null}">

@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
@@ -42,66 +43,69 @@
                                         </div>
                                         <h6 class="text-secondary time">${photo.timeCreation.toLocalDate()} ${photo.timeCreation.toLocalTime()}</h6>
                                     </div>
-                                    <div class="d-flex justify-content-end">
-                                        <a class="nav-link nav-profile" href="#" id="photoDropdown"
-                                           role="button"
-                                           data-bs-toggle="dropdown" data-display="static"
-                                           aria-expanded="false">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                 height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                 class="feather feather-more-horizontal align-middle">
-                                                <circle cx="12" cy="12" r="1"></circle>
-                                                <circle cx="19" cy="12" r="1"></circle>
-                                                <circle cx="5" cy="12" r="1"></circle>
-                                            </svg>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="photoDropdown">
-                                            <li><a href="#" class="dropdown-item"
-                                                   data-bs-toggle="modal"
-                                                   data-bs-target="#description"><spring:message
-                                                    code="photoPage.addDescription"/></a>
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="<c:url value="/id${profile.user.id}/photos/${photo.id}/delete"/>"><spring:message
-                                                    code="photoPage.deletePhoto"/></a>
-                                            </li>
-                                        </ul>
-                                        <div class="modal fade" id="description" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="description-label">
-                                                            <spring:message
-                                                                    code="photoPage.description.title"/></h5>
-                                                        <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form:form method="POST"
-                                                                   action="${photo.id}/add-description">
-                                                            <div>
+                                    <c:if test="${user.id == profile.user.id}">
+                                        <div class="d-flex justify-content-end">
+                                            <a class="nav-link nav-profile" href="#"
+                                               id="photoDropdown"
+                                               role="button"
+                                               data-bs-toggle="dropdown" data-display="static"
+                                               aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                     height="24" viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor" stroke-width="2"
+                                                     stroke-linecap="round" stroke-linejoin="round"
+                                                     class="feather feather-more-horizontal align-middle">
+                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                    <circle cx="19" cy="12" r="1"></circle>
+                                                    <circle cx="5" cy="12" r="1"></circle>
+                                                </svg>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end"
+                                                aria-labelledby="photoDropdown">
+                                                <li><a href="#" class="dropdown-item"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#description"><spring:message
+                                                        code="photoPage.addDescription"/></a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                       href="<c:url value="/id${profile.user.id}/photos/${photo.id}/delete"/>"><spring:message
+                                                        code="photoPage.deletePhoto"/></a>
+                                                </li>
+                                            </ul>
+                                            <div class="modal fade" id="description" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="description-label">
+                                                                <spring:message
+                                                                        code="photoPage.description.title"/></h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form:form method="POST"
+                                                                       action="${photo.id}/add-description">
+                                                                <div>
                                                                 <textarea class="form-control"
                                                                           rows="3" maxlength="255"
                                                                           aria-label="photo-description"
                                                                           name="description"
                                                                           id="area-description">${photo.description}</textarea>
-                                                            </div>
-                                                            <button type="submit"
-                                                                    class="btn btn-primary btn-sm mt-4">
+                                                                </div>
+                                                                <button type="submit"
+                                                                        class="btn btn-primary btn-sm mt-4">
                                                                 <span class="p-4"><spring:message
                                                                         code="button.save"/></span>
-                                                            </button>
-                                                        </form:form>
+                                                                </button>
+                                                            </form:form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                                 <hr class="me-3 ms-3">
                                 <div class="post-image d-flex justify-content-center">
@@ -146,16 +150,18 @@
                                                         <h5 class="time text-secondary">${comment.timeCreation.toLocalDate()} ${comment.timeCreation.toLocalTime()}</h5>
                                                     </div>
                                                     <p>${comment.text}</p>
+                                                    <sec:authorize access="hasRole('ADMIN')">
                                                     <form:form action="${photo.id}/delete-comment"
                                                                method="POST">
                                                         <input type="hidden" name="commentId"
                                                                value="${comment.id}">
                                                         <button type="submit"
-                                                                class="delete-link btn btn-link text-danger">
+                                                                class="delete-link btn btn-link text-danger p-0">
                                                             <spring:message
                                                                     code="photoPage.deleteComment"/>
                                                         </button>
                                                     </form:form>
+                                                    </sec:authorize>
                                                 </div>
                                             </li>
                                         </c:forEach>

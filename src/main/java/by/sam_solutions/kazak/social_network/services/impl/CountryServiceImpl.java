@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class CountryServiceImpl implements CountryService {
 
   private final Logger logger = LoggerFactory.getLogger(CountryServiceImpl.class);
@@ -20,24 +19,28 @@ public class CountryServiceImpl implements CountryService {
   private CountryDao countryDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Country country) {
     logger.debug("saveOrUpdate({})", country);
     countryDao.saveOrUpdate(country);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Country getById(Long id) {
     logger.debug("get country by id = {}", id);
     return countryDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Country> getAll() {
     logger.debug("get all countries");
     return countryDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete country with id = {}", id);
     countryDao.deleteById(id);

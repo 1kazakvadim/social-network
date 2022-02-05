@@ -55,7 +55,7 @@ public class HomeController {
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
 
     if (acceptFriendRequestProfile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
 

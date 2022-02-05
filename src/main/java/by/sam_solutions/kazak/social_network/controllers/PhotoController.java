@@ -45,7 +45,7 @@ public class PhotoController {
       @PathVariable Long userId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     List<Photo> photos = photoFacade.getAllByProfileId(profile.getId());
@@ -70,25 +70,25 @@ public class PhotoController {
       @RequestParam("file") MultipartFile file, @AuthenticationPrincipal UserPrincipal user,
       RedirectAttributes redirectAttributes, Locale locale) {
     if (!Objects.equals(user.getId(), userId)) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
     if (file == null) {
       redirectAttributes.addFlashAttribute("messageError",
           messageSource.getMessage("uploadPage.error.empty", null,
               locale));
-      modelAndView.setViewName("redirect:/id" + userId + "/photos");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
     if (!photoFacade.isMultipartFileValid(file)) {
       redirectAttributes.addFlashAttribute("messageError",
           messageSource.getMessage("uploadPage.error.isMultipartFileValid", null,
               locale));
-      modelAndView.setViewName("redirect:/id" + userId + "/photos");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
     photoFacade.uploadInPhotos(file, profileFacade.getProfileByUserId(userId).getId());
-    modelAndView.setViewName("redirect:/id" + userId + "/photos");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
     return modelAndView;
   }
 
@@ -97,16 +97,16 @@ public class PhotoController {
       @PathVariable Long photoId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
-      modelAndView.setViewName("redirect:/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
     Photo photo = photoFacade.getById(photoId);
     if (photo == null) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
     if (!photoFacade.isPhotoBelongsProfile(photo, profile)) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
     List<Comment> comments = commentFacade.getAllByPhotoId(photoId);
@@ -127,7 +127,7 @@ public class PhotoController {
       @PathVariable Long photoId, @RequestParam String text,
       @AuthenticationPrincipal UserPrincipal user) {
     commentFacade.addComment(text, photoId, user.getId());
-    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
     return modelAndView;
   }
 
@@ -137,11 +137,11 @@ public class PhotoController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile profile = profileFacade.getProfileByUserId(user.getId());
     if (profile == null) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
       return modelAndView;
     }
     commentFacade.deleteComment(commentId, profile);
-    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
     return modelAndView;
   }
 
@@ -150,11 +150,11 @@ public class PhotoController {
       @PathVariable Long photoId, @RequestParam String description,
       @AuthenticationPrincipal UserPrincipal user) {
     if (!Objects.equals(user.getId(), userId)) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
       return modelAndView;
     }
     photoFacade.updateDescriptionInPhoto(description, photoId);
-    modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
     return modelAndView;
   }
 
@@ -162,15 +162,15 @@ public class PhotoController {
   public ModelAndView deletePhoto(ModelAndView modelAndView, @PathVariable Long userId,
       @PathVariable Long photoId, @AuthenticationPrincipal UserPrincipal user) {
     if (!Objects.equals(user.getId(), userId)) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos/" + photoId);
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
       return modelAndView;
     }
     if (null == photoFacade.getById(photoId)) {
-      modelAndView.setViewName("redirect:/id" + userId + "/photos/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/");
       return modelAndView;
     }
     photoFacade.deleteById(photoId);
-    modelAndView.setViewName("redirect:/id" + userId + "/photos/");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/");
     return modelAndView;
   }
 

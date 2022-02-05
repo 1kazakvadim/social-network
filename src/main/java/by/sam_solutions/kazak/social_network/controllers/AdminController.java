@@ -107,7 +107,7 @@ public class AdminController {
     redirectAttributes.addFlashAttribute("profileMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.profileInformationUpdated", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 
@@ -126,7 +126,7 @@ public class AdminController {
     redirectAttributes.addFlashAttribute("basicMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.basicInformationUpdated", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 
@@ -136,26 +136,26 @@ public class AdminController {
       @RequestParam("email") String email, RedirectAttributes redirectAttributes, Locale locale) {
     Profile profile = profileFacade.getById(profileId);
     if (null == profile) {
-      modelAndView.setViewName("redirect:/admin/profiles/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
       return modelAndView;
     }
     if (!userFacade.isEmailValid(email)) {
       redirectAttributes.addFlashAttribute("emailMessageError",
           messageSource.getMessage("adminProfileEditPage.error.isEmailValid", null, locale));
-      modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
       return modelAndView;
     }
     if (userFacade.isEmailExists(email)) {
       redirectAttributes.addFlashAttribute("emailMessageError",
           messageSource.getMessage("adminProfileEditPage.error.isEmailExists", null, locale));
-      modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
       return modelAndView;
     }
     userFacade.changeEmail(profile.getUser().getId(), email);
     redirectAttributes.addFlashAttribute("emailMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.emailChanged", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 
@@ -166,26 +166,26 @@ public class AdminController {
       RedirectAttributes redirectAttributes, Locale locale) {
     Profile profile = profileFacade.getById(profileId);
     if (profile == null) {
-      modelAndView.setViewName("redirect:/admin/profiles/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
       return modelAndView;
     }
     if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
       redirectAttributes.addFlashAttribute("passwordMessageError",
           messageSource.getMessage("adminProfileEditPage.error.passwordMatch", null, locale));
-      modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
       return modelAndView;
     }
     if (!userFacade.isPasswordValid(newPassword)) {
       redirectAttributes.addFlashAttribute("passwordMessageError",
           messageSource.getMessage("adminProfileEditPage.error.isPasswordValid", null, locale));
-      modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
       return modelAndView;
     }
     userFacade.changePassword(profile.getUser().getId(), newPassword);
     redirectAttributes.addFlashAttribute("passwordMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.passwordChanged", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 
@@ -195,14 +195,14 @@ public class AdminController {
       @RequestParam("role") Long roleId, RedirectAttributes redirectAttributes, Locale locale) {
     Profile profile = profileFacade.getById(profileId);
     if (profile == null) {
-      modelAndView.setViewName("redirect:/admin/profiles/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
       return modelAndView;
     }
     roleFacade.changeProfileRole(profile, roleId);
     redirectAttributes.addFlashAttribute("roleMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.roleChanged", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 
@@ -213,14 +213,14 @@ public class AdminController {
       Locale locale) {
     Profile profile = profileFacade.getById(profileId);
     if (profile == null) {
-      modelAndView.setViewName("redirect:/admin/profiles/");
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
       return modelAndView;
     }
     profileFacade.changeProfileLock(profile, isLocked);
     redirectAttributes.addFlashAttribute("lockMessageSuccess",
         messageSource.getMessage("adminProfileEditPage.success.lockChanged", null,
             locale));
-    modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
     return modelAndView;
   }
 

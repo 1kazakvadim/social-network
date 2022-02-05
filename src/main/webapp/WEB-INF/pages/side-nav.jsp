@@ -34,7 +34,7 @@
         </a>
         <sec:authorize access="hasRole('ADMIN')">
             <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-               href="<c:url value='/admin/profiles/' />">
+               href="<c:url value='/admin/profiles/'/>">
                 <i class="icon-cogs icon-large "></i>
                 <span><spring:message code="nav.administration"/></span>
             </a>

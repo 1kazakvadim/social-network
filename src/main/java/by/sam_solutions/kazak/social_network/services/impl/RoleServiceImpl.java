@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class RoleServiceImpl implements RoleService {
 
   private final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
@@ -20,30 +19,35 @@ public class RoleServiceImpl implements RoleService {
   private RoleDao roleDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Role role) {
     logger.debug("saveOrUpdate({})", role);
     roleDao.saveOrUpdate(role);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Role getById(Long id) {
     logger.debug("get role by id = {}", id);
     return roleDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Role> getAll() {
     logger.debug("get all roles");
     return roleDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete role with id = {}", id);
     roleDao.deleteById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Role findByName(String name) {
     logger.debug("get role with name = {}", name);
     return roleDao.findByName(name);

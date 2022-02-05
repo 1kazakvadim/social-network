@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class CommentServiceImpl implements CommentService {
 
   private final Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
@@ -20,30 +19,35 @@ public class CommentServiceImpl implements CommentService {
   private CommentDao commentDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Comment comment) {
     logger.debug("saveOrUpdate({})", comment);
     commentDao.saveOrUpdate(comment);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Comment getById(Long id) {
     logger.debug("get comment by id = {}", id);
     return commentDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Comment> getAll() {
     logger.debug("get all comments");
     return commentDao.getAll();
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Comment> getAllByPhotoId(Long id) {
     logger.debug("get all comments with photo id = {}", id);
     return commentDao.getAllByPhotoId(id);
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete comment with id = {}", id);
     commentDao.deleteById(id);

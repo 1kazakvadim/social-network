@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
 <section>
@@ -41,15 +42,18 @@
                                         <spring:message code="friendPage.tab.friends"/>
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="friend-requests-tab"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#friend-requests" type="button"
-                                            role="tab"
-                                            aria-controls="friend-requests" aria-selected="false">
-                                        <spring:message code="friendPage.tab.friendRequests"/>
-                                    </button>
-                                </li>
+                                <c:if test="${user.id == userId}">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="friend-requests-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#friend-requests" type="button"
+                                                role="tab"
+                                                aria-controls="friend-requests"
+                                                aria-selected="false">
+                                            <spring:message code="friendPage.tab.friendRequests"/>
+                                        </button>
+                                    </li>
+                                </c:if>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="container tab-pane fade show active" id="friends"
@@ -82,107 +86,114 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-1">
-                                                <a class="nav-link nav-profile" href="#"
-                                                   id="unfriendDropdown"
-                                                   role="button"
-                                                   data-bs-toggle="dropdown" data-display="static"
-                                                   aria-expanded="false">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         width="24"
-                                                         height="24"
-                                                         viewBox="0 0 24 24" fill="none"
-                                                         stroke="currentColor"
-                                                         stroke-width="2"
-                                                         stroke-linecap="round"
-                                                         stroke-linejoin="round"
-                                                         class="feather feather-more-horizontal align-middle">
-                                                        <circle cx="12" cy="12" r="1"></circle>
-                                                        <circle cx="19" cy="12" r="1"></circle>
-                                                        <circle cx="5" cy="12" r="1"></circle>
-                                                    </svg>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="unfriendDropdown">
-                                                    <li>
-                                                        <a href="<c:url value="/id${friend.user.id}/unfriend"/>"
-                                                           class="dropdown-item"><spring:message
-                                                                code="friendPage.unfriend"/></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <c:if test="${user.id == userId}">
+                                                <div class="col-1">
+                                                    <a class="nav-link nav-profile" href="#"
+                                                       id="unfriendDropdown"
+                                                       role="button"
+                                                       data-bs-toggle="dropdown"
+                                                       data-display="static"
+                                                       aria-expanded="false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                             width="24"
+                                                             height="24"
+                                                             viewBox="0 0 24 24" fill="none"
+                                                             stroke="currentColor"
+                                                             stroke-width="2"
+                                                             stroke-linecap="round"
+                                                             stroke-linejoin="round"
+                                                             class="feather feather-more-horizontal align-middle">
+                                                            <circle cx="12" cy="12" r="1"></circle>
+                                                            <circle cx="19" cy="12" r="1"></circle>
+                                                            <circle cx="5" cy="12" r="1"></circle>
+                                                        </svg>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        aria-labelledby="unfriendDropdown">
+                                                        <li>
+                                                            <a href="<c:url value="/id${friend.user.id}/unfriend"/>"
+                                                               class="dropdown-item"><spring:message
+                                                                    code="friendPage.unfriend"/></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
                                             <hr>
                                         </c:forEach>
                                     </div>
                                 </div>
-                                <div class="container tab-pane fade" id="friend-requests"
-                                     role="tabpanel"
-                                     aria-labelledby="friend-requests-tab">
-                                    <div class="row">
-                                        <c:if test="${noFriendRequestMessage != null}">
-                                            <div class="col-12 d-flex justify-content-center align-content-center">
-                                                <p class="text-secondary m-0 p-5">${noFriendRequestMessage}</p>
-                                            </div>
-                                        </c:if>
-                                        <c:forEach items="${friendRequests}" var="friendRequest">
-                                            <div class="col-11 mb-2">
-                                                <div class="d-flex">
-                                                    <div class="friend-img">
-                                                        <a href="<c:url value="/id${friendRequest.user.id}"/>">
-                                                            <img class="img-fluid rounded-circle"
-                                                                 src="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friendRequest.profilePhotoName}"
-                                                                 alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="friend-details">
-                                                        <h5 class="mb-1"><a
-                                                                href="<c:url value="/id${friendRequest.user.id}"/>"
-                                                                class="user-title text-black">${friendRequest.basicInformation.firstname} ${friendRequest.basicInformation.lastname}</a>
-                                                        </h5>
-                                                        <a href=""
-                                                           class="text-secondary"><spring:message
-                                                                code="friendPage.writeMessage"/></a>
+                                <c:if test="${user.id == userId}">
+                                    <div class="container tab-pane fade" id="friend-requests"
+                                         role="tabpanel"
+                                         aria-labelledby="friend-requests-tab">
+                                        <div class="row">
+                                            <c:if test="${noFriendRequestMessage != null}">
+                                                <div class="col-12 d-flex justify-content-center align-content-center">
+                                                    <p class="text-secondary m-0 p-5">${noFriendRequestMessage}</p>
+                                                </div>
+                                            </c:if>
+                                            <c:forEach items="${friendRequests}"
+                                                       var="friendRequest">
+                                                <div class="col-11 mb-2">
+                                                    <div class="d-flex">
+                                                        <div class="friend-img">
+                                                            <a href="<c:url value="/id${friendRequest.user.id}"/>">
+                                                                <img class="img-fluid rounded-circle"
+                                                                     src="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friendRequest.profilePhotoName}"
+                                                                     alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="friend-details">
+                                                            <h5 class="mb-1"><a
+                                                                    href="<c:url value="/id${friendRequest.user.id}"/>"
+                                                                    class="user-title text-black">${friendRequest.basicInformation.firstname} ${friendRequest.basicInformation.lastname}</a>
+                                                            </h5>
+                                                            <a href=""
+                                                               class="text-secondary"><spring:message
+                                                                    code="friendPage.writeMessage"/></a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-1">
-                                                <a class="nav-link nav-profile" href="#"
-                                                   id="requestDropdown"
-                                                   role="button"
-                                                   data-bs-toggle="dropdown" data-display="static"
-                                                   aria-expanded="false">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         width="24"
-                                                         height="24"
-                                                         viewBox="0 0 24 24" fill="none"
-                                                         stroke="currentColor"
-                                                         stroke-width="2"
-                                                         stroke-linecap="round"
-                                                         stroke-linejoin="round"
-                                                         class="feather feather-more-horizontal align-middle">
-                                                        <circle cx="12" cy="12" r="1"></circle>
-                                                        <circle cx="19" cy="12" r="1"></circle>
-                                                        <circle cx="5" cy="12" r="1"></circle>
-                                                    </svg>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="requestDropdown">
-                                                    <li>
-                                                        <a href="<c:url value="/id${friendRequest.user.id}/accept-request"/>"
-                                                           class="dropdown-item"><spring:message
-                                                                code="friendPage.acceptRequest"/></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<c:url value="/id${friendRequest.user.id}/cancel-request"/>"
-                                                           class="dropdown-item"><spring:message
-                                                                code="friendPage.cancelRequest"/></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <hr>
-                                        </c:forEach>
+                                                <div class="col-1">
+                                                    <a class="nav-link nav-profile" href="#"
+                                                       id="requestDropdown"
+                                                       role="button"
+                                                       data-bs-toggle="dropdown"
+                                                       data-display="static"
+                                                       aria-expanded="false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                             width="24"
+                                                             height="24"
+                                                             viewBox="0 0 24 24" fill="none"
+                                                             stroke="currentColor"
+                                                             stroke-width="2"
+                                                             stroke-linecap="round"
+                                                             stroke-linejoin="round"
+                                                             class="feather feather-more-horizontal align-middle">
+                                                            <circle cx="12" cy="12" r="1"></circle>
+                                                            <circle cx="19" cy="12" r="1"></circle>
+                                                            <circle cx="5" cy="12" r="1"></circle>
+                                                        </svg>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        aria-labelledby="requestDropdown">
+                                                        <li>
+                                                            <a href="<c:url value="/id${friendRequest.user.id}/accept-request"/>"
+                                                               class="dropdown-item"><spring:message
+                                                                    code="friendPage.acceptRequest"/></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<c:url value="/id${friendRequest.user.id}/cancel-request"/>"
+                                                               class="dropdown-item"><spring:message
+                                                                    code="friendPage.cancelRequest"/></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <hr>
+                                            </c:forEach>
+                                        </div>
                                     </div>
-                                </div>
+                                </c:if>
                             </div>
                         </div>
                     </div>

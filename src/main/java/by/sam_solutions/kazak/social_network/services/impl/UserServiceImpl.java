@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
   private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -47,42 +46,49 @@ public class UserServiceImpl implements UserService {
   private TokenService tokenService;
 
   @Override
+  @Transactional
   public void saveOrUpdate(User user) {
     logger.debug("saveOrUpdate({})", user);
     userDao.saveOrUpdate(user);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public User getById(Long id) {
     logger.debug("get user by id = {}", id);
     return userDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<User> getAll() {
     logger.debug("get all users");
     return userDao.getAll();
   }
 
   @Override
+  @Transactional(readOnly = true)
   public User getByToken(String token) {
     logger.debug("get user with token = {}", token);
     return userDao.getByToken(token);
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete user with id = {}", id);
     userDao.deleteById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public User getByEmail(String email) {
     logger.debug("get user with email = {}", email);
     return userDao.getByEmail(email.toLowerCase());
   }
 
   @Override
+  @Transactional(readOnly = true)
   public boolean isEmailExists(String email) {
     logger.debug("check if user exists with email = {}", email);
     return userDao.isEmailExists(email);
@@ -90,6 +96,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean isEmailValid(String email) {
+    logger.debug("is email valid = {}", email);
     Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     Matcher matcher = pattern.matcher(email.toLowerCase());
     return matcher.matches();
@@ -97,42 +104,53 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean isPasswordValid(String password) {
+    logger.debug("is password valid = {}", password);
     Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
     Matcher matcher = pattern.matcher(password);
     return matcher.matches();
   }
 
   @Override
+  @Transactional(readOnly = true)
   public boolean isUserPassword(Long id, String password) {
+    logger.debug("is user password = {}", password);
     User user = userDao.getById(id);
     return passwordEncoder.matches(password, user.getPassword());
   }
 
   @Override
   public boolean isPasswordMatchConfirmPassword(String password, String confirmPassword) {
+    logger.debug("is password = {} match confirm password = {}", password, confirmPassword);
     return password.equals(confirmPassword);
   }
 
   @Override
+  @Transactional
   public void changePassword(User user, String password) {
+    logger.debug("change password to user with id = {}", user.getId());
     user.setPassword(passwordEncoder.encode(password));
     userDao.saveOrUpdate(user);
   }
 
   @Override
+  @Transactional
   public void changeEmail(User user, String email) {
+    logger.debug("change email to user with id = {}", user.getId());
     user.setEmail(email);
     userDao.saveOrUpdate(user);
   }
 
   @Override
+  @Transactional
   public void disableUser(Long id) {
+    logger.debug("disable user with id = {}", id);
     User user = userDao.getById(id);
     user.setLocked(true);
     userDao.saveOrUpdate(user);
   }
 
   @Override
+  @Transactional
   public User registerUser(Profile profile) {
     logger.debug("register user with email = {}", profile.getUser().getEmail());
     User user = profile.getUser();
@@ -149,6 +167,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public void confirmRegisterUser(String token) {
     logger.debug("confirm register user with token = {}", token);
     User user = userDao.getByToken(token);

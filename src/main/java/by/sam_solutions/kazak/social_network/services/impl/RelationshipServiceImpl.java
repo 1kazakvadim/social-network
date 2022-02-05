@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class RelationshipServiceImpl implements RelationshipService {
 
   private final Logger logger = LoggerFactory.getLogger(RelationshipServiceImpl.class);
@@ -20,24 +19,28 @@ public class RelationshipServiceImpl implements RelationshipService {
   private RelationshipDao relationshipDao;
 
   @Override
+  @Transactional
   public void saveOrUpdate(Relationship relationship) {
     logger.debug("saveOrUpdate({})", relationship);
     relationshipDao.saveOrUpdate(relationship);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Relationship getById(Long id) {
     logger.debug("get relationship by id = {}", id);
     return relationshipDao.getById(id);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Relationship> getAll() {
     logger.debug("get all relationships");
     return relationshipDao.getAll();
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete relationship with id = {}", id);
     relationshipDao.deleteById(id);
