@@ -1,7 +1,7 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "dialog")
+@Table(name = "Message")
 public class Message implements Serializable {
 
   @Id
@@ -21,32 +21,21 @@ public class Message implements Serializable {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "dialog_id")
+  @JoinColumn(name = "dialog_id", nullable = false)
   private Dialog dialog;
 
-  @Column(name = "text")
-  private String text;
+  @Column(name = "message_text")
+  private String messageText;
 
-  @Column(name = "user_firstname")
-  private String userFirstname;
+  @ManyToOne
+  @JoinColumn(name = "message_sender", nullable = false)
+  private Profile messageSender;
 
-  @Column(name = "user_lastname")
-  private String userLastname;
+  @Column(name = "time_creation", nullable = false)
+  private LocalDateTime timeCreation;
 
-  @Column(name = "time_creation")
-  private Timestamp timeCreation;
 
   public Message() {
-  }
-
-  public Message(Long id, Dialog dialog, String text, String userFirstname,
-      String userLastname, Timestamp timeCreation) {
-    this.id = id;
-    this.dialog = dialog;
-    this.text = text;
-    this.userFirstname = userFirstname;
-    this.userLastname = userLastname;
-    this.timeCreation = timeCreation;
   }
 
   public Long getId() {
@@ -65,35 +54,27 @@ public class Message implements Serializable {
     this.dialog = dialog;
   }
 
-  public String getText() {
-    return text;
+  public String getMessageText() {
+    return messageText;
   }
 
-  public void setText(String text) {
-    this.text = text;
+  public void setMessageText(String messageText) {
+    this.messageText = messageText;
   }
 
-  public String getUserFirstname() {
-    return userFirstname;
+  public Profile getMessageSender() {
+    return messageSender;
   }
 
-  public void setUserFirstname(String userFirstname) {
-    this.userFirstname = userFirstname;
+  public void setMessageSender(Profile messageSender) {
+    this.messageSender = messageSender;
   }
 
-  public String getUserLastname() {
-    return userLastname;
-  }
-
-  public void setUserLastname(String userLastname) {
-    this.userLastname = userLastname;
-  }
-
-  public Timestamp getTimeCreation() {
+  public LocalDateTime getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(Timestamp timeCreation) {
+  public void setTimeCreation(LocalDateTime timeCreation) {
     this.timeCreation = timeCreation;
   }
 

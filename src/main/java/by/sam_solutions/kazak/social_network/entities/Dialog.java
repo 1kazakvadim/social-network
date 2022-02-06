@@ -1,15 +1,14 @@
 package by.sam_solutions.kazak.social_network.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,22 +20,18 @@ public class Dialog implements Serializable {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "name")
-  private String name;
+  @ManyToOne
+  @JoinColumn(name = "sender_profile_id", nullable = false)
+  private Profile senderProfile;
 
-  @Column(name = "time_creation")
-  private Timestamp timeCreation;
+  @ManyToOne
+  @JoinColumn(name = "recipient_profile_id", nullable = false)
+  private Profile recipientProfile;
 
-  @ManyToMany(mappedBy = "dialogs")
-  private Set<User> users = new HashSet<>();
+  @Column(name = "time_creation", nullable = false)
+  private LocalDateTime timeCreation;
 
   public Dialog() {
-  }
-
-  public Dialog(Long id, String name, Timestamp timeCreation) {
-    this.id = id;
-    this.name = name;
-    this.timeCreation = timeCreation;
   }
 
   public Long getId() {
@@ -47,28 +42,28 @@ public class Dialog implements Serializable {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public Profile getSenderProfile() {
+    return senderProfile;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setSenderProfile(Profile senderProfile) {
+    this.senderProfile = senderProfile;
   }
 
-  public Timestamp getTimeCreation() {
+  public Profile getRecipientProfile() {
+    return recipientProfile;
+  }
+
+  public void setRecipientProfile(Profile recipientProfile) {
+    this.recipientProfile = recipientProfile;
+  }
+
+  public LocalDateTime getTimeCreation() {
     return timeCreation;
   }
 
-  public void setTimeCreation(Timestamp timeCreation) {
+  public void setTimeCreation(LocalDateTime timeCreation) {
     this.timeCreation = timeCreation;
-  }
-
-  public Set<User> getUsers() {
-    return users;
-  }
-
-  public void setUsers(Set<User> users) {
-    this.users = users;
   }
 
 }

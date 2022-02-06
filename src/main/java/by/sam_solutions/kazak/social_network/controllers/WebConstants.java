@@ -5,6 +5,7 @@ public interface WebConstants {
   String REDIRECT_PREFIX = "redirect:";
   String HOMEPAGE_URN = "/";
   String ID_PREFIX = "/id";
+  String MESSAGES = "/messages/";
   String EDIT_PROFILE = "/edit/profile";
   String EDIT_BASIC = "/edit/basic";
   String ADMIN_PROFILES = "/admin/profiles/";
@@ -13,5 +14,6 @@ public interface WebConstants {
   String REDIRECT_TO_ADMIN_PROFILES = REDIRECT_PREFIX + ADMIN_PROFILES;
   String REDIRECT_TO_EDIT_PROFILE = REDIRECT_PREFIX + EDIT_PROFILE;
   String REDIRECT_TO_EDIT_BASIC = REDIRECT_PREFIX + EDIT_BASIC;
+  String REDIRECT_TO_MESSAGES = REDIRECT_PREFIX + MESSAGES;
 
 }

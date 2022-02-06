@@ -116,8 +116,13 @@
                                                                 code="profilePage.button.add"/></button>
                                                 </a>
                                             </c:if>
-                                            <button class="btn btn-primary w-100"><spring:message
-                                                    code="profilePage.message"/></button>
+                                            <c:if test="${user.id != userId}">
+                                                <a href="<c:url value="/messages/${profile.id}"/>">
+                                                    <button class="btn btn-primary w-100">
+                                                        <spring:message
+                                                                code="profilePage.message"/></button>
+                                                </a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

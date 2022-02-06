@@ -13,7 +13,7 @@
             <span><spring:message code="nav.profile"/></span>
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light border-0 rounded"
-           href="<c:url value='/id${user.id}/messages'/>">
+           href="<c:url value='/messages/'/>">
             <i class="icon-comment-alt icon-large"></i>
             <span><spring:message code="nav.messages"/></span>
         </a>

@@ -336,6 +336,8 @@ footer p {
 }
 
 .users-container {
+  max-height: 800px;
+  min-height: 800px;
   position: relative;
   height: 100%;
   display: flex;
@@ -355,6 +357,12 @@ footer p {
   cursor: pointer;
   border-bottom: 1px solid #f0f4f8;
   border-bottom: 1px solid #f0f4f8;
+}
+
+.users .person a {
+  text-decoration: none;
+  display: block;
+  color: black;
 }
 
 .users .person:hover {
@@ -378,8 +386,7 @@ footer p {
 }
 
 .users .person p.name-time {
-  font-weight: 600;
-  font-size: .85rem;
+  font-size: 14px;
   display: inline-block;
 }
 
@@ -419,6 +426,11 @@ footer p {
   margin-bottom: 0;
 }
 
+.chat-container {
+  max-height: 800px;
+  min-height: 800px;
+}
+
 .chat-container li img {
   width: 48px;
   height: 48px;
@@ -427,6 +439,10 @@ footer p {
 
 .chat-container li .chat-avatar {
   margin-right: 20px;
+}
+
+.chat-avatar a {
+  text-decoration: none;
 }
 
 .chat-container li.chat-right {
@@ -453,6 +469,11 @@ footer p {
   position: relative;
 }
 
+.chat-text p {
+  width: 90%;
+  word-wrap: break-word;
+}
+
 .chat-container li .chat-text:before {
   content: '';
   position: absolute;
@@ -477,11 +498,6 @@ footer p {
 .chat-container li .chat-hour {
   padding: 0;
   font-size: .75rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 0 15px;
 }
 
 .chat-container li.chat-right > .chat-hour {
