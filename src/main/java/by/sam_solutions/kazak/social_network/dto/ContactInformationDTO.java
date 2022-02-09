@@ -7,7 +7,7 @@ public class ContactInformationDTO {
   private Long id;
   private Long countryId;
 
-  @Size(max = 255, message = "{registration.email.size}")
+  @Size(max = 255)
   private String city;
 
   @Size(max = 45)

@@ -11,6 +11,4 @@ public interface RelationshipService {
 
   List<Relationship> getAll();
 
-  void deleteById(Long id);
-
 }

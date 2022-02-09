@@ -17,6 +17,7 @@ public class BasicInformationDTO {
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
+
   private Gender gender;
   private Long relationshipId;
 

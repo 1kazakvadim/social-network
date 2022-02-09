@@ -5,7 +5,6 @@ import by.sam_solutions.kazak.social_network.entities.BasicInformation;
 import by.sam_solutions.kazak.social_network.entities.Gender;
 import by.sam_solutions.kazak.social_network.services.BasicInformationService;
 import java.time.LocalDate;
-import java.util.List;
 import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,20 +32,6 @@ public class BasicInformationServiceImpl implements BasicInformationService {
   public BasicInformation getById(Long id) {
     logger.debug("get basic information by id = {}", id);
     return basicInformationDao.getById(id);
-  }
-
-  @Override
-  @Transactional(readOnly = true)
-  public List<BasicInformation> getAll() {
-    logger.debug("get all basic information");
-    return basicInformationDao.getAll();
-  }
-
-  @Override
-  @Transactional
-  public void deleteById(Long id) {
-    logger.debug("delete basic information with id = {}", id);
-    basicInformationDao.deleteById(id);
   }
 
   @Override

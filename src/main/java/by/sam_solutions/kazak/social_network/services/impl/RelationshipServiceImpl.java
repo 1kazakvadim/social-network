@@ -39,11 +39,4 @@ public class RelationshipServiceImpl implements RelationshipService {
     return relationshipDao.getAll();
   }
 
-  @Override
-  @Transactional
-  public void deleteById(Long id) {
-    logger.debug("delete relationship with id = {}", id);
-    relationshipDao.deleteById(id);
-  }
-
 }

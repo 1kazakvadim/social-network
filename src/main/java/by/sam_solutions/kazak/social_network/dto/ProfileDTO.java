@@ -12,6 +12,7 @@ public class ProfileDTO {
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
+
   private Gender gender;
   private String email;
   private String password;
