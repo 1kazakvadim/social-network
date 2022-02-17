@@ -29,14 +29,17 @@
     <hibernate.validator.veriosn>6.0.1.Final</hibernate.validator.veriosn>
     <apache.taglibs.version>1.2.5</apache.taglibs.version>
     <hibernate.version>5.6.1.Final</hibernate.version>
+    <hibernate-search-orm.version>5.11.10.Final</hibernate-search-orm.version>
     <hikari-cp.version>5.0.1</hikari-cp.version>
     <mysql-connector-java.version>8.0.25</mysql-connector-java.version>
-    <h2.version>2.1.210</h2.version>
+    <h2.version>1.4.200</h2.version>
     <flyway-core.version>8.1.0</flyway-core.version>
     <slf4j-api.version>1.7.5</slf4j-api.version>
     <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
     <jcl.slf4j.version>1.7.30</jcl.slf4j.version>
     <junit.version>4.12</junit.version>
+    <mockito-core.version>3.12.4</mockito-core.version>
+    <assertj-core.version>3.21.0</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -183,6 +186,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-search-orm</artifactId>
+      <version>${hibernate-search-orm.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
       <version>${hikari-cp.version}</version>
@@ -229,6 +238,20 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito-core.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj-core.version}</version>
       <scope>test</scope>
     </dependency>
 

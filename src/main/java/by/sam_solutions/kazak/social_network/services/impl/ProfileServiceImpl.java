@@ -85,6 +85,13 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
+  @Transactional(readOnly = true)
+  public List<Profile> searchForProfiles(String search) throws Exception {
+    logger.debug("search for profiles by = {}", search);
+    return profileDao.searchForProfiles(search);
+  }
+
+  @Override
   public boolean isFieldContainsSpecialCharacters(String string) {
     logger.debug("is field contains special characters = {}", string);
     Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);

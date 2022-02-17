@@ -4,7 +4,12 @@ import by.sam_solutions.kazak.social_network.dao.AbstractBaseDao;
 import by.sam_solutions.kazak.social_network.dao.ProfileDao;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import java.util.List;
+import org.apache.lucene.search.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +53,27 @@ public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileD
         .createQuery("FROM Profile WHERE user.id = :id")
         .setParameter("id", id)
         .uniqueResult();
+  }
+
+  @Override
+  public List<Profile> searchForProfiles(String search) throws Exception {
+    FullTextEntityManager fullTextEntityManager = Search.getFullTextSession(
+        sessionFactory.getCurrentSession());
+    fullTextEntityManager.createIndexer().startAndWait();
+    FullTextSession fullTextSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
+    QueryBuilder queryBuilder = fullTextSession
+        .getSearchFactory()
+        .buildQueryBuilder()
+        .forEntity(Profile.class)
+        .get();
+    Query query = queryBuilder
+        .keyword()
+        .onField("basicInformation.fullName")
+        .matching(search)
+        .createQuery();
+    List<Profile> results = fullTextSession.createFullTextQuery(query, Profile.class)
+        .getResultList();
+    return results;
   }
 
 }

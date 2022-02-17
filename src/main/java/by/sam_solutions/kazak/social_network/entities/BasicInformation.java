@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -22,17 +23,19 @@ public class BasicInformation implements Serializable {
   private Long id;
 
   @Column(name = "firstname", nullable = false)
+  @Field(name = "fullName")
   @Length(min = 1, max = 255)
   private String firstname;
 
   @Column(name = "lastname", nullable = false)
+  @Field(name = "fullName")
   @Length(min = 1, max = 255)
   private String lastname;
 
   @Column(name = "birthday", nullable = false)
   private LocalDate birthday;
 
-  @Column(name = "gender")
+  @Column(name = "gender", nullable = false)
   @Length(max = 45)
   private String gender;
 

@@ -15,6 +15,8 @@ public interface ProfileFacade {
 
   List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus);
 
+  List<Profile> searchForProfiles(String search);
+
   void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO);
 
   void changeProfileLock(Profile profile, boolean isLocked);

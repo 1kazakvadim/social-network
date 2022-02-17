@@ -20,6 +20,8 @@ public interface ProfileService {
 
   List<Profile> getUniqueFriendsProfiles(List<Friend> friends, Long id);
 
+  List<Profile> searchForProfiles(String search) throws Exception;
+
   boolean isFieldContainsSpecialCharacters(String string);
 
 }

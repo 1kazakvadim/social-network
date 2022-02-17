@@ -8,6 +8,7 @@ import by.sam_solutions.kazak.social_network.facades.ProfileFacade;
 import by.sam_solutions.kazak.social_network.services.FriendService;
 import by.sam_solutions.kazak.social_network.services.ProfileService;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,17 @@ public class ProfileFacadeImpl implements ProfileFacade {
   public List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus) {
     return profileService.getUniqueFriendsProfiles(
         friendService.getAllByProfileIdAndFriendStatus(id, friendStatus), id);
+  }
+
+  @Override
+  public List<Profile> searchForProfiles(String search) {
+    try {
+      return profileService.searchForProfiles(search);
+    } catch (Exception exp) {
+      logger.debug("Error searching for profiles");
+      exp.printStackTrace();
+    }
+    return new ArrayList<>();
   }
 
   @Override
