@@ -10,6 +10,8 @@ public interface BasicInformationService {
 
   BasicInformation getById(Long id);
 
+  void deleteById(Long id);
+
   boolean isGenderValid(Gender gender);
 
   boolean isBirthdayDateValid(LocalDate birthday);

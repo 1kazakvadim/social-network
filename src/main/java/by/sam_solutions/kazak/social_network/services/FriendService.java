@@ -10,8 +10,6 @@ public interface FriendService {
 
   Friend getById(Long id);
 
-  List<Friend> getAll();
-
   List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
   Friend getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(Long makeFriendRequestProfileId,
@@ -22,7 +20,5 @@ public interface FriendService {
   boolean hasFriendRequest(Friend friend);
 
   boolean isNonFriend(Friend friend);
-
-  void deleteById(Long id);
 
 }

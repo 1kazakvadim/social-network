@@ -42,7 +42,7 @@
                                                                    var="profile">
                                                             <li class="person pb-1">
                                                                 <a href="<c:url value="/messages/${profile.id}"/>">
-                                                                    <div class="user">
+                                                                    <div class="user photo-wrap">
                                                                         <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${profile.profilePhotoName}"/>">
                                                                     </div>
                                                                     <p class="name-time">
@@ -98,7 +98,7 @@
                                                                                 aria-label="message-text"
                                                                                 name="messageText"
                                                                                 id="message-text"
-                                                                                path="messageText"></form:input>
+                                                                                path="messageText"/>
                                                                 </div>
                                                                 <button type="submit"
                                                                         class="btn btn-primary btn-sm mt-4">

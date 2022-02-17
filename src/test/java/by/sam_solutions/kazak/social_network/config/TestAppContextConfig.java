@@ -5,17 +5,19 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,8 +29,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource("classpath:database.properties")
 @PropertySource("classpath:storage.properties")
-@ComponentScan(basePackages = {"by.sam_solutions.kazak.social_network.services.*", "by.sam_solutions.kazak.social_network.dao.*"})
-@Import({StorageConfig.class})
+@ComponentScan(basePackages = {"by.sam_solutions.kazak.social_network.dao.*",
+    "by.sam_solutions.kazak.social_network.services.*"})
 public class TestAppContextConfig {
 
   @Autowired
@@ -45,12 +47,10 @@ public class TestAppContextConfig {
 
   @Bean
   public DataSource dataSource() {
-    HikariDataSource dataSource = new HikariDataSource();
-    dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setJdbcUrl(environment.getRequiredProperty("jdbc.url"));
-    dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-    dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-    return dataSource;
+    EmbeddedDatabaseBuilder dataSource = new EmbeddedDatabaseBuilder();
+    dataSource.setType(EmbeddedDatabaseType.H2);
+    dataSource.addScript("schema-test.sql");
+    return dataSource.build();
   }
 
   private Properties hibernateProperties() {
@@ -60,7 +60,6 @@ public class TestAppContextConfig {
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
     properties.put("hibernate.connection.charSet",
         environment.getRequiredProperty("hibernate.connection.charSet"));
-    properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
     return properties;
   }
 
@@ -70,6 +69,14 @@ public class TestAppContextConfig {
     HibernateTransactionManager transactionManager = new HibernateTransactionManager();
     transactionManager.setSessionFactory(sessionFactory);
     return transactionManager;
+  }
+
+  @Bean("messageSource")
+  public MessageSource messageSource() {
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasenames("l10n/messages");
+    messageSource.setDefaultEncoding("UTF-8");
+    return messageSource;
   }
 
   @Bean

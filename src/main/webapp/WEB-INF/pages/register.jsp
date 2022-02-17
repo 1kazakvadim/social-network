@@ -75,17 +75,17 @@
                                                  id="gender" required="required">
                                         <option name="${Gender.NOT_KNOWN}"
                                                 value="${Gender.NOT_KNOWN}">
-                                            Not known
+                                            <spring:message code="registerPage.gender.notKnown"/>
                                         </option>
                                         <option name="${Gender.MALE}" value="${Gender.MALE}">
-                                            Male
+                                            <spring:message code="registerPage.gender.male"/>
                                         </option>
                                         <option name="${Gender.FEMALE}" value="${Gender.FEMALE}">
-                                            Female
+                                            <spring:message code="registerPage.gender.female"/>
                                         </option>
                                         <option name="${Gender.NOT_APPLICABLE}"
                                                 value="${Gender.NOT_APPLICABLE}">
-                                            Not applicable
+                                            <spring:message code="registerPage.gender.notApplicable"/>
                                         </option>
                                     </form:select>
                                 </div>

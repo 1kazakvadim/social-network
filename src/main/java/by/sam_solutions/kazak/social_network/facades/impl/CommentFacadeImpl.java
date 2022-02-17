@@ -24,6 +24,11 @@ public class CommentFacadeImpl implements CommentFacade {
   private ProfileService profileService;
 
   @Override
+  public Comment getById(Long id) {
+    return commentService.getById(id);
+  }
+
+  @Override
   public List<Comment> getAllByPhotoId(Long id) {
     return commentService.getAllByPhotoId(id);
   }
@@ -39,12 +44,8 @@ public class CommentFacadeImpl implements CommentFacade {
   }
 
   @Override
-  public boolean deleteComment(Long commentId, Profile profile) {
-    if (profile.getUser().getRole().getName().equals("ADMIN")) {
+  public void deleteComment(Long commentId, Profile profile) {
       commentService.deleteById(commentId);
-      return true;
-    }
-    return false;
   }
 
 }

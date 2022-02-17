@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface CommentFacade {
 
+  Comment getById(Long id);
+
   List<Comment> getAllByPhotoId(Long id);
 
   void addComment(String text, Long photoId, Long userId);
 
-  boolean deleteComment(Long commentId, Profile profile);
+  void deleteComment(Long commentId, Profile profile);
 
 }

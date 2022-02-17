@@ -102,6 +102,7 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public boolean isTokenExpired(String token) {
     logger.debug("is token expired = {}", token);
     return LocalDateTime.now().isAfter(tokenDao.getByToken(token).getExpiryDate());

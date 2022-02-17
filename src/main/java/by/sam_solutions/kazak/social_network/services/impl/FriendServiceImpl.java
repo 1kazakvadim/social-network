@@ -35,13 +35,6 @@ public class FriendServiceImpl implements FriendService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<Friend> getAll() {
-    logger.debug("get all friends");
-    return friendDao.getAll();
-  }
-
-  @Override
-  @Transactional(readOnly = true)
   public List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus) {
     logger.debug("get friend by profile id = {} and by friend status = {}", id, friendStatus);
     return friendDao.getAllByProfileIdAndFriendStatus(id, friendStatus);
@@ -74,13 +67,6 @@ public class FriendServiceImpl implements FriendService {
   public boolean isNonFriend(Friend friend) {
     logger.debug("is non request = {}", friend.getFriendId());
     return friend.getFriendStatus() == FriendStatus.NON_FRIEND;
-  }
-
-  @Override
-  @Transactional
-  public void deleteById(Long id) {
-    logger.debug("delete friend with id = {}", id);
-    friendDao.deleteById(id);
   }
 
 }

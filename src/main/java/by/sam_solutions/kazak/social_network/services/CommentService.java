@@ -9,8 +9,6 @@ public interface CommentService {
 
   Comment getById(Long id);
 
-  List<Comment> getAll();
-
   List<Comment> getAllByPhotoId(Long id);
 
   void deleteById(Long id);

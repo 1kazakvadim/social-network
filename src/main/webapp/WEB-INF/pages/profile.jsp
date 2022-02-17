@@ -127,6 +127,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <c:if test="${friendCount != 0}">
                                 <div class="card mt-3">
                                     <div class="row friend-count">
@@ -134,19 +135,20 @@
                                            class="text-secondary m-2"><spring:message
                                                 code="profilePage.friends"/> (${friendCount})</a>
                                     </div>
-                                    <div class="container">
+                                    <div class="container friend-container">
                                         <div class="row">
                                             <c:forEach items="${friends}" var="friend" begin="0"
                                                        end="3">
-                                                <div class="col-3">
-                                                    <div class="friend-row d-flex flex-column">
-                                                        <div class="d-flex justify-content-center">
-                                                            <a href="<c:url value="/id${friend.user.id}"/>"><img
+                                                <div class="col-3 p-1">
+                                                    <div class="friend-row">
+                                                        <div>
+                                                            <a class="d-flex justify-content-center friend-row-wrap w-auto"
+                                                               href="<c:url value="/id${friend.user.id}"/>"><img
                                                                     src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friend.profilePhotoName}"/>"
                                                                     class="rounded-circle"
                                                                     alt=""/></a>
                                                         </div>
-                                                        <div class="d-flex justify-content-center">
+                                                        <div class="d-flex justify-content-center ">
                                                             <a href=""
                                                                class="text-secondary friend-name">${friend.basicInformation.firstname}</a>
                                                         </div>
@@ -157,6 +159,32 @@
                                     </div>
                                 </div>
                             </c:if>
+                            <c:if test="${friendCount == 0 && user.id == userId}">
+                                <div class="card mt-3">
+                                    <div class="row friend-count">
+                                        <a href="<c:url value="/id${userId}/friends"/>"
+                                           class="text-secondary m-2"><spring:message
+                                                code="profilePage.friends"/> (${friendCount})</a>
+                                    </div>
+                                    <div class="container friend-container">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-center profile-no-image">
+                                                    <a href="<c:url value="/search"/>"
+                                                       class="text-secondary">
+                                                        <i class="d-flex icon-plus icon-2x justify-content-center"></i>
+                                                        <span class="d-flex justify-content-center">
+                                                                    <spring:message
+                                                                            code="profilePage.addFriends"/>
+                                                                </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+
                         </div>
                         <div class="col-8">
                             <div class="card mb-3">
@@ -238,114 +266,117 @@
                                             </div>
                                         </div>
                                     </c:if>
-                                    <button class="btn collapse-contact-info-button mt-3 mb-3"
-                                            type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-contact-info"
-                                            aria-expanded="false" aria-controls="collapseExample">
-                                        <spring:message
-                                                code="profilePage.collapse.title"/>
-                                    </button>
-                                    <div class="row mt-2 collapse" id="collapse-contact-info">
-                                        <div class="contact-info">
-                                            <div class="col-sm-12">
-                                                <div class="contact-info-header mb-3">
+                                    <c:if test="${not empty profile.mobilePhone || not empty profile.homePhone || not empty profile.githubName || not empty profile.twitterName || not empty profile.instagramName || not empty profile.facebookName || not empty profile.skypeName}">
+                                        <button class="btn collapse-contact-info-button mt-3 mb-3"
+                                                type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-contact-info"
+                                                aria-expanded="false"
+                                                aria-controls="collapseExample">
+                                            <spring:message
+                                                    code="profilePage.collapse.title"/>
+                                        </button>
+                                        <div class="row mt-2 collapse" id="collapse-contact-info">
+                                            <div class="contact-info">
+                                                <div class="col-sm-12">
+                                                    <div class="contact-info-header mb-3">
                                                     <span><spring:message
                                                             code="profilePage.contact.title"/></span>
+                                                    </div>
+                                                    <c:if test="${not empty profile.mobilePhone}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0">
+                                                                    <span class="text-secondary"><spring:message
+                                                                            code="profilePage.mobile"/></span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <span>${profile.mobilePhone}</span>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.homePhone}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0">
+                                                                    <span class="text-secondary"><spring:message
+                                                                            code="profilePage.phone"/></span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <span>${profile.homePhone}</span>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.githubName}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0 text-secondary">
+                                                                    <i class="icon-github icon-large"></i>
+                                                                    <span>Github</span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="#">${profile.githubName}</a>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.twitterName}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0 text-secondary">
+                                                                    <i class="icon-twitter icon-large"></i>
+                                                                    <span>Twitter</span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="#">${profile.twitterName}</a>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.instagramName}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0 text-secondary">
+                                                                    <i class="icon-instagram icon-large"></i>
+                                                                    <span>Instagram</span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="#">${profile.instagramName}</a>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.facebookName}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0 text-secondary">
+                                                                    <i class="icon-facebook icon-large"></i>
+                                                                    <span>Facebook</span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="#">${profile.facebookName}</a>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty profile.skypeName}">
+                                                        <div class="row mb-2">
+                                                            <div class="col-4">
+                                                                <h6 class="mb-0 text-secondary">
+                                                                    <i class="icon-skype icon-large"></i>
+                                                                    <span>Skype</span>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <a href="#">${profile.skypeName}</a>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
-                                                <c:if test="${not empty profile.mobilePhone}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0">
-                                                                                                        <span class="text-secondary"><spring:message
-                                                                                                                code="profilePage.mobile"/></span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <span>${profile.mobilePhone}</span>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.homePhone}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0">
-                                                                                                        <span class="text-secondary"><spring:message
-                                                                                                                code="profilePage.phone"/></span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <span>${profile.homePhone}</span>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.githubName}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0 text-secondary">
-                                                                <i class="icon-github icon-large"></i>
-                                                                <span>Github</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <a href="#">${profile.githubName}</a>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.twitterName}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0 text-secondary">
-                                                                <i class="icon-twitter icon-large"></i>
-                                                                <span>Twitter</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <a href="#">${profile.twitterName}</a>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.instagramName}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0 text-secondary">
-                                                                <i class="icon-instagram icon-large"></i>
-                                                                <span>Instagram</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <a href="#">${profile.instagramName}</a>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.facebookName}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0 text-secondary">
-                                                                <i class="icon-facebook icon-large"></i>
-                                                                <span>Facebook</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <a href="#">${profile.facebookName}</a>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${not empty profile.skypeName}">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4">
-                                                            <h6 class="mb-0 text-secondary">
-                                                                <i class="icon-skype icon-large"></i>
-                                                                <span>Skype</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <a href="#">${profile.skypeName}</a>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                             <c:if test="${photoCount != 0}">
@@ -371,6 +402,36 @@
                                                             </div>
                                                         </div>
                                                     </c:forEach>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${photoCount == 0 && user.id == userId}">
+                                <div class="card mb-3">
+                                    <div class="card-body pt-0">
+                                        <div class="row">
+                                            <div>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="photo-title m-2"><a
+                                                            href="<c:url value="/id${userId}/photos"/>"
+                                                            class="text-secondary"><spring:message
+                                                            code="profilePage.photos"/>
+                                                        (${photoCount})</a>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="d-flex justify-content-center profile-no-image">
+                                                            <a href="<c:url value="/id${user.id}/photos"/>"
+                                                               class="text-secondary">
+                                                                <i class="icon-picture icon-3x d-block d-flex justify-content-center"></i>
+                                                                <span class="d-block d-flex justify-content-center">
+                                                                    <spring:message
+                                                                            code="profilePage.addPhotos"/>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

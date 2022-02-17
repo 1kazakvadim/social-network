@@ -35,14 +35,6 @@ public class Token implements Serializable {
   public Token() {
   }
 
-  public Token(Long id, String token,
-      User user, LocalDateTime expiryDate) {
-    this.id = id;
-    this.token = token;
-    this.user = user;
-    this.expiryDate = expiryDate;
-  }
-
   public Long getId() {
     return id;
   }

@@ -34,13 +34,6 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<Comment> getAll() {
-    logger.debug("get all comments");
-    return commentDao.getAll();
-  }
-
-  @Override
-  @Transactional(readOnly = true)
   public List<Comment> getAllByPhotoId(Long id) {
     logger.debug("get all comments with photo id = {}", id);
     return commentDao.getAllByPhotoId(id);

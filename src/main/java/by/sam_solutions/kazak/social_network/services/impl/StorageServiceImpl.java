@@ -6,9 +6,6 @@ import static org.apache.http.entity.ContentType.IMAGE_PNG;
 
 import by.sam_solutions.kazak.social_network.services.StorageService;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.util.IOUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,19 +38,6 @@ public class StorageServiceImpl implements StorageService {
     convertedFile.delete();
     logger.debug("Uploaded file with name {}", fileName);
     return fileName;
-  }
-
-  @Override
-  public byte[] download(String fileName) {
-    S3Object s3Object = amazonS3.getObject(bucketName, fileName);
-    S3ObjectInputStream inputStream = s3Object.getObjectContent();
-    try {
-      return IOUtils.toByteArray(inputStream);
-    } catch (IOException exp) {
-      logger.debug("Downloaded file with name {}", fileName);
-      exp.printStackTrace();
-    }
-    return null;
   }
 
   @Override

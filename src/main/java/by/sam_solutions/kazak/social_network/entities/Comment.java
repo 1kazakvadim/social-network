@@ -42,15 +42,6 @@ public class Comment implements Serializable {
   public Comment() {
   }
 
-  public Comment(Long id, String text, Profile profile,
-      Photo photo, LocalDateTime timeCreation) {
-    this.id = id;
-    this.text = text;
-    this.profile = profile;
-    this.photo = photo;
-    this.timeCreation = timeCreation;
-  }
-
   public Long getId() {
     return id;
   }

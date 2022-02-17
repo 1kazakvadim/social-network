@@ -35,6 +35,13 @@ public class BasicInformationServiceImpl implements BasicInformationService {
   }
 
   @Override
+  @Transactional
+  public void deleteById(Long id) {
+    logger.debug("delete basic information with id = {}", id);
+    basicInformationDao.deleteById(id);
+  }
+
+  @Override
   public boolean isGenderValid(Gender gender) {
     logger.debug("is gender valid = {}", gender.getName());
     return EnumUtils.isValidEnum(Gender.class, gender.getName());

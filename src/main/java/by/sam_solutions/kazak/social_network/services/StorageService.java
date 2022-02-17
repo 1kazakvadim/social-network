@@ -6,8 +6,6 @@ public interface StorageService {
 
   String upload(MultipartFile file);
 
-  byte[] download(String fileName);
-
   String delete(String fileName);
 
   boolean isMultipartFileValid(MultipartFile file);

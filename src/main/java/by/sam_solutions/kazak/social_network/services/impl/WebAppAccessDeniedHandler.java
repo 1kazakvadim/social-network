@@ -21,7 +21,6 @@ public class WebAppAccessDeniedHandler implements AccessDeniedHandler {
       throws IOException, ServletException, IOException {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null) {
-
       logger.info("User '" + authentication.getName() +
           "' attempted to access the URL: " +
           request.getRequestURI());

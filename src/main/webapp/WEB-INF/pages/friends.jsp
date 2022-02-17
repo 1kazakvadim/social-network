@@ -27,8 +27,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-10">
                                     <h4><span><spring:message code="friendPage.title"/></span></h4>
+                                </div>
+                                <div class="col-2">
+                                    <a class="btn btn-primary" href="<c:url value="/search"/>"
+                                       role="button"><spring:message code="friendPage.search"/></a>
                                 </div>
                             </div>
                             <hr>
@@ -68,9 +72,10 @@
                                         <c:forEach items="${friends}" var="friend">
                                             <div class="col-11 mb-2">
                                                 <div class="d-flex">
-                                                    <div class="friend-img">
-                                                        <a href="<c:url value="/id${friend.user.id}"/>">
-                                                            <img class="img-fluid rounded-circle"
+                                                    <div>
+                                                        <a class="friend-img-wrap d-flex"
+                                                           href="<c:url value="/id${friend.user.id}"/>">
+                                                            <img class="rounded-circle"
                                                                  src="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friend.profilePhotoName}"
                                                                  alt="">
                                                         </a>
@@ -80,14 +85,14 @@
                                                                 href="<c:url value="/id${friend.user.id}"/>"
                                                                 class="user-title text-black">${friend.basicInformation.firstname} ${friend.basicInformation.lastname}</a>
                                                         </h5>
-                                                        <a href=""
+                                                        <a href="<c:url value="/messages/${friend.id}"/>"
                                                            class="text-secondary"><spring:message
                                                                 code="friendPage.writeMessage"/></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <c:if test="${user.id == userId}">
-                                                <div class="col-1">
+                                                <div class=" col-1">
                                                     <a class="nav-link nav-profile" href="#"
                                                        id="unfriendDropdown"
                                                        role="button"
@@ -123,7 +128,8 @@
                                     </div>
                                 </div>
                                 <c:if test="${user.id == userId}">
-                                    <div class="container tab-pane fade" id="friend-requests"
+                                    <div class="container tab-pane fade"
+                                         id="friend-requests"
                                          role="tabpanel"
                                          aria-labelledby="friend-requests-tab">
                                         <div class="row">
@@ -136,9 +142,10 @@
                                                        var="friendRequest">
                                                 <div class="col-11 mb-2">
                                                     <div class="d-flex">
-                                                        <div class="friend-img">
-                                                            <a href="<c:url value="/id${friendRequest.user.id}"/>">
-                                                                <img class="img-fluid rounded-circle"
+                                                        <div>
+                                                            <a class="friend-img-wrap d-flex"
+                                                               href="<c:url value="/id${friendRequest.user.id}"/>">
+                                                                <img class="rounded-circle"
                                                                      src="https://social-network-sam.s3.eu-north-1.amazonaws.com/${friendRequest.profilePhotoName}"
                                                                      alt="">
                                                             </a>
@@ -148,7 +155,7 @@
                                                                     href="<c:url value="/id${friendRequest.user.id}"/>"
                                                                     class="user-title text-black">${friendRequest.basicInformation.firstname} ${friendRequest.basicInformation.lastname}</a>
                                                             </h5>
-                                                            <a href=""
+                                                            <a href="<c:url value="/messages/${friendRequest.id}"/>"
                                                                class="text-secondary"><spring:message
                                                                     code="friendPage.writeMessage"/></a>
                                                         </div>
@@ -170,9 +177,12 @@
                                                              stroke-linecap="round"
                                                              stroke-linejoin="round"
                                                              class="feather feather-more-horizontal align-middle">
-                                                            <circle cx="12" cy="12" r="1"></circle>
-                                                            <circle cx="19" cy="12" r="1"></circle>
-                                                            <circle cx="5" cy="12" r="1"></circle>
+                                                            <circle cx="12" cy="12"
+                                                                    r="1"></circle>
+                                                            <circle cx="19" cy="12"
+                                                                    r="1"></circle>
+                                                            <circle cx="5" cy="12"
+                                                                    r="1"></circle>
                                                         </svg>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-end"

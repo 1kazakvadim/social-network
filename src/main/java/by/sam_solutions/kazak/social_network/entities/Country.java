@@ -29,12 +29,6 @@ public class Country implements Serializable {
   public Country() {
   }
 
-  public Country(Long id, String name, String ISOCode) {
-    this.id = id;
-    this.name = name;
-    this.ISOCode = ISOCode;
-  }
-
   public Long getId() {
     return id;
   }

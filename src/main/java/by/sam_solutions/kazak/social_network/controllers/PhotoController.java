@@ -28,6 +28,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @Controller
 public class PhotoController {
 
+  private static final String ROLE_ADMIN = "ADMIN";
+
   @Autowired
   private ProfileFacade profileFacade;
 
@@ -42,13 +44,14 @@ public class PhotoController {
 
   @GetMapping("/id{userId}/photos")
   public ModelAndView getPhotosPage(HttpServletRequest request, ModelAndView modelAndView,
+      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
       @PathVariable Long userId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
-    List<Photo> photos = photoFacade.getAllByProfileId(profile.getId());
+    List<Photo> photos = photoFacade.getAllByProfileId(profile.getId(), page);
     if (photos.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoPage.message", null,
@@ -136,11 +139,19 @@ public class PhotoController {
       @PathVariable Long photoId, @RequestParam Long commentId,
       @AuthenticationPrincipal UserPrincipal user) {
     Profile profile = profileFacade.getProfileByUserId(user.getId());
+    Comment comment = commentFacade.getById(commentId);
     if (profile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
       return modelAndView;
     }
-    commentFacade.deleteComment(commentId, profile);
+    if (comment == null) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
+      return modelAndView;
+    }
+    if (profile.getUser().getRole().getName().equals(ROLE_ADMIN) || profile.getUser().getId()
+        .equals(comment.getProfile().getUser().getId())) {
+      commentFacade.deleteComment(commentId, profile);
+    }
     modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
     return modelAndView;
   }

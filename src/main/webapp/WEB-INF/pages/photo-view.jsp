@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<sec:authorize var="isAdmin" access="hasRole('ADMIN')"/>
 <sec:authentication var="user" property="principal"/>
 <jsp:include page="header.jsp"/>
 
@@ -29,9 +30,10 @@
                             <div class="post">
                                 <div class="post-heading mb-4">
                                     <div class="pull-left">
-                                        <a href="<c:url value="/id${profile.user.id}"/>">
+                                        <a class="post-heading-wrap d-flex"
+                                           href="<c:url value="/id${profile.user.id}"/>">
                                             <img src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${profile.profilePhotoName}"/>"
-                                                 class="rounded-circle profile-photo">
+                                                 class="rounded-circle">
                                         </a>
                                     </div>
                                     <div class="pull-left meta">
@@ -136,9 +138,9 @@
                                     <ul class="comments-list">
                                         <c:forEach items="${comments}" var="comment">
                                             <li class="comment">
-                                                <a class="pull-left"
+                                                <a class="pull-left comment-wrap d-flex pe-1"
                                                    href="<c:url value="/id${comment.profile.user.id}"/>">
-                                                    <img class="profile-photo rounded-circle"
+                                                    <img class="rounded-circle"
                                                          src="<c:url value="https://social-network-sam.s3.eu-north-1.amazonaws.com/${comment.profile.profilePhotoName}"/>"
                                                          alt="avatar">
                                                 </a>
@@ -150,18 +152,20 @@
                                                         <h5 class="time text-secondary">${comment.timeCreation.toLocalDate()} ${comment.timeCreation.toLocalTime()}</h5>
                                                     </div>
                                                     <p>${comment.text}</p>
-                                                    <sec:authorize access="hasRole('ADMIN')">
-                                                    <form:form action="${photo.id}/delete-comment"
-                                                               method="POST">
-                                                        <input type="hidden" name="commentId"
-                                                               value="${comment.id}">
-                                                        <button type="submit"
-                                                                class="delete-link btn btn-link text-danger p-0">
-                                                            <spring:message
-                                                                    code="photoPage.deleteComment"/>
-                                                        </button>
-                                                    </form:form>
-                                                    </sec:authorize>
+                                                        <c:if test="${isAdmin || user.id == comment.profile.user.id}">
+                                                            <form:form
+                                                                    action="${photo.id}/delete-comment"
+                                                                    method="POST">
+                                                                <input type="hidden"
+                                                                       name="commentId"
+                                                                       value="${comment.id}">
+                                                                <button type="submit"
+                                                                        class="delete-link btn btn-link text-danger p-0">
+                                                                    <spring:message
+                                                                            code="photoPage.deleteComment"/>
+                                                                </button>
+                                                            </form:form>
+                                                        </c:if>
                                                 </div>
                                             </li>
                                         </c:forEach>
