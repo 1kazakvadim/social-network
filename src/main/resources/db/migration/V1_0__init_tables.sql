@@ -117,21 +117,6 @@ CREATE TABLE IF NOT EXISTS `dialog`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `message`
-(
-    `id`             bigint NOT NULL AUTO_INCREMENT,
-    `dialog_id`      bigint                                  DEFAULT NULL,
-    `text`           varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `user_firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `user_lastname`  varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `time_creation`  datetime                                DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    KEY `dialog_id_idx` (`dialog_id`),
-    CONSTRAINT `dialog_table_message_id` FOREIGN KEY (`dialog_id`) REFERENCES `dialog` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS `users_to_dialogs`
 (
     `user_id`   bigint NOT NULL,
@@ -174,17 +159,17 @@ CREATE TABLE IF NOT EXISTS `photo`
 
 CREATE TABLE IF NOT EXISTS `comment`
 (
-    `id`            bigint NOT NULL AUTO_INCREMENT,
-    `text`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `user_id`       bigint                                  DEFAULT NULL,
-    `photo_id`      bigint                                  DEFAULT NULL,
-    `like_count`    bigint                                  DEFAULT NULL,
-    `time_creation` datetime                                DEFAULT NULL,
+    `id`            bigint                                                        NOT NULL AUTO_INCREMENT,
+    `text`          varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `profile_id`    bigint                                                                 DEFAULT NULL,
+    `photo_id`      bigint                                                                 DEFAULT NULL,
+    `like_count`    bigint                                                        NOT NULL DEFAULT '0',
+    `time_creation` datetime                                                      NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `user_commet_id_idx` (`user_id`),
     KEY `photo_comment_id_idx` (`photo_id`),
-    CONSTRAINT `photo_table_comment_id` FOREIGN KEY (`photo_id`) REFERENCES `photo` (`id`),
-    CONSTRAINT `user_table_comment_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+    KEY `profile_table_comment_id_idx` (`profile_id`),
+    CONSTRAINT `photo_table_comment_id` FOREIGN KEY (`photo_id`) REFERENCES `photo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `profile_table_comment_id` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
