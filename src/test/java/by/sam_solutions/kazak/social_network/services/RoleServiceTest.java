@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import by.sam_solutions.kazak.social_network.config.TestAppContextConfig;
-import by.sam_solutions.kazak.social_network.entities.Relationship;
+import by.sam_solutions.kazak.social_network.entities.Role;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,60 +22,68 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestAppContextConfig.class)
 @Transactional
-public class RelationshipServiceTest {
+public class RoleServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(RelationshipServiceTest.class);
+  private final Logger logger = LoggerFactory.getLogger(RoleServiceTest.class);
 
   @Autowired
-  private RelationshipService relationshipService;
+  private RoleService roleService;
 
-  private Relationship relationship;
+  private Role role;
 
   @BeforeTransaction
   public void addValues() {
-    relationship = new Relationship();
-    relationship.setName("name");
-    relationshipService.saveOrUpdate(relationship);
+    role = new Role();
+    role.setName("role");
+    roleService.saveOrUpdate(role);
   }
 
   @AfterTransaction
   public void removeValues() {
-    relationshipService.deleteById(relationship.getId());
+    roleService.deleteById(role.getId());
   }
 
   @Test
   public void testSaveOrUpdate() {
     logger.debug("Execute test: testSave()");
-    relationship.setName("updatedName");
-    relationshipService.saveOrUpdate(relationship);
-    Relationship updatedRelationship = relationshipService.getById(relationship.getId());
-    assertEquals(updatedRelationship.getId(), relationship.getId());
-    assertEquals(updatedRelationship.getName(), relationship.getName());
+    role.setName("updatedRole");
+    roleService.saveOrUpdate(role);
+    Role updatedRole = roleService.getById(role.getId());
+    assertEquals(updatedRole.getId(), role.getId());
+    assertEquals(updatedRole.getName(), role.getName());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
-    relationshipService.saveOrUpdate(relationship);
-    Relationship relationshipById = relationshipService.getById(relationship.getId());
-    assertEquals(relationshipById.getId(), relationship.getId());
-    assertEquals(relationshipById.getName(), relationship.getName());
+    Role roleById = roleService.getById(role.getId());
+    assertEquals(roleById.getId(), role.getId());
+    assertEquals(roleById.getName(), role.getName());
   }
 
   @Test
   public void testGetAll() {
     logger.debug("Execute test: testGetAll()");
-    List<Relationship> relationships = relationshipService.getAll();
-    assertNotNull(relationships);
-    assertEquals(1, relationships.size());
+    roleService.saveOrUpdate(role);
+    List<Role> roles = roleService.getAll();
+    assertNotNull(roles);
+    assertEquals(3, roles.size());
+  }
+
+  @Test
+  public void testFindByName() {
+    logger.debug("Execute test: testFindByName()");
+    Role roleByName = roleService.findByName(role.getName());
+    assertEquals(roleByName.getId(), role.getId());
+    assertEquals(roleByName.getName(), role.getName());
   }
 
   @Test
   @Rollback
   public void testDeleteById() {
     logger.debug("Execute test: testDeleteById()");
-    relationshipService.deleteById(relationship.getId());
-    assertNull(relationshipService.getById(relationship.getId()));
+    roleService.deleteById(role.getId());
+    assertNull(roleService.getById(role.getId()));
   }
 
 }
