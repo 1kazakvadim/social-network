@@ -12,6 +12,9 @@ public interface FriendService {
 
   List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
+  List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus, Integer page,
+      Integer size);
+
   Friend getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(Long makeFriendRequestProfileId,
       Long acceptFriendRequestProfileId);
 
@@ -20,5 +23,7 @@ public interface FriendService {
   boolean hasFriendRequest(Friend friend);
 
   boolean isNonFriend(Friend friend);
+
+  Long countByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
 }

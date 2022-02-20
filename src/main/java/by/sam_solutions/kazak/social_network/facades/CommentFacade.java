@@ -10,8 +10,12 @@ public interface CommentFacade {
 
   List<Comment> getAllByPhotoId(Long id);
 
+  List<Comment> getAllByPhotoId(Long id, Integer page, Integer size);
+
   void addComment(String text, Long photoId, Long userId);
 
   void deleteComment(Long commentId, Profile profile);
+
+  Long countByPhotoId(Long id);
 
 }

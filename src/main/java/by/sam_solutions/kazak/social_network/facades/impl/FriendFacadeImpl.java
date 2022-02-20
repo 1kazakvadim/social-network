@@ -58,4 +58,9 @@ public class FriendFacadeImpl implements FriendFacade {
     return friendService.isNonFriend(friend);
   }
 
+  @Override
+  public Long countByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus) {
+    return friendService.countByProfileIdAndFriendStatus(id, friendStatus);
+  }
+
 }

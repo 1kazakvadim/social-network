@@ -91,6 +91,7 @@
                                                                        action="${photo.id}/add-description">
                                                                 <div>
                                                                 <textarea class="form-control"
+                                                                          placeholder="<spring:message code="photoView.placeholder.addDescription"/>"
                                                                           rows="3" maxlength="255"
                                                                           aria-label="photo-description"
                                                                           name="description"
@@ -135,7 +136,7 @@
                                             <p class="text-secondary m-0 p-5">${message}</p>
                                         </div>
                                     </c:if>
-                                    <ul class="comments-list">
+                                    <ul class="comments-list mb-2">
                                         <c:forEach items="${comments}" var="comment">
                                             <li class="comment">
                                                 <a class="pull-left comment-wrap d-flex pe-1"
@@ -152,24 +153,90 @@
                                                         <h5 class="time text-secondary">${comment.timeCreation.toLocalDate()} ${comment.timeCreation.toLocalTime()}</h5>
                                                     </div>
                                                     <p>${comment.text}</p>
-                                                        <c:if test="${isAdmin || user.id == comment.profile.user.id}">
-                                                            <form:form
-                                                                    action="${photo.id}/delete-comment"
-                                                                    method="POST">
-                                                                <input type="hidden"
-                                                                       name="commentId"
-                                                                       value="${comment.id}">
-                                                                <button type="submit"
-                                                                        class="delete-link btn btn-link text-danger p-0">
-                                                                    <spring:message
-                                                                            code="photoPage.deleteComment"/>
-                                                                </button>
-                                                            </form:form>
-                                                        </c:if>
+                                                    <c:if test="${isAdmin || user.id == comment.profile.user.id}">
+                                                        <form:form
+                                                                action="${photo.id}/delete-comment"
+                                                                method="POST">
+                                                            <input type="hidden"
+                                                                   name="commentId"
+                                                                   value="${comment.id}">
+                                                            <button type="submit"
+                                                                    class="delete-link btn btn-link text-danger p-0">
+                                                                <spring:message
+                                                                        code="photoPage.deleteComment"/>
+                                                            </button>
+                                                        </form:form>
+                                                    </c:if>
                                                 </div>
                                             </li>
                                         </c:forEach>
                                     </ul>
+                                    <c:if test="${not empty comments}">
+                                        <nav class="d-flex justify-content-center mt-auto">
+                                            <div>
+                                                <div class="d-flex justify-content-center">
+                                                    <ul class="pagination">
+                                                        <li class="page-item disabled">
+                                                            <a href="#" class="page-link"
+                                                               tabindex="-1">
+                                                                <spring:message code="pages"/>
+                                                            </a>
+                                                        </li>
+                                                        <c:forEach begin="1"
+                                                                   end="${total / size + 1}"
+                                                                   var="pageNumber">
+                                                            <c:choose>
+                                                                <c:when test="${page == pageNumber - 1}">
+                                                                    <li class="page-item active">
+                                                                        <a
+                                                                                class="page-link"
+                                                                                href="#">${pageNumber}</a>
+                                                                    </li>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <li class="page-item"><a
+                                                                            class="page-link"
+                                                                            tabindex="-1"
+                                                                            href="<c:url value="/id${userId}/photos/${photoId}?page=${pageNumber-1}&size=${size}"/>">${pageNumber}</a>
+                                                                    </li>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <ul class="pagination">
+                                                        <li class="page-item disabled">
+                                                            <a href="#" class="page-link"
+                                                               tabindex="-1">
+                                                                <spring:message
+                                                                        code="elementsOnPage"/>
+                                                            </a>
+                                                        </li>
+                                                        <c:forEach items="${elementsOnPage}"
+                                                                   var="element">
+                                                            <c:choose>
+                                                                <c:when test="${element == size}">
+                                                                    <li class="page-item active">
+                                                                        <a
+                                                                                class="page-link"
+                                                                                href="#">${element}</a>
+                                                                    </li>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <li class="page-item"><a
+                                                                            class="page-link"
+                                                                            tabindex="-1"
+                                                                            href="<c:url value="/id${userId}/photos/${photoId}?page=${page}&size=${element}"/>">${element}</a>
+                                                                    </li>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

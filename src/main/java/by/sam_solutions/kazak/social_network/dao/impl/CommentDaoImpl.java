@@ -5,6 +5,7 @@ import by.sam_solutions.kazak.social_network.dao.CommentDao;
 import by.sam_solutions.kazak.social_network.entities.Comment;
 import java.util.List;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,24 @@ public class CommentDaoImpl extends AbstractBaseDao<Comment> implements CommentD
         .createQuery("FROM Comment comment WHERE comment.photo.id = :id")
         .setParameter("id", id)
         .list();
+  }
+
+  @Override
+  public List<Comment> getAllByPhotoId(Long id, Integer page, Integer size) {
+    Query query = sessionFactory.getCurrentSession()
+        .createQuery("FROM Comment comment WHERE comment.photo.id = :id")
+        .setParameter("id", id);
+    query.setFirstResult(page * size);
+    query.setMaxResults(size);
+    return (List<Comment>) query.list();
+  }
+
+  @Override
+  public Long countByPhotoId(Long id) {
+    return (Long) sessionFactory.getCurrentSession()
+        .createQuery("SELECT count(comment) FROM Comment comment WHERE comment.photo.id = :id")
+        .setParameter("id", id)
+        .getSingleResult();
   }
 
 }

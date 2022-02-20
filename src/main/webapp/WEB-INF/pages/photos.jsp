@@ -87,7 +87,7 @@
                                     </c:if>
                                     <hr class="mt-2">
                                     <div class="container-fluid">
-                                        <div class="row">
+                                        <div class="row photos-wrapper">
                                             <c:if test="${message != null}">
                                                 <div class="col-12 d-flex justify-content-center align-content-center">
                                                     <p class="text-secondary m-0 p-5">${message}</p>
@@ -101,6 +101,73 @@
                                                     </a>
                                                 </div>
                                             </c:forEach>
+                                            <c:if test="${not empty photos}">
+                                                <nav class="d-flex justify-content-center mt-auto mt-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <ul class="pagination">
+                                                                <li class="page-item disabled">
+                                                                    <a href="#" class="page-link"
+                                                                       tabindex="-1">
+                                                                        <spring:message
+                                                                                code="pages"/>
+                                                                    </a>
+                                                                </li>
+                                                                <c:forEach begin="1"
+                                                                           end="${total / size + 1}"
+                                                                           var="pageNumber">
+                                                                    <c:choose>
+                                                                        <c:when test="${page == pageNumber - 1}">
+                                                                            <li class="page-item active">
+                                                                                <a
+                                                                                        class="page-link"
+                                                                                        href="#">${pageNumber}</a>
+                                                                            </li>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <li class="page-item"><a
+                                                                                    class="page-link"
+                                                                                    tabindex="-1"
+                                                                                    href="<c:url value="/id${userId}/photos?page=${pageNumber-1}&size=${size}"/>">${pageNumber}</a>
+                                                                            </li>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <ul class="pagination">
+                                                                <li class="page-item disabled">
+                                                                    <a href="#" class="page-link"
+                                                                       tabindex="-1">
+                                                                        <spring:message
+                                                                                code="elementsOnPage"/>
+                                                                    </a>
+                                                                </li>
+                                                                <c:forEach items="${elementsOnPage}"
+                                                                           var="element">
+                                                                    <c:choose>
+                                                                        <c:when test="${element == size}">
+                                                                            <li class="page-item active">
+                                                                                <a
+                                                                                        class="page-link"
+                                                                                        href="#">${element}</a>
+                                                                            </li>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <li class="page-item"><a
+                                                                                    class="page-link"
+                                                                                    tabindex="-1"
+                                                                                    href="<c:url value="/id${userId}/photos?page=${page}&size=${element}"/>">${element}</a>
+                                                                            </li>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +177,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 

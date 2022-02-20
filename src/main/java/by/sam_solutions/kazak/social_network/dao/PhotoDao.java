@@ -5,6 +5,10 @@ import java.util.List;
 
 public interface PhotoDao extends IAbstractBaseDao<Photo> {
 
+  List<Photo> getAllByProfileId(Long id, Integer page, Integer size);
+
   List<Photo> getAllByProfileId(Long id);
+
+  Long countByProfileId(Long id);
 
 }

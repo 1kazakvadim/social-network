@@ -178,6 +178,10 @@ hr.solid {
   text-decoration: none;
 }
 
+.photos-wrapper {
+  min-height: 850px;
+}
+
 .friend-count a {
   text-decoration: none;
   font-size: 10px;
@@ -544,6 +548,10 @@ footer p {
 
 .chat-container textarea {
   padding: 10px;
+}
+
+.table-wrapper {
+  min-height: 600px;
 }
 
 .profile-table td {

@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +32,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @Controller
 @RequestMapping("/admin/profiles")
 public class AdminController {
+
+  private static final List<Integer> ELEMENTS_ON_PROFILES_PAGE = List.of(10, 25, 50, 100);
 
   @Autowired
   private ProfileFacade profileFacade;
@@ -58,11 +59,22 @@ public class AdminController {
   @Autowired
   private MessageSource messageSource;
 
-  @GetMapping("/")
-  public String getProfilesPage(Model model) {
-    List<Profile> profiles = profileFacade.getAll();
-    model.addAttribute("profiles", profiles);
-    return "profiles";
+  @GetMapping
+  public ModelAndView getProfilesPage(ModelAndView modelAndView,
+      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+      @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+    if (page < 0 || size < 0) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
+      return modelAndView;
+    }
+    List<Profile> profiles = profileFacade.getAll(page, size);
+    modelAndView.addObject("page", page);
+    modelAndView.addObject("size", size);
+    modelAndView.addObject("total", profileFacade.countProfiles());
+    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_PROFILES_PAGE);
+    modelAndView.addObject("profiles", profiles);
+    modelAndView.setViewName("profiles");
+    return modelAndView;
   }
 
   @GetMapping("/{profileId}/edit")

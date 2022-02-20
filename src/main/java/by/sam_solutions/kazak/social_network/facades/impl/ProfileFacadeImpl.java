@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProfileFacadeImpl implements ProfileFacade {
 
-  private final Logger logger = LoggerFactory.getLogger(ProfileFacadeImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileFacadeImpl.class);
 
   @Autowired
   private ProfileService profileService;
@@ -35,6 +35,11 @@ public class ProfileFacadeImpl implements ProfileFacade {
   }
 
   @Override
+  public List<Profile> getAll(Integer page, Integer size) {
+    return profileService.getAll(page, size);
+  }
+
+  @Override
   public Profile getById(Long id) {
     return profileService.getById(id);
   }
@@ -48,6 +53,13 @@ public class ProfileFacadeImpl implements ProfileFacade {
   public List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus) {
     return profileService.getUniqueFriendsProfiles(
         friendService.getAllByProfileIdAndFriendStatus(id, friendStatus), id);
+  }
+
+  @Override
+  public List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus, Integer page,
+      Integer size) {
+    return profileService.getUniqueFriendsProfiles(
+        friendService.getAllByProfileIdAndFriendStatus(id, friendStatus, page, size), id);
   }
 
   @Override
@@ -86,6 +98,11 @@ public class ProfileFacadeImpl implements ProfileFacade {
     profile.getUser().setLocked(isLocked);
     profile.setUpdateTime(LocalDateTime.now());
     profileService.saveOrUpdate(profile);
+  }
+
+  @Override
+  public Long countProfiles() {
+    return profileService.countProfiles();
   }
 
 }

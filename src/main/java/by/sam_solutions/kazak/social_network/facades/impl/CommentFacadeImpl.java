@@ -34,6 +34,11 @@ public class CommentFacadeImpl implements CommentFacade {
   }
 
   @Override
+  public List<Comment> getAllByPhotoId(Long id, Integer page, Integer size) {
+    return commentService.getAllByPhotoId(id, page, size);
+  }
+
+  @Override
   public void addComment(String text, Long photoId, Long userId) {
     Comment comment = new Comment();
     comment.setText(text);
@@ -45,7 +50,12 @@ public class CommentFacadeImpl implements CommentFacade {
 
   @Override
   public void deleteComment(Long commentId, Profile profile) {
-      commentService.deleteById(commentId);
+    commentService.deleteById(commentId);
+  }
+
+  @Override
+  public Long countByPhotoId(Long id) {
+    return commentService.countByPhotoId(id);
   }
 
 }

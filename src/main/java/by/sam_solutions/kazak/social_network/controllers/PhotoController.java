@@ -29,6 +29,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 public class PhotoController {
 
   private static final String ROLE_ADMIN = "ADMIN";
+  private static final List<Integer> ELEMENTS_ON_PHOTOS_PAGE = List.of(8, 16, 24, 32);
+  private static final List<Integer> ELEMENTS_OF_COMMENTS_ON_PHOTO_PAGE = List.of(5, 10, 25, 50);
 
   @Autowired
   private ProfileFacade profileFacade;
@@ -45,13 +47,18 @@ public class PhotoController {
   @GetMapping("/id{userId}/photos")
   public ModelAndView getPhotosPage(HttpServletRequest request, ModelAndView modelAndView,
       @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+      @RequestParam(value = "size", required = false, defaultValue = "8") Integer size,
       @PathVariable Long userId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
-    List<Photo> photos = photoFacade.getAllByProfileId(profile.getId(), page);
+    if (page < 0 || size < 0) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
+      return modelAndView;
+    }
+    List<Photo> photos = photoFacade.getAllByProfileId(profile.getId(), page, size);
     if (photos.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoPage.message", null,
@@ -60,6 +67,10 @@ public class PhotoController {
       return modelAndView;
     }
     modelAndView.addObject("photos", photos);
+    modelAndView.addObject("page", page);
+    modelAndView.addObject("size", size);
+    modelAndView.addObject("total", photoFacade.countByProfileId(profile.getId()));
+    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_PHOTOS_PAGE);
     modelAndView.setViewName("photos");
     Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
     if (inputFlashMap != null) {
@@ -97,6 +108,8 @@ public class PhotoController {
 
   @GetMapping("/id{userId}/photos/{photoId}")
   public ModelAndView getViewPhotoPage(ModelAndView modelAndView, @PathVariable Long userId,
+      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
       @PathVariable Long photoId, Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
@@ -112,7 +125,15 @@ public class PhotoController {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos");
       return modelAndView;
     }
-    List<Comment> comments = commentFacade.getAllByPhotoId(photoId);
+    if (page < 0 || size < 0) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_PROFILE + userId + "/photos/" + photoId);
+      return modelAndView;
+    }
+    List<Comment> comments = commentFacade.getAllByPhotoId(photo.getId(), page, size);
+    modelAndView.addObject("page", page);
+    modelAndView.addObject("size", size);
+    modelAndView.addObject("total", commentFacade.countByPhotoId(photo.getId()));
+    modelAndView.addObject("elementsOnPage", ELEMENTS_OF_COMMENTS_ON_PHOTO_PAGE);
     if (comments.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoView.message", null,

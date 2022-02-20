@@ -15,10 +15,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class FriendController {
+
+  private static final List<Integer> ELEMENTS_ON_FRIEND_PAGE = List.of(10, 25, 50, 100);
 
   @Autowired
   private ProfileFacade profileFacade;
@@ -31,16 +34,24 @@ public class FriendController {
 
   @GetMapping("/id{userId}/friends")
   public ModelAndView modelAndView(ModelAndView modelAndView, @PathVariable Long userId,
+      @RequestParam(value = "friendPage", required = false, defaultValue = "0") Integer friendPage,
+      @RequestParam(value = "friendSize", required = false, defaultValue = "10") Integer friendSize,
+      @RequestParam(value = "friendRequestPage", required = false, defaultValue = "0") Integer friendRequestPage,
+      @RequestParam(value = "friendRequestSize", required = false, defaultValue = "10") Integer friendRequestSize,
       Locale locale) {
     Profile profile = profileFacade.getProfileByUserId(userId);
     if (profile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
+    if (friendPage < 0 || friendSize < 0 || friendRequestPage < 0 || friendRequestSize < 0) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_FRIENDS);
+      return modelAndView;
+    }
     List<Profile> friends = profileFacade.getProfilesByFriendStatus(profile.getId(),
-        FriendStatus.IN_FRIEND);
+        FriendStatus.IN_FRIEND, friendPage, friendSize);
     List<Profile> friendRequests = profileFacade.getProfilesByFriendStatus(profile.getId(),
-        FriendStatus.FRIEND_REQUEST);
+        FriendStatus.FRIEND_REQUEST, friendRequestPage, friendRequestSize);
     if (friends.isEmpty()) {
       modelAndView.addObject("noFriendMessage",
           messageSource.getMessage("friendPage.noFriendMessage", null,
@@ -51,6 +62,15 @@ public class FriendController {
           messageSource.getMessage("friendPage.noFriendRequestMessage", null,
               locale));
     }
+    modelAndView.addObject("friendPage", friendPage);
+    modelAndView.addObject("friendRequestPage", friendRequestPage);
+    modelAndView.addObject("friendSize", friendSize);
+    modelAndView.addObject("friendRequestSize", friendRequestSize);
+    modelAndView.addObject("totalFriend", friendFacade.countByProfileIdAndFriendStatus(
+        profile.getId(), FriendStatus.IN_FRIEND));
+    modelAndView.addObject("totalFriendRequests", friendFacade.countByProfileIdAndFriendStatus(
+        profile.getId(), FriendStatus.FRIEND_REQUEST));
+    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_FRIEND_PAGE);
     modelAndView.addObject("friends", friends);
     modelAndView.addObject("friendRequests", friendRequests);
     modelAndView.setViewName("friends");

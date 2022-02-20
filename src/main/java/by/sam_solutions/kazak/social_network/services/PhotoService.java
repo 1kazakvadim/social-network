@@ -11,8 +11,12 @@ public interface PhotoService {
 
   List<Photo> getAll();
 
+  List<Photo> getAllByProfileId(Long id, Integer page, Integer size);
+
   void deleteById(Long id);
 
   List<Photo> getAllByProfileId(Long id);
+
+  Long countByProfileId(Long id);
 
 }

@@ -45,6 +45,11 @@ public class PhotoFacadeImpl implements PhotoFacade {
   }
 
   @Override
+  public List<Photo> getAllByProfileId(Long id, Integer page, Integer size) {
+    return photoService.getAllByProfileId(id, page, size);
+  }
+
+  @Override
   public List<Photo> getAllByProfileId(Long id) {
     return photoService.getAllByProfileId(id);
   }
@@ -91,6 +96,11 @@ public class PhotoFacadeImpl implements PhotoFacade {
   @Override
   public boolean isPhotoBelongsProfile(Photo photo, Profile profile) {
     return Objects.equals(photo.getProfile().getId(), profile.getId());
+  }
+
+  @Override
+  public Long countByProfileId(Long id) {
+    return photoService.countByProfileId(id);
   }
 
 }

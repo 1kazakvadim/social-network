@@ -22,4 +22,6 @@ public interface FriendFacade {
 
   boolean isNonFriend(Friend friend);
 
+  Long countByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
+
 }

@@ -9,16 +9,23 @@ public interface ProfileFacade {
 
   List<Profile> getAll();
 
+  List<Profile> getAll(Integer page, Integer size);
+
   Profile getById(Long id);
 
   Profile getProfileByUserId(Long id);
 
   List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus);
 
+  List<Profile> getProfilesByFriendStatus(Long id, FriendStatus friendStatus, Integer page,
+      Integer size);
+
   List<Profile> searchForProfiles(String search);
 
   void updateContactInformationInProfile(ContactInformationDTO contactInformationDTO);
 
   void changeProfileLock(Profile profile, boolean isLocked);
+
+  Long countProfiles();
 
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-  private final Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
   @Autowired
   private CommentDao commentDao;
@@ -40,10 +40,24 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
+  @Transactional(readOnly = true)
+  public List<Comment> getAllByPhotoId(Long id, Integer page, Integer size) {
+    logger.debug("get all comments with photo id = {}", id);
+    return commentDao.getAllByPhotoId(id, page, size);
+  }
+
+  @Override
   @Transactional
   public void deleteById(Long id) {
     logger.debug("delete comment with id = {}", id);
     commentDao.deleteById(id);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Long countByPhotoId(Long id) {
+    logger.debug("count comments by photo id = {}", id);
+    return commentDao.countByPhotoId(id);
   }
 
 }

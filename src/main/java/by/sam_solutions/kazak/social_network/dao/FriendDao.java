@@ -8,7 +8,12 @@ public interface FriendDao extends IAbstractBaseDao<Friend> {
 
   List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
+  List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus, Integer page,
+      Integer size);
+
   Friend getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(Long makeFriendRequestProfileId,
       Long acceptFriendRequestProfileId);
+
+  Long countByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
 }

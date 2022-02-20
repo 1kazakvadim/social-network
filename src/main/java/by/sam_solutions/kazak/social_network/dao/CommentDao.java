@@ -7,4 +7,8 @@ public interface CommentDao extends IAbstractBaseDao<Comment> {
 
   List<Comment> getAllByPhotoId(Long id);
 
+  List<Comment> getAllByPhotoId(Long id, Integer page, Integer size);
+
+  Long countByPhotoId(Long id);
+
 }

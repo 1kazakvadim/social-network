@@ -12,9 +12,9 @@ public interface ProfileService {
 
   List<Profile> getAll();
 
-  void deleteById(Long id);
+  List<Profile> getAll(Integer page, Integer size);
 
-  Profile getProfileByEmail(String email);
+  void deleteById(Long id);
 
   Profile getProfileByUserId(Long id);
 
@@ -23,5 +23,7 @@ public interface ProfileService {
   List<Profile> searchForProfiles(String search) throws Exception;
 
   boolean isFieldContainsSpecialCharacters(String string);
+
+  Long countProfiles();
 
 }

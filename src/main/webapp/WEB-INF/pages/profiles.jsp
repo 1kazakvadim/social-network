@@ -18,7 +18,7 @@
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
             <div class="col-9">
-                <div>
+                <div class="table-wrapper">
                     <table class="table table-hover profile-table">
                         <thead>
                         <tr>
@@ -28,7 +28,8 @@
                             <th scope="col"><spring:message code="profilesPage.email"/></th>
                             <th scope="col"><spring:message code="profilesPage.role"/></th>
                             <th scope="col"><spring:message code="profilesPage.isLocked"/></th>
-                            <th scope="col"><spring:message code="profilesPage.timeRegistration"/></th>
+                            <th scope="col"><spring:message
+                                    code="profilesPage.timeRegistration"/></th>
                             <th scope="col"><spring:message code="profilesPage.timeUpdate"/></th>
                         </tr>
                         </thead>
@@ -76,6 +77,72 @@
                         </tbody>
                     </table>
                 </div>
+                <c:if test="${not empty profiles}">
+                    <nav class="d-flex justify-content-center mt-auto mt-1">
+                        <div>
+                            <div class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"
+                                           tabindex="-1">
+                                            <spring:message code="pages"/>
+                                        </a>
+                                    </li>
+                                    <c:forEach begin="1"
+                                               end="${total / size + 1}"
+                                               var="pageNumber">
+                                        <c:choose>
+                                            <c:when test="${page == pageNumber - 1}">
+                                                <li class="page-item active">
+                                                    <a
+                                                            class="page-link"
+                                                            href="#">${pageNumber}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a
+                                                        class="page-link"
+                                                        tabindex="-1"
+                                                        href="<c:url value="/admin/profiles?page=${pageNumber-1}&size=${size}"/>">${pageNumber}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"
+                                           tabindex="-1">
+                                            <spring:message
+                                                    code="elementsOnPage"/>
+                                        </a>
+                                    </li>
+                                    <c:forEach items="${elementsOnPage}"
+                                               var="element">
+                                        <c:choose>
+                                            <c:when test="${element == size}">
+                                                <li class="page-item active">
+                                                    <a
+                                                            class="page-link"
+                                                            href="#">${element}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a
+                                                        class="page-link"
+                                                        tabindex="-1"
+                                                        href="<c:url value="/admin/profiles?page=${page}&size=${element}"/>">${element}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </c:if>
             </div>
         </div>
     </div>

@@ -40,6 +40,15 @@ public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileD
   }
 
   @Override
+  public List<Profile> getAll(Integer page, Integer size) {
+    org.hibernate.query.Query query = sessionFactory.getCurrentSession()
+        .createQuery("FROM Profile profile");
+    query.setFirstResult(page * size);
+    query.setMaxResults(size);
+    return (List<Profile>) query.list();
+  }
+
+  @Override
   public Profile getProfileByEmail(String email) {
     return (Profile) sessionFactory.getCurrentSession()
         .createQuery("FROM Profile WHERE user.email = :email")
@@ -74,6 +83,13 @@ public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileD
     List<Profile> results = fullTextSession.createFullTextQuery(query, Profile.class)
         .getResultList();
     return results;
+  }
+
+  @Override
+  public Long countProfiles() {
+    return (Long) sessionFactory.getCurrentSession()
+        .createQuery("SELECT count(profile) FROM Profile profile")
+        .getSingleResult();
   }
 
 }

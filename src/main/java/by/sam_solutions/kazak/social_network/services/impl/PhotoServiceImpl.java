@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PhotoServiceImpl implements PhotoService {
 
-  private final Logger logger = LoggerFactory.getLogger(PhotoServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(PhotoServiceImpl.class);
 
   @Autowired
   private PhotoDao photoDao;
@@ -40,6 +40,13 @@ public class PhotoServiceImpl implements PhotoService {
   }
 
   @Override
+  @Transactional(readOnly = true)
+  public List<Photo> getAllByProfileId(Long id, Integer page, Integer maxResultsPerPage) {
+    logger.debug("get all photos by profile id = {}", id);
+    return photoDao.getAllByProfileId(id, page, maxResultsPerPage);
+  }
+
+  @Override
   @Transactional
   public void deleteById(Long id) {
     logger.debug("delete photo with id = {}", id);
@@ -51,6 +58,13 @@ public class PhotoServiceImpl implements PhotoService {
   public List<Photo> getAllByProfileId(Long id) {
     logger.debug("get all photos by profile id = {}", id);
     return photoDao.getAllByProfileId(id);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Long countByProfileId(Long id) {
+    logger.debug("count photos by profile id = {}", id);
+    return photoDao.countByProfileId(id);
   }
 
 }

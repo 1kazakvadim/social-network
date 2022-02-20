@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class FriendServiceImpl implements FriendService {
 
-  private final Logger logger = LoggerFactory.getLogger(FriendServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(FriendServiceImpl.class);
 
   @Autowired
   private FriendDao friendDao;
@@ -38,6 +38,14 @@ public class FriendServiceImpl implements FriendService {
   public List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus) {
     logger.debug("get friend by profile id = {} and by friend status = {}", id, friendStatus);
     return friendDao.getAllByProfileIdAndFriendStatus(id, friendStatus);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus,
+      Integer page, Integer size) {
+    logger.debug("get friend by profile id = {} and by friend status = {}", id, friendStatus);
+    return friendDao.getAllByProfileIdAndFriendStatus(id, friendStatus, page, size);
   }
 
   @Override
@@ -67,6 +75,13 @@ public class FriendServiceImpl implements FriendService {
   public boolean isNonFriend(Friend friend) {
     logger.debug("is non request = {}", friend.getFriendId());
     return friend.getFriendStatus() == FriendStatus.NON_FRIEND;
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Long countByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus) {
+    logger.debug("count by profile id = {}, and friend status = {}", id, friendStatus);
+    return friendDao.countByProfileIdAndFriendStatus(id, friendStatus);
   }
 
 }

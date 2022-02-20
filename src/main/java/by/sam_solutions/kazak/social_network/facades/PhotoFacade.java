@@ -13,6 +13,8 @@ public interface PhotoFacade {
 
   List<Photo> getAll();
 
+  List<Photo> getAllByProfileId(Long id, Integer page, Integer size);
+
   List<Photo> getAllByProfileId(Long id);
 
   void deleteById(Long id);
@@ -26,5 +28,7 @@ public interface PhotoFacade {
   boolean isMultipartFileValid(MultipartFile file);
 
   boolean isPhotoBelongsProfile(Photo photo, Profile profile);
+
+  Long countByProfileId(Long id);
 
 }

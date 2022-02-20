@@ -126,6 +126,72 @@
                                             <hr>
                                         </c:forEach>
                                     </div>
+                                    <c:if test="${not empty friends}">
+                                        <nav class="d-flex justify-content-center mt-auto mt-1">
+                                            <div>
+                                                <div class="d-flex justify-content-center">
+                                                    <ul class="pagination">
+                                                        <li class="page-item disabled">
+                                                            <a href="#" class="page-link"
+                                                               tabindex="-1">
+                                                                <spring:message code="pages"/>
+                                                            </a>
+                                                        </li>
+                                                        <c:forEach begin="1"
+                                                                   end="${totalFriend / friendSize + 1}"
+                                                                   var="pageNumber">
+                                                            <c:choose>
+                                                                <c:when test="${friendPage == pageNumber - 1}">
+                                                                    <li class="page-item active">
+                                                                        <a
+                                                                                class="page-link"
+                                                                                href="#">${pageNumber}</a>
+                                                                    </li>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <li class="page-item"><a
+                                                                            class="page-link"
+                                                                            tabindex="-1"
+                                                                            href="<c:url value="/id${userId}/friends?friendPage=${pageNumber-1}&friendSize=${friendSize}"/>">${pageNumber}</a>
+                                                                    </li>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <ul class="pagination">
+                                                        <li class="page-item disabled">
+                                                            <a href="#" class="page-link"
+                                                               tabindex="-1">
+                                                                <spring:message
+                                                                        code="elementsOnPage"/>
+                                                            </a>
+                                                        </li>
+                                                        <c:forEach items="${elementsOnPage}"
+                                                                   var="element">
+                                                            <c:choose>
+                                                                <c:when test="${element == friendSize}">
+                                                                    <li class="page-item active">
+                                                                        <a
+                                                                                class="page-link"
+                                                                                href="#">${element}</a>
+                                                                    </li>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <li class="page-item"><a
+                                                                            class="page-link"
+                                                                            tabindex="-1"
+                                                                            href="<c:url value="/id${userId}/friends?friendPage=${friendPage}&friendSize=${element}"/>">${element}</a>
+                                                                    </li>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </c:if>
                                 </div>
                                 <c:if test="${user.id == userId}">
                                     <div class="container tab-pane fade"
@@ -202,6 +268,72 @@
                                                 <hr>
                                             </c:forEach>
                                         </div>
+                                        <c:if test="${not empty friendRequests}">
+                                            <nav class="d-flex justify-content-center mt-auto mt-1">
+                                                <div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <ul class="pagination">
+                                                            <li class="page-item disabled">
+                                                                <a href="#" class="page-link"
+                                                                   tabindex="-1">
+                                                                    <spring:message code="pages"/>
+                                                                </a>
+                                                            </li>
+                                                            <c:forEach begin="1"
+                                                                       end="${totalFriendRequests / friendRequestSize + 1}"
+                                                                       var="pageRequestNumber">
+                                                                <c:choose>
+                                                                    <c:when test="${friendRequestPage == pageRequestNumber - 1}">
+                                                                        <li class="page-item active">
+                                                                            <a
+                                                                                    class="page-link"
+                                                                                    href="#">${pageRequestNumber}</a>
+                                                                        </li>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <li class="page-item"><a
+                                                                                class="page-link"
+                                                                                tabindex="-1"
+                                                                                href="<c:url value="/id${userId}/friends?friendRequestPage=${pageRequestNumber-1}&friendRequestSize=${friendRequestSize}"/>">${pageRequestNumber}</a>
+                                                                        </li>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <ul class="pagination">
+                                                            <li class="page-item disabled">
+                                                                <a href="#" class="page-link"
+                                                                   tabindex="-1">
+                                                                    <spring:message
+                                                                            code="elementsOnPage"/>
+                                                                </a>
+                                                            </li>
+                                                            <c:forEach items="${elementsOnPage}"
+                                                                       var="requestElement">
+                                                                <c:choose>
+                                                                    <c:when test="${requestElement == friendRequestSize}">
+                                                                        <li class="page-item active">
+                                                                            <a
+                                                                                    class="page-link"
+                                                                                    href="#">${requestElement}</a>
+                                                                        </li>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <li class="page-item"><a
+                                                                                class="page-link"
+                                                                                tabindex="-1"
+                                                                                href="<c:url value="/id${userId}/friends?friendRequestPage=${friendRequestPage}&friendRequestSize=${requestElement}"/>">${requestElement}</a>
+                                                                        </li>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </nav>
+                                        </c:if>
                                     </div>
                                 </c:if>
                             </div>
