@@ -9,6 +9,7 @@ import by.sam_solutions.kazak.social_network.entities.BasicInformation;
 import by.sam_solutions.kazak.social_network.entities.Comment;
 import by.sam_solutions.kazak.social_network.entities.Photo;
 import by.sam_solutions.kazak.social_network.entities.Profile;
+import by.sam_solutions.kazak.social_network.entities.Role;
 import by.sam_solutions.kazak.social_network.entities.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CommentServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(CommentServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(CommentServiceTest.class);
+
+  private static final String DEFAULT_TEST_COMMENT_TEXT = "test";
 
   @Autowired
   private CommentService commentService;
@@ -55,6 +58,7 @@ public class CommentServiceTest {
   private Profile profile;
   private BasicInformation basicInformation;
   private User user;
+  private Role role;
 
   @BeforeTransaction
   public void addValues() {
@@ -63,9 +67,12 @@ public class CommentServiceTest {
     profile = new Profile();
     basicInformation = new BasicInformation();
     user = new User();
+    role = new Role();
+    role.setName("USER");
+    roleService.saveOrUpdate(role);
     user.setEmail("email");
     user.setPassword("password");
-    user.setRole(roleService.getById(1L));
+    user.setRole(role);
     user.setLocked(false);
     basicInformation.setFirstname("firstname");
     basicInformation.setLastname("lastname");
@@ -81,7 +88,7 @@ public class CommentServiceTest {
     photo.setProfile(profile);
     photo.setTimeCreation(LocalDateTime.now());
     photoService.saveOrUpdate(photo);
-    comment.setText("test");
+    comment.setText(DEFAULT_TEST_COMMENT_TEXT);
     comment.setProfile(profile);
     comment.setPhoto(photo);
     comment.setTimeCreation(LocalDateTime.now());
@@ -95,37 +102,36 @@ public class CommentServiceTest {
     profileService.deleteById(profile.getId());
     basicInformationService.deleteById(basicInformation.getId());
     userService.deleteById(user.getId());
+    roleService.deleteById(role.getId());
   }
 
   @Test
   public void testSaveOrUpdate() {
     logger.debug("Execute test: testSaveOrUpdate()");
-    comment.setText("updatedText");
-    comment.setTimeCreation(LocalDateTime.now().plusHours(1));
+
+    final String updatedTestText = "updatedTestText";
+
+    Comment comment = new Comment();
+    comment.setId(this.comment.getId());
+    comment.setText(updatedTestText);
     commentService.saveOrUpdate(comment);
     Comment updatedComment = commentService.getById(comment.getId());
-    assertEquals(updatedComment.getId(), comment.getId());
-    assertEquals(updatedComment.getText(), comment.getText());
-    assertEquals(updatedComment.getProfile(), comment.getProfile());
-    assertEquals(updatedComment.getPhoto(), comment.getPhoto());
-    assertEquals(updatedComment.getTimeCreation(), comment.getTimeCreation());
+    assertNotNull(updatedComment);
+    assertEquals(updatedTestText, updatedComment.getText());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
     Comment commentById = commentService.getById(comment.getId());
-    assertEquals(comment.getId(), commentById.getId());
-    assertEquals(comment.getText(), commentById.getText());
-    assertEquals(comment.getProfile(), commentById.getProfile());
-    assertEquals(comment.getPhoto(), commentById.getPhoto());
-    assertEquals(comment.getTimeCreation(), commentById.getTimeCreation());
+    assertNotNull(commentById);
+    assertEquals(commentById.getText(), DEFAULT_TEST_COMMENT_TEXT);
   }
 
   @Test
   public void testGetAllByPhotoId() {
     logger.debug("Execute test: testGetAllByPhotoId()");
-    List<Comment> comments = commentService.getAllByPhotoId(comment.getPhoto().getId());
+    List<Comment> comments = commentService.getAllByPhotoId(photo.getId());
     assertNotNull(comments);
     assertEquals(1, comments.size());
   }
@@ -136,6 +142,13 @@ public class CommentServiceTest {
     logger.debug("Execute test: testDeleteById()");
     commentService.deleteById(comment.getId());
     assertNull(commentService.getById(comment.getId()));
+  }
+
+  @Test
+  public void testCountByPhotoId() {
+    logger.debug("Execute test: testCountByPhotoId()");
+    Long count = commentService.countByPhotoId(photo.getId());
+    assertNotNull(count);
   }
 
 }

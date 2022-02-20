@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import by.sam_solutions.kazak.social_network.config.TestAppContextConfig;
 import by.sam_solutions.kazak.social_network.entities.BasicInformation;
 import by.sam_solutions.kazak.social_network.entities.Gender;
-import by.sam_solutions.kazak.social_network.entities.Relationship;
 import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,53 +27,60 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BasicInformationServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(BasicInformationServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(BasicInformationServiceTest.class);
+
+  private static final String DEFAULT_TEST_BASIC_INFORMATION_FIRSTNAME = "testFirstname";
+  private static final String DEFAULT_TEST_BASIC_INFORMATION_LASTNAME = "testLastname";
+  private static final String DEFAULT_TEST_BASIC_INFORMATION_GENDER = "MALE";
+  private static final String DEFAULT_TEST_BASIC_INFORMATION_GENDER_INVALID = "INVALID";
+  private static final LocalDate DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY = LocalDate.now()
+      .minusYears(1);
+  private static final LocalDate DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY_INVALID = LocalDate.now()
+      .plusYears(1);
 
   @Autowired
   private BasicInformationService basicInformationService;
 
-  @Autowired
-  private RelationshipService relationshipService;
-
   private BasicInformation basicInformation;
-  private Relationship relationship;
 
   @BeforeTransaction
   public void addValues() {
-    relationship = new Relationship();
     basicInformation = new BasicInformation();
-    relationship.setName("name");
-    relationshipService.saveOrUpdate(relationship);
-    basicInformation.setRelationship(relationship);
-    basicInformation.setGender("MALE");
-    basicInformation.setLastname("lastname");
-    basicInformation.setFirstname("firstname");
-    basicInformation.setBirthday(LocalDate.now().minusDays(1));
+    basicInformation.setFirstname(DEFAULT_TEST_BASIC_INFORMATION_FIRSTNAME);
+    basicInformation.setLastname(DEFAULT_TEST_BASIC_INFORMATION_LASTNAME);
+    basicInformation.setGender(DEFAULT_TEST_BASIC_INFORMATION_GENDER);
+    basicInformation.setBirthday(DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY);
     basicInformationService.saveOrUpdate(basicInformation);
   }
 
   @AfterTransaction
   public void removeValues() {
     basicInformationService.deleteById(basicInformation.getId());
-    relationshipService.deleteById(relationship.getId());
   }
 
   @Test
   public void testSaveOrUpdate() {
     logger.debug("Execute test: testSaveOrUpdate()");
-    basicInformation.setGender("FEMALE");
-    basicInformation.setLastname("updatedLastname");
-    basicInformation.setFirstname("updatedFirstname");
-    basicInformation.setBirthday(LocalDate.now().minusDays(10));
+
+    final String updatedTestFirstname = "updatedTestFirstname";
+    final String updatedTestLastname = "updatedTestLastname";
+    final String updatedTestGender = "updatedTestGender";
+    final LocalDate updatedTestBirthday = LocalDate.now().minusYears(2);
+
+    BasicInformation basicInformation = new BasicInformation();
+    basicInformation.setId(this.basicInformation.getId());
+    basicInformation.setFirstname(updatedTestFirstname);
+    basicInformation.setLastname(updatedTestLastname);
+    basicInformation.setGender(updatedTestGender);
+    basicInformation.setBirthday(updatedTestBirthday);
     basicInformationService.saveOrUpdate(basicInformation);
     BasicInformation updatedBasicInformation = basicInformationService.getById(
         basicInformation.getId());
-    assertEquals(updatedBasicInformation.getId(), basicInformation.getId());
-    assertEquals(updatedBasicInformation.getRelationship(), basicInformation.getRelationship());
-    assertEquals(updatedBasicInformation.getGender(), basicInformation.getGender());
-    assertEquals(updatedBasicInformation.getLastname(), basicInformation.getLastname());
-    assertEquals(updatedBasicInformation.getFirstname(), basicInformation.getFirstname());
-    assertEquals(updatedBasicInformation.getBirthday(), basicInformation.getBirthday());
+    assertNotNull(basicInformation);
+    assertEquals(updatedTestFirstname, updatedBasicInformation.getFirstname());
+    assertEquals(updatedTestLastname, updatedBasicInformation.getLastname());
+    assertEquals(updatedTestGender, updatedBasicInformation.getGender());
+    assertEquals(updatedTestBirthday, updatedBasicInformation.getBirthday());
   }
 
   @Test
@@ -82,19 +88,16 @@ public class BasicInformationServiceTest {
     logger.debug("Execute test: testGetById()");
     BasicInformation basicInformationById = basicInformationService.getById(
         basicInformation.getId());
-    assertEquals(basicInformationById.getId(), basicInformationById.getId());
-    assertEquals(basicInformationById.getRelationship(), basicInformationById.getRelationship());
-    assertEquals(basicInformationById.getGender(), basicInformationById.getGender());
-    assertEquals(basicInformationById.getLastname(), basicInformationById.getLastname());
-    assertEquals(basicInformationById.getFirstname(), basicInformationById.getFirstname());
-    assertEquals(basicInformationById.getBirthday(), basicInformationById.getBirthday());
+    assertEquals(basicInformationById.getFirstname(), DEFAULT_TEST_BASIC_INFORMATION_FIRSTNAME);
+    assertEquals(basicInformationById.getLastname(), DEFAULT_TEST_BASIC_INFORMATION_LASTNAME);
+    assertEquals(basicInformationById.getGender(), DEFAULT_TEST_BASIC_INFORMATION_GENDER);
+    assertEquals(basicInformationById.getBirthday(), DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY);
   }
 
   @Test
   @Rollback
   public void testDeleteById() {
     logger.debug("Execute test: testDeleteById()");
-    assertNotNull(basicInformation);
     basicInformationService.deleteById(basicInformation.getId());
     assertNull(basicInformationService.getById(basicInformation.getId()));
   }
@@ -102,14 +105,14 @@ public class BasicInformationServiceTest {
   @Test
   public void testIsGenderValid() {
     logger.debug("Execute test: testIsGenderValid()");
-    basicInformationService.saveOrUpdate(basicInformation);
     assertTrue(basicInformationService.isGenderValid(Gender.valueOf(basicInformation.getGender())));
   }
 
   @Test(expected = IllegalArgumentException.class)
+  @Rollback
   public void testIsGenderInvalid() {
     logger.debug("Execute test: testIsGenderInvalid()");
-    basicInformation.setGender("INVALID_GENDER");
+    basicInformation.setGender(DEFAULT_TEST_BASIC_INFORMATION_GENDER_INVALID);
     basicInformationService.saveOrUpdate(basicInformation);
     basicInformationService.isGenderValid(Gender.valueOf(basicInformation.getGender()));
   }
@@ -117,14 +120,15 @@ public class BasicInformationServiceTest {
   @Test
   public void testIsBirthdayValid() {
     logger.debug("Execute test: testIsBirthdayValid()");
-    basicInformationService.saveOrUpdate(basicInformation);
-    assertTrue(basicInformationService.isBirthdayDateValid(basicInformation.getBirthday()));
+    assertTrue(
+        basicInformationService.isBirthdayDateValid(DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY));
   }
 
   @Test
+  @Rollback
   public void testIsBirthdayInvalid() {
     logger.debug("Execute test: testIsBirthdayInvalid()");
-    basicInformation.setBirthday(LocalDate.now().plusDays(1));
+    basicInformation.setBirthday(DEFAULT_TEST_BASIC_INFORMATION_BIRTHDAY_INVALID);
     basicInformationService.saveOrUpdate(basicInformation);
     assertFalse(basicInformationService.isBirthdayDateValid(basicInformation.getBirthday()));
   }

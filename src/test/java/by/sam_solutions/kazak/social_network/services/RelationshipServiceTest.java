@@ -24,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RelationshipServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(RelationshipServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(RelationshipServiceTest.class);
+
+  private static final String DEFAULT_TEST_RELATIONSHIP_NAME = "test";
 
   @Autowired
   private RelationshipService relationshipService;
@@ -34,7 +36,7 @@ public class RelationshipServiceTest {
   @BeforeTransaction
   public void addValues() {
     relationship = new Relationship();
-    relationship.setName("name");
+    relationship.setName(DEFAULT_TEST_RELATIONSHIP_NAME);
     relationshipService.saveOrUpdate(relationship);
   }
 
@@ -45,21 +47,25 @@ public class RelationshipServiceTest {
 
   @Test
   public void testSaveOrUpdate() {
-    logger.debug("Execute test: testSave()");
-    relationship.setName("updatedName");
+    logger.debug("Execute test: testSaveOrUpdate()");
+
+    final String updatedTestName = "updatedTestName";
+
+    Relationship relationship = new Relationship();
+    relationship.setId(this.relationship.getId());
+    relationship.setName(updatedTestName);
     relationshipService.saveOrUpdate(relationship);
     Relationship updatedRelationship = relationshipService.getById(relationship.getId());
-    assertEquals(updatedRelationship.getId(), relationship.getId());
-    assertEquals(updatedRelationship.getName(), relationship.getName());
+    assertNotNull(updatedRelationship);
+    assertEquals(updatedTestName, updatedRelationship.getName());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
-    relationshipService.saveOrUpdate(relationship);
     Relationship relationshipById = relationshipService.getById(relationship.getId());
-    assertEquals(relationshipById.getId(), relationship.getId());
-    assertEquals(relationshipById.getName(), relationship.getName());
+    assertNotNull(relationshipById);
+    assertEquals(relationshipById.getName(), DEFAULT_TEST_RELATIONSHIP_NAME);
   }
 
   @Test

@@ -7,8 +7,6 @@ import static org.junit.Assert.assertNull;
 import by.sam_solutions.kazak.social_network.config.TestAppContextConfig;
 import by.sam_solutions.kazak.social_network.entities.Country;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.AfterTransaction;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,22 +24,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CountryServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(CountryServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(CountryServiceTest.class);
+
+  private static final String DEFAULT_TEST_COUNTRY_NAME = "testName";
+  private static final String DEFAULT_TEST_ISO_NAME = "testISO";
 
   @Autowired
   private CountryService countryService;
 
   private Country country;
 
-  @Before
+  @BeforeTransaction
   public void addValues() {
     country = new Country();
-    country.setName("country");
-    country.setISOCode("iso");
+    country.setName(DEFAULT_TEST_COUNTRY_NAME);
+    country.setISOCode(DEFAULT_TEST_ISO_NAME);
     countryService.saveOrUpdate(country);
   }
 
-  @After
+  @AfterTransaction
   public void removeValues() {
     countryService.deleteById(country.getId());
   }
@@ -47,22 +50,29 @@ public class CountryServiceTest {
   @Test
   public void testSaveOrUpdate() {
     logger.debug("Execute test: testSaveOrUpdate()");
-    country.setName("updatedName");
-    country.setISOCode("updatedISOCode");
+
+    final String updatedTestCountryName = "updatedTestName";
+    final String updatedTestISOName = "updatedTestISOName";
+
+    Country country = new Country();
+    country.setId(this.country.getId());
+    country.setName(updatedTestCountryName);
+    country.setISOCode(updatedTestISOName);
     countryService.saveOrUpdate(country);
     Country updatedCountry = countryService.getById(country.getId());
-    assertEquals(updatedCountry.getId(), country.getId());
-    assertEquals(updatedCountry.getName(), country.getName());
-    assertEquals(updatedCountry.getISOCode(), country.getISOCode());
+    assertNotNull(updatedCountry);
+    assertEquals(updatedTestCountryName, updatedCountry.getName());
+    assertEquals(updatedTestISOName, updatedCountry.getISOCode());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
     Country countryById = countryService.getById(country.getId());
-    assertEquals(country.getId(), countryById.getId());
-    assertEquals(country.getName(), countryById.getName());
-    assertEquals(country.getISOCode(), countryById.getISOCode());
+    assertNotNull(countryById);
+    assertEquals(countryById.getId(), country.getId());
+    assertEquals(countryById.getName(), DEFAULT_TEST_COUNTRY_NAME);
+    assertEquals(countryById.getISOCode(), DEFAULT_TEST_ISO_NAME);
   }
 
   @Test
@@ -80,5 +90,7 @@ public class CountryServiceTest {
     countryService.deleteById(country.getId());
     assertNull(countryService.getById(country.getId()));
   }
+
+
 
 }

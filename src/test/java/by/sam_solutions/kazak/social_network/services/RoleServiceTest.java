@@ -24,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoleServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(RoleServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(RoleServiceTest.class);
+
+  private static final String DEFAULT_TEST_ROLE_NAME = "test";
 
   @Autowired
   private RoleService roleService;
@@ -34,7 +36,7 @@ public class RoleServiceTest {
   @BeforeTransaction
   public void addValues() {
     role = new Role();
-    role.setName("role");
+    role.setName(DEFAULT_TEST_ROLE_NAME);
     roleService.saveOrUpdate(role);
   }
 
@@ -45,37 +47,43 @@ public class RoleServiceTest {
 
   @Test
   public void testSaveOrUpdate() {
-    logger.debug("Execute test: testSave()");
-    role.setName("updatedRole");
+    logger.debug("Execute test: testSaveOrUpdate()");
+
+    final String updatedTestName = "updatedTestName";
+
+    Role role = new Role();
+    role.setId(this.role.getId());
+    role.setName(updatedTestName);
     roleService.saveOrUpdate(role);
     Role updatedRole = roleService.getById(role.getId());
-    assertEquals(updatedRole.getId(), role.getId());
-    assertEquals(updatedRole.getName(), role.getName());
+    assertNotNull(updatedRole);
+    assertEquals(updatedTestName, updatedRole.getName());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
     Role roleById = roleService.getById(role.getId());
+    assertNotNull(roleById);
     assertEquals(roleById.getId(), role.getId());
-    assertEquals(roleById.getName(), role.getName());
+    assertEquals(roleById.getName(), DEFAULT_TEST_ROLE_NAME);
   }
 
   @Test
   public void testGetAll() {
     logger.debug("Execute test: testGetAll()");
-    roleService.saveOrUpdate(role);
     List<Role> roles = roleService.getAll();
     assertNotNull(roles);
-    assertEquals(3, roles.size());
+    assertEquals(1, roles.size());
   }
 
   @Test
   public void testFindByName() {
     logger.debug("Execute test: testFindByName()");
-    Role roleByName = roleService.findByName(role.getName());
+    Role roleByName = roleService.findByName(DEFAULT_TEST_ROLE_NAME);
+    assertNotNull(roleByName);
     assertEquals(roleByName.getId(), role.getId());
-    assertEquals(roleByName.getName(), role.getName());
+    assertEquals(roleByName.getName(), DEFAULT_TEST_ROLE_NAME);
   }
 
   @Test

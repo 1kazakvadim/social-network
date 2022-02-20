@@ -8,6 +8,7 @@ import by.sam_solutions.kazak.social_network.config.TestAppContextConfig;
 import by.sam_solutions.kazak.social_network.entities.BasicInformation;
 import by.sam_solutions.kazak.social_network.entities.Photo;
 import by.sam_solutions.kazak.social_network.entities.Profile;
+import by.sam_solutions.kazak.social_network.entities.Role;
 import by.sam_solutions.kazak.social_network.entities.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,7 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PhotoServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(PhotoServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(PhotoServiceTest.class);
+
+  private static final String DEFAULT_TEST_PHOTO_NAME = "testName";
+  private static final String DEFAULT_TEST_PHOTO_DESCRIPTION = "testDescription";
 
   @Autowired
   private PhotoService photoService;
@@ -50,16 +54,20 @@ public class PhotoServiceTest {
   private Profile profile;
   private BasicInformation basicInformation;
   private User user;
+  private Role role;
 
   @BeforeTransaction
   public void addValues() {
     photo = new Photo();
     profile = new Profile();
     basicInformation = new BasicInformation();
+    role = new Role();
     user = new User();
+    role.setName("name");
+    roleService.saveOrUpdate(role);
     user.setEmail("email");
     user.setPassword("password");
-    user.setRole(roleService.findByName("USER"));
+    user.setRole(role);
     user.setLocked(false);
     basicInformation.setFirstname("firstname");
     basicInformation.setLastname("lastname");
@@ -70,9 +78,9 @@ public class PhotoServiceTest {
     profile.setTimeRegistration(LocalDateTime.now());
     profile.setUpdateTime(LocalDateTime.now());
     profileService.saveOrUpdate(profile);
-    photo.setName("name");
+    photo.setName(DEFAULT_TEST_PHOTO_NAME);
     photo.setProfile(profile);
-    photo.setDescription("description");
+    photo.setDescription(DEFAULT_TEST_PHOTO_DESCRIPTION);
     photo.setTimeCreation(LocalDateTime.now());
     photoService.saveOrUpdate(photo);
   }
@@ -83,36 +91,41 @@ public class PhotoServiceTest {
     profileService.deleteById(profile.getId());
     basicInformationService.deleteById(basicInformation.getId());
     userService.deleteById(user.getId());
+    roleService.deleteById(role.getId());
   }
 
   @Test
   public void testSaveOrUpdate() {
     logger.debug("Execute test: testSaveOrUpdate()");
-    photo.setName("updatedName");
-    photo.setDescription("updatedDescription");
-    photo.setTimeCreation(LocalDateTime.now().plusHours(1));
+
+    final String updatedTestName = "updatedTestName";
+    final String updatedTestDescription = "updatedTestDescription";
+
+    Photo photo = new Photo();
+    photo.setId(this.profile.getId());
+    photo.setName(updatedTestName);
+    photo.setDescription(updatedTestDescription);
     photoService.saveOrUpdate(photo);
     Photo updatedPhoto = photoService.getById(photo.getId());
-    assertEquals(updatedPhoto.getId(), photo.getId());
-    assertEquals(updatedPhoto.getName(), photo.getName());
-    assertEquals(updatedPhoto.getProfile(), photo.getProfile());
-    assertEquals(updatedPhoto.getDescription(), photo.getDescription());
-    assertEquals(updatedPhoto.getTimeCreation(), photo.getTimeCreation());
+    assertNotNull(updatedPhoto);
+    assertEquals(updatedTestName, updatedPhoto.getName());
+    assertEquals(updatedTestDescription, updatedPhoto.getDescription());
   }
 
   @Test
   public void testGetById() {
     logger.debug("Execute test: testGetById()");
     Photo photoById = photoService.getById(photo.getId());
+    assertNotNull(photoById);
     assertEquals(photoById.getId(), photo.getId());
-    assertEquals(photoById.getName(), photo.getName());
-    assertEquals(photoById.getDescription(), photo.getDescription());
+    assertEquals(photoById.getName(), DEFAULT_TEST_PHOTO_NAME);
+    assertEquals(photoById.getDescription(), DEFAULT_TEST_PHOTO_DESCRIPTION);
     assertEquals(photoById.getTimeCreation(), photo.getTimeCreation());
   }
 
   @Test
   public void testGetAll() {
-    logger.debug("Execute test: it_should_get_all_photos()");
+    logger.debug("Execute test: testGetAll()");
     List<Photo> photos = photoService.getAll();
     assertNotNull(photos);
     assertEquals(1, photos.size());
@@ -132,6 +145,13 @@ public class PhotoServiceTest {
     List<Photo> photos = photoService.getAllByProfileId(profile.getId());
     assertNotNull(photos);
     assertEquals(1, photos.size());
+  }
+
+  @Test
+  public void testCountByProfileId() {
+    logger.debug("Execute test: testCountByProfileId()");
+    Long count = photoService.countByProfileId(profile.getId());
+    assertNotNull(count);
   }
 
 }

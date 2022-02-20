@@ -22,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 @ContextConfiguration(classes = TestAppContextConfig.class)
 public class StorageServiceTest {
 
-  private final Logger logger = LoggerFactory.getLogger(StorageServiceTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(StorageServiceTest.class);
+
+  private static final String DEFAULT_TEST_UPLOAD_NAME = "uploadName";
+  private static final String DEFAULT_TEST_DELETE_NAME = "deleteName";
 
   @Autowired
   private StorageService storageService;
@@ -32,16 +35,16 @@ public class StorageServiceTest {
     logger.debug("Execute test: testUpload()");
     storageService = mock(StorageServiceImpl.class);
     MultipartFile multipartFile = mock(MultipartFile.class);
-    when(storageService.upload(multipartFile)).thenReturn("uploadName");
-    assertThat(storageService.upload(multipartFile)).isEqualTo("uploadName");
+    when(storageService.upload(multipartFile)).thenReturn(DEFAULT_TEST_UPLOAD_NAME);
+    assertThat(storageService.upload(multipartFile)).isEqualTo(DEFAULT_TEST_UPLOAD_NAME);
   }
 
   @Test
   public void testDelete() {
     logger.debug("Execute test: testDelete()");
     storageService = mock(StorageServiceImpl.class);
-    when(storageService.delete("deleteName")).thenReturn("deleteName");
-    assertThat(storageService.delete("deleteName")).isEqualTo("deleteName");
+    when(storageService.delete(DEFAULT_TEST_DELETE_NAME)).thenReturn(DEFAULT_TEST_DELETE_NAME);
+    assertThat(storageService.delete(DEFAULT_TEST_DELETE_NAME)).isEqualTo(DEFAULT_TEST_DELETE_NAME);
   }
 
   @Test
