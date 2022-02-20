@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContactInformationConverter implements TwoWayConverter {
 
-  private final Logger logger = LoggerFactory.getLogger(ContactInformationConverter.class);
+  private static final Logger logger = LoggerFactory.getLogger(ContactInformationConverter.class);
 
   @Autowired
   private CountryService countryService;

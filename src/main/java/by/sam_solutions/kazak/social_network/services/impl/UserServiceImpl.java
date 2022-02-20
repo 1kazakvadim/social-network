@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserService {
 
-  private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
   private static final String PASSWORD_PATTERN =
       "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";

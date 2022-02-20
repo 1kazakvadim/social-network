@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BasicInformationConverter implements TwoWayConverter {
 
-  private final Logger logger = LoggerFactory.getLogger(BasicInformationConverter.class);
+  private static final Logger logger = LoggerFactory.getLogger(BasicInformationConverter.class);
 
   @Autowired
   private RelationshipService relationshipService;

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageConverter implements TwoWayConverter {
 
-  private final Logger logger = LoggerFactory.getLogger(MessageConverter.class);
+  private static final Logger logger = LoggerFactory.getLogger(MessageConverter.class);
 
   @Autowired
   private ProfileService profileService;

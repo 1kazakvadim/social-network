@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BasicInformationServiceImpl implements BasicInformationService {
 
-  private final Logger logger = LoggerFactory.getLogger(BasicInformationServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(BasicInformationServiceImpl.class);
 
   @Autowired
   private BasicInformationDao basicInformationDao;

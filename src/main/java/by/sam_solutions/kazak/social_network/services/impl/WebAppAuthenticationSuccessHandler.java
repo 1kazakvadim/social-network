@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebAppAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-  private final Logger logger = LoggerFactory.getLogger(WebAppAuthenticationSuccessHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(WebAppAuthenticationSuccessHandler.class);
 
   @Autowired
   private UserService userService;

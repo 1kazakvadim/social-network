@@ -13,7 +13,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class WebAppAccessDeniedHandler implements AccessDeniedHandler {
 
-  private final Logger logger = LoggerFactory.getLogger(WebAppAccessDeniedHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(WebAppAccessDeniedHandler.class);
 
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response,

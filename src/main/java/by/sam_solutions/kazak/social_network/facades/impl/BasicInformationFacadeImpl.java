@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BasicInformationFacadeImpl implements BasicInformationFacade {
 
-  private final Logger logger = LoggerFactory.getLogger(BasicInformationFacadeImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(BasicInformationFacadeImpl.class);
 
   @Autowired
   private BasicInformationService basicInformationService;

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DialogServiceImpl implements DialogService {
 
-  private final Logger logger = LoggerFactory.getLogger(DialogServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(DialogServiceImpl.class);
 
   @Autowired
   private DialogDao dialogDao;

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageFacadeImpl implements MessageFacade {
 
-  private final Logger logger = LoggerFactory.getLogger(MessageFacadeImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(MessageFacadeImpl.class);
 
   @Autowired
   private MessageService messageService;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter implements TwoWayConverter {
 
-  private final Logger logger = LoggerFactory.getLogger(UserConverter.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserConverter.class);
 
   @Override
   public Class getSourceClass() {

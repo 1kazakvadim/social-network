@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RelationshipServiceImpl implements RelationshipService {
 
-  private final Logger logger = LoggerFactory.getLogger(RelationshipServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(RelationshipServiceImpl.class);
 
   @Autowired
   private RelationshipDao relationshipDao;

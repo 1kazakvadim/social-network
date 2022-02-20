@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CountryServiceImpl implements CountryService {
 
-  private final Logger logger = LoggerFactory.getLogger(CountryServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(CountryServiceImpl.class);
 
   @Autowired
   private CountryDao countryDao;

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class ScheduleDeleteToken {
 
-  private final Logger logger = LoggerFactory.getLogger(ScheduleDeleteToken.class);
+  private static final Logger logger = LoggerFactory.getLogger(ScheduleDeleteToken.class);
 
   @Autowired
   private ThreadPoolTaskScheduler threadPoolTaskScheduler;

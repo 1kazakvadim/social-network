@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-  private final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
   @Autowired
   private RoleDao roleDao;

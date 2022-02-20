@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-  private final Logger logger = LoggerFactory.getLogger(StorageServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(StorageServiceImpl.class);
 
   @Autowired
   private AmazonS3 amazonS3;

@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-  private final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
   private static final long DAYS_OF_VERIFICATION_TOKEN_EXPIRATION_DATE = 1;
   private static final long HOURS_OF_PASSWORD_RESET_TOKEN_EXPIRATION_DATE = 1;

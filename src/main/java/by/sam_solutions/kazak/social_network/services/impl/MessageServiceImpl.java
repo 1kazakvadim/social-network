@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-  private final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
   @Autowired
   private MessageDao messageDao;

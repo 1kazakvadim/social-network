@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class UserFacadeImpl implements UserFacade {
 
-  private final Logger logger = LoggerFactory.getLogger(UserFacadeImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserFacadeImpl.class);
 
   @Autowired
   private UserService userService;
