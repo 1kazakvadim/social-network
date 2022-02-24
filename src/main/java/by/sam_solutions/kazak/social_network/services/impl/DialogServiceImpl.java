@@ -55,6 +55,7 @@ public class DialogServiceImpl implements DialogService {
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     logger.debug("delete dialog with id = {}", id);
     dialogDao.deleteById(id);

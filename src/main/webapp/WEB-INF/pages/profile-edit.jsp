@@ -37,11 +37,6 @@
                                 </div>
                             </c:forEach>
                         </c:if>
-                        <c:if test="${messageSuccess != null}">
-                            <div class="alert alert-success" role="alert">
-                                    ${messageSuccess}
-                            </div>
-                        </c:if>
                         <form:form action="profile" id="edit-form" method="POST"
                                    modelAttribute="contactInformationDTO">
                             <form:input path="id" type="hidden" id="id"
@@ -59,7 +54,7 @@
                                         <c:forEach items="${countries}" var="country">
                                             <option name="${country.id}" value="${country.id}"
                                                     label="${country.name}"
-                                                    <c:if test="${profile.country == country}"> selected </c:if>>
+                                                    <c:if test="${profile.country.id == country.id}"> selected </c:if>>
                                             </option>
                                         </c:forEach>
                                     </form:select>
@@ -73,7 +68,7 @@
                                 </div>
                                 <div class="col-8 form-outline">
                                     <form:input path="city" type="text" class="form-control"
-                                                maxlength="500" aria-label="city"
+                                                maxlength="255" aria-label="city"
                                                 id="city"
                                                 value="${profile.city}"/>
                                 </div>
@@ -99,9 +94,9 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="mobilePhone" type="text" class="form-control"
+                                    <form:input path="mobilePhone" type="tel" class="form-control"
                                                 maxlength="45" aria-label="mobilePhone"
-                                                id="mobilePhone"
+                                                id="mobilePhone" placeholder="+375291111111"
                                                 value="${profile.mobilePhone}"/>
                                 </div>
                             </div>
@@ -113,9 +108,9 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="homePhone" type="text" class="form-control"
+                                    <form:input path="homePhone" type="tel" class="form-control"
                                                 maxlength="45" aria-label="homePhone"
-                                                id="homePhone"
+                                                id="homePhone" placeholder="+375162111111"
                                                 value="${profile.homePhone}"/>
                                 </div>
                             </div>
@@ -126,9 +121,9 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="githubName" type="text" class="form-control"
+                                    <form:input path="githubName" type="url" class="form-control"
                                                 maxlength="45" aria-label="githubName"
-                                                id="github"
+                                                id="github" placeholder="https://github.com/"
                                                 value="${profile.githubName}"/>
                                 </div>
                             </div>
@@ -139,9 +134,9 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="twitterName" type="text" class="form-control"
+                                    <form:input path="twitterName" type="url" class="form-control"
                                                 maxlength="45" aria-label="twitterName"
-                                                id="twitter"
+                                                id="twitter" placeholder="https://twitter.com/"
                                                 value="${profile.twitterName}"/>
                                 </div>
                             </div>
@@ -152,9 +147,10 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="instagramName" type="text" maxlength="45"
+                                    <form:input path="instagramName" type="url" maxlength="45"
                                                 aria-label="instagramName"
                                                 class="form-control" id="instagram"
+                                                placeholder="https://www.instagram.com/"
                                                 value="${profile.instagramName}"/>
                                 </div>
                             </div>
@@ -165,9 +161,9 @@
                                     </h6>
                                 </div>
                                 <div class="col-8 form-outline">
-                                    <form:input path="facebookName" type="text" class="form-control"
+                                    <form:input path="facebookName" type="url" class="form-control"
                                                 maxlength="45" aria-label="facebookName"
-                                                id="facebook"
+                                                id="facebook" placeholder="https://www.facebook.com/"
                                                 value="${profile.facebookName}"/>
                                 </div>
                             </div>
@@ -193,6 +189,12 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${messageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${messageSuccess}
+                </div>
+            </c:if>
             <jsp:include page="edit-nav.jsp"/>
         </div>
     </div>

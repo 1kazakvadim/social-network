@@ -9,10 +9,10 @@ public class BasicInformationDTO {
 
   private Long id;
 
-  @Size(min = 1, max = 255)
+  @Size(min = 1, max = 255, message = "{firstname.size}")
   private String firstname;
 
-  @Size(min = 1, max = 255)
+  @Size(min = 1, max = 255, message = "{lastname.size}")
   private String lastname;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")

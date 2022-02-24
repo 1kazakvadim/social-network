@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "Message")
@@ -21,6 +23,7 @@ public class Message implements Serializable {
   private Long id;
 
   @ManyToOne
+  @Cascade(CascadeType.DELETE)
   @JoinColumn(name = "dialog_id", nullable = false)
   private Dialog dialog;
 

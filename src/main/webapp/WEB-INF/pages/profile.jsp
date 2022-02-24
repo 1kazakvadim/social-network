@@ -53,12 +53,6 @@
                                                                             data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                 </div>
-                                                                <c:if test="${error != null}">
-                                                                    <div class="alert alert-danger"
-                                                                         role="alert">
-                                                                            ${error}
-                                                                    </div>
-                                                                </c:if>
                                                                 <div class="modal-body">
                                                                     <form:form
                                                                             action="upload-profile-photo"
@@ -127,7 +121,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <c:if test="${friendCount != 0}">
                                 <div class="card mt-3">
                                     <div class="row friend-count">
@@ -148,9 +141,9 @@
                                                                     class="rounded-circle"
                                                                     alt=""/></a>
                                                         </div>
-                                                        <div class="d-flex justify-content-center ">
-                                                            <a href=""
-                                                               class="text-secondary friend-name">${friend.basicInformation.firstname}</a>
+                                                        <div class="d-flex justify-content-center friend-name text-center">
+                                                            <a href="<c:url value="/id${friend.user.id}"/>"
+                                                               class="text-secondary">${friend.basicInformation.firstname}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,16 +177,17 @@
                                     </div>
                                 </div>
                             </c:if>
-
                         </div>
                         <div class="col-8">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-10">
-                                            <h4 class="mb-0">
-                                                <span>${profile.basicInformation.firstname} ${profile.basicInformation.lastname}</span>
-                                            </h4>
+                                            <div class="profile-name mb-0">
+                                                <h4>
+                                                    ${profile.basicInformation.firstname} ${profile.basicInformation.lastname}
+                                                </h4>
+                                            </div>
                                         </div>
                                         <div class="col-2 profile-edit">
                                             <c:if test="${user.id == profile.user.id}">
@@ -257,8 +251,8 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <h6 class="mb-0">
-                                                                                    <span class="text-secondary"><spring:message
-                                                                                            code="profilePage.job"/></span>
+                                                  <span class="text-secondary"><spring:message
+                                                          code="profilePage.job"/></span>
                                                 </h6>
                                             </div>
                                             <div class="col-8">
@@ -317,7 +311,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col-8">
-                                                                <a href="#">${profile.githubName}</a>
+                                                                <a href="${profile.githubName}">${profile.githubName}</a>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -330,7 +324,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col-8">
-                                                                <a href="#">${profile.twitterName}</a>
+                                                                <a href="${profile.twitterName}">${profile.twitterName}</a>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -343,7 +337,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col-8">
-                                                                <a href="#">${profile.instagramName}</a>
+                                                                <a href="${profile.instagramName}">${profile.instagramName}</a>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -356,7 +350,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col-8">
-                                                                <a href="#">${profile.facebookName}</a>
+                                                                <a href="${profile.facebookName}">${profile.facebookName}</a>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -369,7 +363,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="col-8">
-                                                                <a href="#">${profile.skypeName}</a>
+                                                                <span>${profile.skypeName}</span>
                                                             </div>
                                                         </div>
                                                     </c:if>
@@ -442,6 +436,12 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${error != null}">
+                <div class="alert text-white alert-notification-error align-middle w-auto"
+                     role="alert">
+                        ${error}
+                </div>
+            </c:if>
         </div>
     </div>
 </section>

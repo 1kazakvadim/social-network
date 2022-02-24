@@ -183,7 +183,7 @@
                                                             </a>
                                                         </li>
                                                         <c:forEach begin="1"
-                                                                   end="${total / size + 1}"
+                                                                   end="${total}"
                                                                    var="pageNumber">
                                                             <c:choose>
                                                                 <c:when test="${page == pageNumber - 1}">

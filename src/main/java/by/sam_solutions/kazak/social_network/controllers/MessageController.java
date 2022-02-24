@@ -10,6 +10,7 @@ import by.sam_solutions.kazak.social_network.facades.MessageFacade;
 import by.sam_solutions.kazak.social_network.facades.ProfileFacade;
 import java.util.List;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class MessageController {
   @Autowired
   private MessageFacade messageFacade;
 
-  @GetMapping("/")
+  @GetMapping
   public ModelAndView getDialogsPage(ModelAndView modelAndView,
       @AuthenticationPrincipal UserPrincipal user) {
     Profile profile = profileFacade.getProfileByUserId(user.getId());
@@ -63,6 +64,7 @@ public class MessageController {
     modelAndView.addObject("messages", messages);
     modelAndView.addObject("dialogId", dialog.getId());
     modelAndView.addObject("messageSenderProfileId", profile.getId());
+    modelAndView.addObject("recipientProfile", recipientProfile);
     MessageDTO messageDto = new MessageDTO();
     modelAndView.addObject("messageDto", messageDto);
     modelAndView.setViewName("messages");
@@ -72,8 +74,25 @@ public class MessageController {
   @PostMapping("/{profileId}/send-message")
   public ModelAndView sendMessage(ModelAndView modelAndView, @PathVariable Long profileId,
       @ModelAttribute MessageDTO message) {
+    if (StringUtils.isBlank(message.getMessageText())) {
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_MESSAGES + profileId);
+      return modelAndView;
+    }
     messageFacade.sendMessage(message);
     modelAndView.setViewName(WebConstants.REDIRECT_TO_MESSAGES + profileId);
+    return modelAndView;
+  }
+
+  @GetMapping("/{profileId}/delete-dialog")
+  public ModelAndView deleteDialog(ModelAndView modelAndView, @PathVariable Long profileId,
+      @AuthenticationPrincipal UserPrincipal user) {
+    Profile profile = profileFacade.getProfileByUserId(user.getId());
+    Dialog dialog = dialogFacade.getBySenderProfileIdAndRecipientProfileId(profile.getId(),
+        profileId);
+    if (dialog != null) {
+      dialogFacade.deleteById(dialog.getId());
+    }
+    modelAndView.setViewName(WebConstants.REDIRECT_TO_MESSAGES);
     return modelAndView;
   }
 

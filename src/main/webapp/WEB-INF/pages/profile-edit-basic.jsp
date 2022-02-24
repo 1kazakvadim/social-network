@@ -34,11 +34,6 @@
                                 <spring:message message="${error}"/>
                             </div>
                         </c:forEach>
-                        <c:if test="${messageSuccess != null}">
-                            <div class="alert alert-success" role="alert">
-                                    ${messageSuccess}
-                            </div>
-                        </c:if>
                         <form:form action="basic" id="edit-basic-form" method="POST"
                                    modelAttribute="basicInformationDTO">
                             <div class="row mb-3 mx-auto">
@@ -126,6 +121,12 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${messageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${messageSuccess}
+                </div>
+            </c:if>
             <jsp:include page="edit-nav.jsp"/>
         </div>
     </div>

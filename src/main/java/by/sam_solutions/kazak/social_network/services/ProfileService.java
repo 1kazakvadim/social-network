@@ -22,7 +22,11 @@ public interface ProfileService {
 
   List<Profile> searchForProfiles(String search) throws Exception;
 
-  boolean isFieldContainsSpecialCharacters(String string);
+  boolean isFieldContainsSpecialCharacters(String field);
+
+  boolean isFieldWithLinkValid(String field);
+
+  boolean isPhoneFieldValid(String phone);
 
   Long countProfiles();
 

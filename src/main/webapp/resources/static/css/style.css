@@ -20,17 +20,13 @@ hr.solid {
   color: #FFFFFF;
 }
 
-.nav-notification i {
+.nav-username {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.nav-username p {
   color: #FFFFFF;
-}
-
-.nav-notification span {
-  font-size: 12px;
-  background-color: #ecc36f !important;
-}
-
-.nav-notification:hover {
-  opacity: 0.8;
 }
 
 .nav-profile i {
@@ -75,7 +71,7 @@ hr.solid {
   height: 100%;
 }
 
-.profile-no-image a{
+.profile-no-image a {
   text-decoration: none;
 }
 
@@ -95,6 +91,22 @@ hr.solid {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.friend-name a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 48px;
+  min-width: 48px;
+}
+
+.profile-name h4 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 410px;
+  min-width: 410px;
 }
 
 .profile-image-action {
@@ -378,10 +390,7 @@ footer p {
 }
 
 .users-container {
-  max-height: 800px;
-  min-height: 800px;
   position: relative;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -395,7 +404,7 @@ footer p {
 .users .person {
   position: relative;
   width: 100%;
-  margin: 20px 0 20px;
+  margin: 10px 0 20px;
   cursor: pointer;
   border-bottom: 1px solid #f0f4f8;
   border-bottom: 1px solid #f0f4f8;
@@ -411,53 +420,74 @@ footer p {
   background-color: #f7f9fb;
 }
 
-.users .person.active-user {
-  background-color: #f7f9fb;
+.delete-dialog-link {
+  text-decoration: none;
+  font-size: 8px;
+}
+
+.delete-dialog-link:hover {
+  color: rgba(138, 138, 143, 0.8);
 }
 
 .users .person .user {
-  display: inline-block;
-  position: relative;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
-.users .person .user img {
+.users .person .name {
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 250px;
+  min-width: 250px;
+}
+
+.users .person .name p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.dialog-photo-wrap {
   width: 48px;
   height: 48px;
-  /*border-radius: 50px;*/
+  position: relative;
+  overflow: hidden;
 }
 
-.users .person p.name-time {
-  font-size: 14px;
-  display: inline-block;
-}
-
-.users .person p.name-time .time {
-  font-weight: 400;
-  font-size: .7rem;
-  text-align: right;
-  color: #8796af;
-}
-
-.selected-user {
+.dialog-photo-wrap img {
+  object-fit: cover;
   width: 100%;
-  padding: 0 15px;
-  min-height: 64px;
-  line-height: 64px;
-  border-bottom: 1px solid #e6ecf3;
-  border-radius: 0 3px 0 0;
+  height: 100%;
+}
+
+.chat-photo-wrap {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-photo-wrap img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .selected-user span {
-  line-height: 100%;
-}
-
-.selected-user span.name {
   font-weight: 700;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 500px;
+  min-width: 500px;
 }
 
-.chat-container li.chat-left,
-.chat-container li.chat-right {
+.selected-user a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.chat-container li.chat-left {
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -466,11 +496,6 @@ footer p {
 
 .chat-box li:last-child {
   margin-bottom: 0;
-}
-
-.chat-container {
-  max-height: 800px;
-  min-height: 800px;
 }
 
 .chat-container li img {
@@ -505,10 +530,14 @@ footer p {
 .chat-container li .chat-text {
   padding: .4rem 1rem;
   border-radius: 4px;
-  background: #f4f5fb;
   font-weight: 300;
   line-height: 150%;
   position: relative;
+}
+
+.chat-text {
+  max-width: 420px;
+  word-wrap: break-word;
 }
 
 .chat-text p {
@@ -554,8 +583,13 @@ footer p {
   min-height: 600px;
 }
 
-.profile-table td {
+.profile-table .name {
   position: relative;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 175px;
+  min-width: auto;
 }
 
 .profile-table tr:hover,
@@ -621,4 +655,24 @@ footer p {
 
 .collapse-contact-info-button:focus, .collapse-contact-info-button:active {
   box-shadow: none !important;
+}
+
+.alert-notification-error {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-top: 5px;
+  background-color: darkred;
+  z-index: 100;
+}
+
+.alert-notification-success {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-top: 5px;
+  background-color: darkgreen;
+  z-index: 100;
 }

@@ -8,6 +8,8 @@ public interface DialogFacade {
 
   List<Dialog> getAllByProfileId(Long id);
 
+  void deleteById(Long id);
+
   List<Profile> getProfilesWithDialogs(Long id);
 
   Dialog getBySenderProfileIdAndRecipientProfileId(Long senderProfileId, Long recipientProfileId);

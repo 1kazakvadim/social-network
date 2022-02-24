@@ -29,8 +29,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 public class PhotoController {
 
   private static final String ROLE_ADMIN = "ADMIN";
-  private static final List<Integer> ELEMENTS_ON_PHOTOS_PAGE = List.of(8, 16, 24, 32);
-  private static final List<Integer> ELEMENTS_OF_COMMENTS_ON_PHOTO_PAGE = List.of(5, 10, 25, 50);
 
   @Autowired
   private ProfileFacade profileFacade;
@@ -69,8 +67,9 @@ public class PhotoController {
     modelAndView.addObject("photos", photos);
     modelAndView.addObject("page", page);
     modelAndView.addObject("size", size);
-    modelAndView.addObject("total", photoFacade.countByProfileId(profile.getId()));
-    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_PHOTOS_PAGE);
+    modelAndView.addObject("total",
+        Math.ceil((double) photoFacade.countByProfileId(profile.getId()) / size));
+    modelAndView.addObject("elementsOnPage", WebConstants.ELEMENTS_PAGE_COUNT_8);
     modelAndView.setViewName("photos");
     Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
     if (inputFlashMap != null) {
@@ -132,8 +131,9 @@ public class PhotoController {
     List<Comment> comments = commentFacade.getAllByPhotoId(photo.getId(), page, size);
     modelAndView.addObject("page", page);
     modelAndView.addObject("size", size);
-    modelAndView.addObject("total", commentFacade.countByPhotoId(photo.getId()));
-    modelAndView.addObject("elementsOnPage", ELEMENTS_OF_COMMENTS_ON_PHOTO_PAGE);
+    modelAndView.addObject("total",
+        Math.ceil((double) commentFacade.countByPhotoId(photo.getId()) / size));
+    modelAndView.addObject("elementsOnPage", WebConstants.ELEMENTS_PAGE_COUNT_5);
     if (comments.isEmpty()) {
       modelAndView.addObject("message",
           messageSource.getMessage("photoView.message", null,
