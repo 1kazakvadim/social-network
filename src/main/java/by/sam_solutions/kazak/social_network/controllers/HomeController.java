@@ -53,12 +53,10 @@ public class HomeController {
       @PathVariable Long userId, @AuthenticationPrincipal UserPrincipal user) {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
-
     if (acceptFriendRequestProfile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }
-
     Friend friend = friendFacade.getByMakeRequestProfileIdAndAcceptFriendRequestProfileId(
         acceptFriendRequestProfile.getId(),
         makeFriendRequestProfile.getId());
@@ -72,26 +70,21 @@ public class HomeController {
     } else if (friendFacade.isFriend(friend)) {
       modelAndView.addObject("inFriendButton", true);
     }
-
     List<Profile> friends = profileFacade.getProfilesByFriendStatus(
         acceptFriendRequestProfile.getId(),
         FriendStatus.IN_FRIEND);
     Collections.shuffle(friends);
     modelAndView.addObject("friends", friends);
     modelAndView.addObject("friendCount", friends.size());
-
     List<Photo> photos = photoFacade.getAllByProfileId(acceptFriendRequestProfile.getId());
     Collections.shuffle(photos);
     modelAndView.addObject("photos", photos);
     modelAndView.addObject("photoCount", photos.size());
-
     modelAndView.addObject("profile", acceptFriendRequestProfile);
-
     Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
     if (inputFlashMap != null) {
       modelAndView.addObject("error", inputFlashMap.get("error"));
     }
-
     modelAndView.setViewName("profile");
     return modelAndView;
   }

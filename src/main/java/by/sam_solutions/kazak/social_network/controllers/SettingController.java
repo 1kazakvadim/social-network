@@ -11,6 +11,7 @@ import by.sam_solutions.kazak.social_network.facades.ProfileFacade;
 import by.sam_solutions.kazak.social_network.facades.RelationshipFacade;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
 import by.sam_solutions.kazak.social_network.validators.BasicInformationDtoValidator;
+import by.sam_solutions.kazak.social_network.validators.ContactInformationDtoValidator;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +55,9 @@ public class SettingController {
   private BasicInformationDtoValidator basicInformationDtoValidator;
 
   @Autowired
+  private ContactInformationDtoValidator contactInformationDtoValidator;
+
+  @Autowired
   private MessageSource messageSource;
 
   @GetMapping("/edit/profile")
@@ -76,6 +80,7 @@ public class SettingController {
   public ModelAndView saveProfileEdit(ModelAndView modelAndView,
       @Valid @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
+    contactInformationDtoValidator.validate(contactInformationDTO, result);
     if (result.hasErrors()) {
       redirectAttributes.addFlashAttribute("errors", result);
       modelAndView.setViewName(WebConstants.REDIRECT_TO_EDIT_PROFILE);

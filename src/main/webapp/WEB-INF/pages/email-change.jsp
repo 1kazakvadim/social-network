@@ -28,16 +28,6 @@
                             </div>
                         </div>
                         <hr>
-                        <c:if test="${messageError != null}">
-                            <div class="alert alert-danger" role="alert">
-                                    ${messageError}
-                            </div>
-                        </c:if>
-                        <c:if test="${messageSuccess != null}">
-                            <div class="alert alert-success" role="alert">
-                                    ${messageSuccess}
-                            </div>
-                        </c:if>
                         <form:form action="email-change" method="POST" id="email-change">
                             <div class="row mb-3 mx-auto justify-content-center text-center">
                                 <p class="text-secondary"><spring:message
@@ -58,6 +48,18 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${messageError != null}">
+                <div class="alert text-white alert-notification-error align-middle w-auto"
+                     role="alert">
+                        ${messageError}
+                </div>
+            </c:if>
+            <c:if test="${messageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${messageSuccess}
+                </div>
+            </c:if>
             <jsp:include page="edit-nav.jsp"/>
         </div>
     </div>

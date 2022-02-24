@@ -89,11 +89,6 @@
                                                         </div>
                                                     </c:forEach>
                                                 </c:if>
-                                                <c:if test="${profileMessageSuccess != null}">
-                                                    <div class="alert alert-success" role="alert">
-                                                            ${profileMessageSuccess}
-                                                    </div>
-                                                </c:if>
                                                 <form:form action="edit/profile" id="profile-form"
                                                            method="POST"
                                                            modelAttribute="contactInformationDTO">
@@ -165,10 +160,11 @@
                                                         <div class="col-8 form-outline">
                                                             <form:input path="mobilePhone"
                                                                         maxlength="45"
-                                                                        type="text"
+                                                                        type="tel"
                                                                         class="form-control"
                                                                         aria-label="mobilePhone"
                                                                         id="mobilePhone"
+                                                                        placeholder="+375291111111"
                                                                         value="${profile.mobilePhone}"/>
                                                         </div>
                                                     </div>
@@ -180,11 +176,12 @@
                                                             </h6>
                                                         </div>
                                                         <div class="col-8 form-outline">
-                                                            <form:input path="homePhone" type="text"
+                                                            <form:input path="homePhone" type="tel"
                                                                         maxlength="45"
                                                                         class="form-control"
                                                                         aria-label="homePhone"
                                                                         id="homePhone"
+                                                                        placeholder="+375162111111"
                                                                         value="${profile.homePhone}"/>
                                                         </div>
                                                     </div>
@@ -196,10 +193,10 @@
                                                         </div>
                                                         <div class="col-8 form-outline">
                                                             <form:input path="githubName"
-                                                                        type="text" maxlength="45"
+                                                                        type="url" maxlength="45"
                                                                         class="form-control"
                                                                         aria-label="githubName"
-                                                                        id="github"
+                                                                        id="github" placeholder="https://github.com/"
                                                                         value="${profile.githubName}"/>
                                                         </div>
                                                     </div>
@@ -211,10 +208,10 @@
                                                         </div>
                                                         <div class="col-8 form-outline">
                                                             <form:input path="twitterName"
-                                                                        type="text" maxlength="45"
+                                                                        type="url" maxlength="45"
                                                                         class="form-control"
                                                                         aria-label="twitterName"
-                                                                        id="twitter"
+                                                                        id="twitter" placeholder="https://twitter.com/"
                                                                         value="${profile.twitterName}"/>
                                                         </div>
                                                     </div>
@@ -226,10 +223,10 @@
                                                         </div>
                                                         <div class="col-8 form-outline">
                                                             <form:input path="instagramName"
-                                                                        type="text" maxlength="45"
+                                                                        type="url" maxlength="45"
                                                                         class="form-control"
                                                                         aria-label="instagramName"
-                                                                        id="instagram"
+                                                                        id="instagram" placeholder="https://www.instagram.com/"
                                                                         value="${profile.instagramName}"/>
                                                         </div>
                                                     </div>
@@ -241,10 +238,10 @@
                                                         </div>
                                                         <div class="col-8 form-outline">
                                                             <form:input path="facebookName"
-                                                                        type="text" maxlength="45"
+                                                                        type="url" maxlength="45"
                                                                         class="form-control"
                                                                         aria-label="facebookName"
-                                                                        id="facebook"
+                                                                        id="facebook" placeholder="https://www.facebook.com/"
                                                                         value="${profile.facebookName}"/>
                                                         </div>
                                                     </div>
@@ -287,11 +284,6 @@
                                                             <spring:message message="${error}"/>
                                                         </div>
                                                     </c:forEach>
-                                                </c:if>
-                                                <c:if test="${basicMessageSuccess != null}">
-                                                    <div class="alert alert-success" role="alert">
-                                                            ${basicMessageSuccess}
-                                                    </div>
                                                 </c:if>
                                                 <form:form action="edit/basic" id="basic-form"
                                                            method="POST"
@@ -406,18 +398,6 @@
                                         <div class="card mb-4">
                                             <div class="card-body">
                                                 <div class="col-12">
-                                                    <c:if test="${emailMessageError != null}">
-                                                        <div class="alert alert-danger"
-                                                             role="alert">
-                                                                ${emailMessageError}
-                                                        </div>
-                                                    </c:if>
-                                                    <c:if test="${emailMessageSuccess != null}">
-                                                        <div class="alert alert-success"
-                                                             role="alert">
-                                                                ${emailMessageSuccess}
-                                                        </div>
-                                                    </c:if>
                                                     <form:form action="edit/email-change"
                                                                method="POST"
                                                                id="email-change">
@@ -426,8 +406,10 @@
                                                                 <spring:message
                                                                         code="adminProfileEditPage.tab.security.currentEmail"/>: ${profile.user.email}</p>
                                                             <div class="col-6">
-                                                                <input type="text" id="email" maxlength="255"
-                                                                       class="form-control" aria-label="email"
+                                                                <input type="text" id="email"
+                                                                       maxlength="255"
+                                                                       class="form-control"
+                                                                       aria-label="email"
                                                                        name="email"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.newEmail"/>"/>
                                                             </div>
@@ -446,18 +428,6 @@
                                         <div class="card mb-4">
                                             <div class="card-body">
                                                 <div class="col-12">
-                                                    <c:if test="${passwordMessageError != null}">
-                                                        <div class="alert alert-danger"
-                                                             role="alert">
-                                                                ${passwordMessageError}
-                                                        </div>
-                                                    </c:if>
-                                                    <c:if test="${passwordMessageSuccess != null}">
-                                                        <div class="alert alert-success"
-                                                             role="alert">
-                                                                ${passwordMessageSuccess}
-                                                        </div>
-                                                    </c:if>
                                                     <form:form action="edit/password-change"
                                                                method="POST"
                                                                id="password-change">
@@ -466,18 +436,22 @@
                                                                 <spring:message
                                                                         code="adminProfileEditPage.tab.security.createPassword"/></p>
                                                             <div class="col-8">
-                                                                <input type="password" maxlength="20"
+                                                                <input type="password"
+                                                                       maxlength="20"
                                                                        id="new-password"
-                                                                       class="form-control" aria-label="password"
+                                                                       class="form-control"
+                                                                       aria-label="password"
                                                                        name="newPassword"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.newPassword"/>"/>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3 mx-auto justify-content-center text-center">
                                                             <div class="col-8">
-                                                                <input type="password" maxlength="20"
+                                                                <input type="password"
+                                                                       maxlength="20"
                                                                        id="re-password"
-                                                                       class="form-control" aria-label="re-password"
+                                                                       class="form-control"
+                                                                       aria-label="re-password"
                                                                        name="confirmPassword"
                                                                        placeholder="<spring:message code="adminProfileEditPage.tab.security.placeholder.confirmPassword"/>"/>
                                                             </div>
@@ -498,12 +472,6 @@
                                      aria-labelledby="role-tab">
                                     <div class="row">
                                         <div class="col-12 form-outline">
-                                            <c:if test="${roleMessageSuccess != null}">
-                                                <div class="alert alert-success"
-                                                     role="alert">
-                                                        ${roleMessageSuccess}
-                                                </div>
-                                            </c:if>
                                             <form:form action="edit/role-change" method="POST"
                                                        id="role-change">
                                                 <select class="form-select form-select" name="role"
@@ -530,12 +498,6 @@
                                      aria-labelledby="block-tab">
                                     <div class="row">
                                         <div class="col-12 form-outline">
-                                            <c:if test="${lockMessageSuccess != null}">
-                                                <div class="alert alert-success"
-                                                     role="alert">
-                                                        ${lockMessageSuccess}
-                                                </div>
-                                            </c:if>
                                             <form:form action="edit/lock-change" method="POST"
                                                        id="lock-change">
                                                 <select class="form-select form-select"
@@ -566,6 +528,54 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${profileMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${profileMessageSuccess}
+                </div>
+            </c:if>
+            <c:if test="${basicMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${basicMessageSuccess}
+                </div>
+            </c:if>
+            <c:if test="${emailMessageError != null}">
+                <div class="alert text-white alert-notification-error align-middle w-auto"
+                     role="alert">
+                        ${emailMessageError}
+                </div>
+            </c:if>
+            <c:if test="${emailMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${emailMessageSuccess}
+                </div>
+            </c:if>
+            <c:if test="${passwordMessageError != null}">
+                <div class="alert text-white alert-notification-error align-middle w-auto"
+                     role="alert">
+                        ${passwordMessageError}
+                </div>
+            </c:if>
+            <c:if test="${passwordMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${passwordMessageSuccess}
+                </div>
+            </c:if>
+            <c:if test="${roleMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${roleMessageSuccess}
+                </div>
+            </c:if>
+            <c:if test="${lockMessageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${lockMessageSuccess}
+                </div>
+            </c:if>
         </div>
     </div>
 </section>

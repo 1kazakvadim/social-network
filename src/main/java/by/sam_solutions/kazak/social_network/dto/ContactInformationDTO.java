@@ -7,31 +7,31 @@ public class ContactInformationDTO {
   private Long id;
   private Long countryId;
 
-  @Size(max = 255)
+  @Size(max = 255, message = "{city.size}")
   private String city;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{jobTitle.size}")
   private String jobTitle;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{mobilePhone.size}")
   private String mobilePhone;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{homePhone.size}")
   private String homePhone;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{githubName.size}")
   private String githubName;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{twitterName.size}")
   private String twitterName;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{instagramName.size}")
   private String instagramName;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{facebookName.size}")
   private String facebookName;
 
-  @Size(max = 45)
+  @Size(max = 45, message = "{skypeName.size}")
   private String skypeName;
 
   public ContactInformationDTO() {

@@ -10,6 +10,7 @@ import by.sam_solutions.kazak.social_network.facades.RelationshipFacade;
 import by.sam_solutions.kazak.social_network.facades.RoleFacade;
 import by.sam_solutions.kazak.social_network.facades.UserFacade;
 import by.sam_solutions.kazak.social_network.validators.BasicInformationDtoValidator;
+import by.sam_solutions.kazak.social_network.validators.ContactInformationDtoValidator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,8 +34,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @RequestMapping("/admin/profiles")
 public class AdminController {
 
-  private static final List<Integer> ELEMENTS_ON_PROFILES_PAGE = List.of(10, 25, 50, 100);
-
   @Autowired
   private ProfileFacade profileFacade;
 
@@ -57,6 +56,9 @@ public class AdminController {
   private BasicInformationDtoValidator basicInformationDtoValidator;
 
   @Autowired
+  private ContactInformationDtoValidator contactInformationDtoValidator;
+
+  @Autowired
   private MessageSource messageSource;
 
   @GetMapping
@@ -70,8 +72,8 @@ public class AdminController {
     List<Profile> profiles = profileFacade.getAll(page, size);
     modelAndView.addObject("page", page);
     modelAndView.addObject("size", size);
-    modelAndView.addObject("total", profileFacade.countProfiles());
-    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_PROFILES_PAGE);
+    modelAndView.addObject("total", Math.ceil((double) profileFacade.countProfiles() / size));
+    modelAndView.addObject("elementsOnPage", WebConstants.ELEMENTS_PAGE_COUNT_10);
     modelAndView.addObject("profiles", profiles);
     modelAndView.setViewName("profiles");
     return modelAndView;
@@ -110,6 +112,7 @@ public class AdminController {
       @PathVariable Long profileId,
       @Valid @ModelAttribute("contactInformationDTO") ContactInformationDTO contactInformationDTO,
       BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
+    contactInformationDtoValidator.validate(contactInformationDTO, result);
     if (result.hasErrors()) {
       redirectAttributes.addFlashAttribute("profileErrors", result);
       modelAndView.setViewName("redirect:/admin/profiles/" + profileId + "/edit");

@@ -25,6 +25,8 @@ public class ProfileServiceImpl implements ProfileService {
   private static final Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
 
   private static final String SPECIAL_CHARACTERS_PATTERN = "[^A-Za-zа-яА-ЯёЁ0-9]";
+  private static final String LINK_PATTERN = "((http|https)://)(www.)?[a-zA-Z0-9@:%._~#?&/=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._~#?&/=]*)";
+  private static final String PHONE_PATTERN = "^\\+(?:[0-9]●?){6,14}[0-9]$";
 
   @Autowired
   private ProfileDao profileDao;
@@ -96,10 +98,26 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public boolean isFieldContainsSpecialCharacters(String string) {
-    logger.debug("is field contains special characters = {}", string);
+  public boolean isFieldContainsSpecialCharacters(String field) {
+    logger.debug("is field contains special characters = {}", field);
     Pattern pattern = Pattern.compile(SPECIAL_CHARACTERS_PATTERN);
-    Matcher matcher = pattern.matcher(string);
+    Matcher matcher = pattern.matcher(field);
+    return matcher.find();
+  }
+
+  @Override
+  public boolean isFieldWithLinkValid(String field) {
+    logger.debug("is field with link valid = {}", field);
+    Pattern pattern = Pattern.compile(LINK_PATTERN);
+    Matcher matcher = pattern.matcher(field);
+    return matcher.find();
+  }
+
+  @Override
+  public boolean isPhoneFieldValid(String phone) {
+    logger.debug("is mobile phone field valid = {}", phone);
+    Pattern pattern = Pattern.compile(PHONE_PATTERN);
+    Matcher matcher = pattern.matcher(phone);
     return matcher.find();
   }
 

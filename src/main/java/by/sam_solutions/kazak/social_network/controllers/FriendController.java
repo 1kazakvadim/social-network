@@ -21,8 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FriendController {
 
-  private static final List<Integer> ELEMENTS_ON_FRIEND_PAGE = List.of(10, 25, 50, 100);
-
   @Autowired
   private ProfileFacade profileFacade;
 
@@ -66,11 +64,13 @@ public class FriendController {
     modelAndView.addObject("friendRequestPage", friendRequestPage);
     modelAndView.addObject("friendSize", friendSize);
     modelAndView.addObject("friendRequestSize", friendRequestSize);
-    modelAndView.addObject("totalFriend", friendFacade.countByProfileIdAndFriendStatus(
-        profile.getId(), FriendStatus.IN_FRIEND));
-    modelAndView.addObject("totalFriendRequests", friendFacade.countByProfileIdAndFriendStatus(
-        profile.getId(), FriendStatus.FRIEND_REQUEST));
-    modelAndView.addObject("elementsOnPage", ELEMENTS_ON_FRIEND_PAGE);
+    modelAndView.addObject("totalFriend",
+        Math.ceil((double) friendFacade.countByProfileIdAndFriendStatus(
+            profile.getId(), FriendStatus.IN_FRIEND) / friendSize));
+    modelAndView.addObject("totalFriendRequests",
+        Math.ceil((double) friendFacade.countByProfileIdAndFriendStatus(
+            profile.getId(), FriendStatus.FRIEND_REQUEST) / friendRequestSize));
+    modelAndView.addObject("elementsOnPage", WebConstants.ELEMENTS_PAGE_COUNT_10);
     modelAndView.addObject("friends", friends);
     modelAndView.addObject("friendRequests", friendRequests);
     modelAndView.setViewName("friends");
@@ -192,7 +192,7 @@ public class FriendController {
       @AuthenticationPrincipal UserPrincipal user) {
     Profile acceptFriendRequestProfile = profileFacade.getProfileByUserId(userId);
     Profile makeFriendRequestProfile = profileFacade.getProfileByUserId(user.getId());
-    if (null == acceptFriendRequestProfile) {
+    if (acceptFriendRequestProfile == null) {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_HOMEPAGE_URN);
       return modelAndView;
     }

@@ -77,6 +77,8 @@ public class ProfileDaoImpl extends AbstractBaseDao<Profile> implements ProfileD
         .get();
     Query query = queryBuilder
         .keyword()
+        .fuzzy()
+        .withEditDistanceUpTo(2)
         .onField("basicInformation.fullName")
         .matching(search)
         .createQuery();

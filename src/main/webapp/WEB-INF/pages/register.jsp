@@ -153,8 +153,8 @@
 
 <jsp:include page="footer.jsp"/>
 
+<style:registerFormValidation/>
 <style:scripts/>
-<style:register-form-validation/>
 
 </body>
 </html>

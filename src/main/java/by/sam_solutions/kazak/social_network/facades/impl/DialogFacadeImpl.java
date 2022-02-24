@@ -21,6 +21,11 @@ public class DialogFacadeImpl implements DialogFacade {
   }
 
   @Override
+  public void deleteById(Long id) {
+    dialogService.deleteById(id);
+  }
+
+  @Override
   public List<Profile> getProfilesWithDialogs(Long profileId) {
     List<Dialog> dialogs = dialogService.getAllByProfileId(profileId);
     return dialogService.getProfilesWithDialogs(dialogs, profileId);

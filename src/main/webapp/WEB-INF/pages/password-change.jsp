@@ -28,16 +28,6 @@
                             </div>
                         </div>
                         <hr>
-                        <c:if test="${messageError != null}">
-                            <div class="alert alert-danger" role="alert">
-                                    ${messageError}
-                            </div>
-                        </c:if>
-                        <c:if test="${messageSuccess != null}">
-                            <div class="alert alert-success" role="alert">
-                                    ${messageSuccess}
-                            </div>
-                        </c:if>
                         <form:form action="password-change" method="POST"
                                    id="password-change">
                             <div class="row mb-3 mx-auto justify-content-center text-center">
@@ -77,6 +67,18 @@
                 </div>
 
             </div>
+            <c:if test="${messageError != null}">
+                <div class="alert text-white alert-notification-error align-middle w-auto"
+                     role="alert">
+                        ${messageError}
+                </div>
+            </c:if>
+            <c:if test="${messageSuccess != null}">
+                <div class="alert text-white alert-notification-success align-middle w-auto"
+                     role="alert">
+                        ${messageSuccess}
+                </div>
+            </c:if>
             <jsp:include page="edit-nav.jsp"/>
         </div>
     </div>
