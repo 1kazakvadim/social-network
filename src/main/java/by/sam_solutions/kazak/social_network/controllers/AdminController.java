@@ -184,15 +184,15 @@ public class AdminController {
       modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES);
       return modelAndView;
     }
-    if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
-      redirectAttributes.addFlashAttribute("passwordMessageError",
-          messageSource.getMessage("adminProfileEditPage.error.passwordMatch", null, locale));
-      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
-      return modelAndView;
-    }
     if (!userFacade.isPasswordValid(newPassword)) {
       redirectAttributes.addFlashAttribute("passwordMessageError",
           messageSource.getMessage("adminProfileEditPage.error.isPasswordValid", null, locale));
+      modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
+      return modelAndView;
+    }
+    if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
+      redirectAttributes.addFlashAttribute("passwordMessageError",
+          messageSource.getMessage("adminProfileEditPage.error.passwordMatch", null, locale));
       modelAndView.setViewName(WebConstants.REDIRECT_TO_ADMIN_PROFILES + profileId + "/edit");
       return modelAndView;
     }

@@ -18,8 +18,8 @@
         <div class="row">
             <jsp:include page="side-nav.jsp"/>
             <div class="col-9">
-                <div class="table-wrapper">
-                    <table class="table table-hover profile-table min-vh-100">
+                <div>
+                    <table class="table table-hover profile-table">
                         <thead>
                         <tr>
                             <th scope="col">#</th>

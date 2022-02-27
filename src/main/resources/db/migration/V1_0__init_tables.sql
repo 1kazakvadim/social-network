@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `friend`
     `user_make_friend_request_id`   bigint                                        NOT NULL,
     `user_accept_friend_request_id` bigint                                        NOT NULL,
     `friend_status`                 enum ('0','1','2') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-    `time_creation`                 datetime                                      NOT NULL DEFAULT NULL,
+    `time_creation`                 datetime                                      NOT NULL,
     PRIMARY KEY (`user_make_friend_request_id`, `user_accept_friend_request_id`),
     KEY `user1_id_idx` (`user_make_friend_request_id`),
     KEY `user2_id_idx` (`user_accept_friend_request_id`),

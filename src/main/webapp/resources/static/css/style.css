@@ -579,10 +579,6 @@ footer p {
   padding: 10px;
 }
 
-.table-wrapper {
-  min-height: 600px;
-}
-
 .profile-table .name {
   position: relative;
   text-overflow: ellipsis;
@@ -590,6 +586,10 @@ footer p {
   white-space: nowrap;
   max-width: 175px;
   min-width: auto;
+}
+
+.profile-table td {
+  position: relative;
 }
 
 .profile-table tr:hover,
