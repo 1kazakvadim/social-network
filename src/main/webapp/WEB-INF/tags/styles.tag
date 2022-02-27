@@ -10,3 +10,6 @@
 
 <spring:url value="/resources/static/css/style.css" var="style"/>
 <link href="${style}" rel="stylesheet"/>
+
+<spring:url value="/resources/static/images/favicon.ico" var="favicon"/>
+<link rel="shortcut icon" type="image/jpg" href="${favicon}"/>

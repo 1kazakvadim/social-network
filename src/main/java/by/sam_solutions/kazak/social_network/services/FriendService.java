@@ -8,8 +8,6 @@ public interface FriendService {
 
   void saveOrUpdate(Friend friend);
 
-  Friend getById(Long id);
-
   List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus);
 
   List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus, Integer page,

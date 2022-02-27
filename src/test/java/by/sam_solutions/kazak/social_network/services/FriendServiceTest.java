@@ -7,10 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import by.sam_solutions.kazak.social_network.config.TestAppContextConfig;
 import by.sam_solutions.kazak.social_network.entities.BasicInformation;
-import by.sam_solutions.kazak.social_network.entities.Dialog;
 import by.sam_solutions.kazak.social_network.entities.Friend;
 import by.sam_solutions.kazak.social_network.entities.FriendStatus;
-import by.sam_solutions.kazak.social_network.entities.Message;
 import by.sam_solutions.kazak.social_network.entities.Profile;
 import by.sam_solutions.kazak.social_network.entities.Role;
 import by.sam_solutions.kazak.social_network.entities.User;

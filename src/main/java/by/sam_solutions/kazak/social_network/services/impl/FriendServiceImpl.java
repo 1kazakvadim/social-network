@@ -28,13 +28,6 @@ public class FriendServiceImpl implements FriendService {
 
   @Override
   @Transactional(readOnly = true)
-  public Friend getById(Long id) {
-    logger.debug("get friend by id = {}", id);
-    return friendDao.getById(id);
-  }
-
-  @Override
-  @Transactional(readOnly = true)
   public List<Friend> getAllByProfileIdAndFriendStatus(Long id, FriendStatus friendStatus) {
     logger.debug("get friend by profile id = {} and by friend status = {}", id, friendStatus);
     return friendDao.getAllByProfileIdAndFriendStatus(id, friendStatus);

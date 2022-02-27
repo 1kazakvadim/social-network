@@ -13,8 +13,6 @@ public interface DialogService {
   Dialog getBySenderProfileIdAndRecipientProfileId(Long senderProfileId,
       Long recipientProfileId);
 
-  List<Dialog> getAll();
-
   List<Dialog> getAllByProfileId(Long id);
 
   void deleteById(Long id);

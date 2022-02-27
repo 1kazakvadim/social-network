@@ -43,13 +43,6 @@ public class DialogServiceImpl implements DialogService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<Dialog> getAll() {
-    logger.debug("get all dialogs");
-    return dialogDao.getAll();
-  }
-
-  @Override
-  @Transactional(readOnly = true)
   public List<Dialog> getAllByProfileId(Long id) {
     return dialogDao.getAllByProfileId(id);
   }
