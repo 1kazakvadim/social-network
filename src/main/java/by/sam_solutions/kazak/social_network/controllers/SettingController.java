@@ -153,15 +153,15 @@ public class SettingController {
       modelAndView.setViewName("password-change");
       return modelAndView;
     }
-    if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
-      modelAndView.addObject("messageError",
-          messageSource.getMessage("passwordChangePage.error.passwordMatch", null, locale));
-      modelAndView.setViewName("password-change");
-      return modelAndView;
-    }
     if (!userFacade.isPasswordValid(newPassword)) {
       modelAndView.addObject("messageError",
           messageSource.getMessage("passwordChangePage.error.isPasswordValid", null, locale));
+      modelAndView.setViewName("password-change");
+      return modelAndView;
+    }
+    if (!userFacade.isPasswordMatchConfirmPassword(newPassword, confirmPassword)) {
+      modelAndView.addObject("messageError",
+          messageSource.getMessage("passwordChangePage.error.passwordMatch", null, locale));
       modelAndView.setViewName("password-change");
       return modelAndView;
     }
